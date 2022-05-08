@@ -12,9 +12,9 @@ This is the library for VueTube. The main repository is <a href="https://github.
 </p>
 
 <p align="center">
-  <a href="https://github.com/VueTubeApp/VueTube-Extractor/commits/main"><img src="https://img.shields.io/github/commit-activity/m/VueTubeApp/VueTube-Extractor?label=Commits" alt="Commits"></img></a>
+  <a href="https://github.com/VueTubeApp/VueTube-Extractor/commits/master"><img src="https://img.shields.io/github/commit-activity/m/VueTubeApp/VueTube-Extractor?label=Commits" alt="Commits"></img></a>
   <a href="https://github.com/VueTubeApp/VueTube-Extractor/issues" alt="Issues"><img src="https://img.shields.io/github/issues/VueTubeApp/VueTube-Extractor"></img></a>
-  <a href="https://github.com/VueTubeApp/VueTube-Extractor/blob/main/LICENSE" alt="License"><img src="https://img.shields.io/github/license/VueTubeApp/VueTube-Extractor"></img></a>
+  <a href="https://github.com/VueTubeApp/VueTube-Extractor/blob/master/LICENSE" alt="License"><img src="https://img.shields.io/github/license/VueTubeApp/VueTube-Extractor"></img></a>
   <a><img src="https://img.shields.io/github/stars/VueTubeApp/VueTube-Extractor" alt="Stars"></img></a>
 </p>
 
