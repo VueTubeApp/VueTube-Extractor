@@ -10,3 +10,5 @@
 </br>
 This is the library for VueTube. The main repository is <a href="https://github.com/Frontesque/VueTube"> here.</a>
 </p>
+
+VueTube Extractor is currently under active development, and is not a part of the main VueTube app. It is planned to completely replace the current API wrapper employed by VueTube upon completion.
