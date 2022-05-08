@@ -1,4 +1,4 @@
-import proto from "./youtube/proto";
+import proto from "./extractors/youtube/proto";
 
 // function to create a random string of length n:
 function randomString(n: number): string {
