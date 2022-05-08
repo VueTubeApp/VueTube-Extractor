@@ -2,7 +2,8 @@
   "name": "vuetube-extractor",
   "version": "1.0.0",
   "description": "Core API wrapper for VueTube",
-  "main": "index.js",
+  "main": "dict/index.js",
+  "types": "dist/index.d.ts",
   "author": "404-Program-not-found (Alex)",
   "license": "GPL-3.0",
   "private": true,
@@ -11,6 +12,7 @@
     "@types/node": "^17.0.31",
     "@typescript-eslint/eslint-plugin": "^5.22.0",
     "@typescript-eslint/parser": "^5.22.0",
+    "copyfiles": "^2.4.1",
     "eslint": "^8.15.0",
     "jest": "^28.1.0",
     "ts-jest": "^28.0.1",
@@ -19,8 +21,14 @@
   },
   "scripts": {
     "test": "jest",
+    "test-build": "npm run build && npm run test",
     "lint": "eslint src/ --ext .js,.jsx,.ts,.tsx",
-    "build": "npm run clean && tsc -p tsconfig.json",
-    "clean": "rm -rf dist build"
+    "build": "npm run clean && tsc -p tsconfig.json && npm run copy-files",
+    "clean": "rm -rf dist build",
+    "copy-files": "copyfiles --error --up 1 src/youtube/proto/youtube.proto dist"
+  },
+  "dependencies": {
+    "axios": "^0.27.2",
+    "protobufjs": "^6.11.2"
   }
 }
