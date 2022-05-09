@@ -3,17 +3,23 @@ import proto from "../proto";
 import { YouTubeHTTPOptions, YtUtils, ytConstants, ytErrors } from "../utils";
 import ytContext from "../types/ytContext";
 import ytcfg from "../types/ytcfg";
-import config from "../types/config";
+import userConfig from "../types/userConfig";
 
 export default class initialization {
-  private config: config;
+  private config: userConfig;
 
   private innertubeKey: string;
   private ready: boolean = false;
   private context: ytContext;
-  protected baseHttpOptions: YouTubeHTTPOptions;
+  private baseHttpOptions: YouTubeHTTPOptions;
 
-  constructor(config: config) {
+  /**
+   * ```typescript
+   * const initial = new initialization(config).initAsync();
+   * ```
+   * @param {userConfig} config
+   */
+  constructor(config: userConfig) {
     this.config = config;
   }
 
@@ -92,5 +98,9 @@ export default class initialization {
     }
 
     return JSON.parse(YtUtils.findBetween(response.data, "ytcfg.set(", ");"));
+  }
+
+  getBaseHttpOptions(): YouTubeHTTPOptions {
+    return this.baseHttpOptions;
   }
 }
