@@ -1,7 +1,8 @@
-import ytContext from './ytContext';
+import ytContext from "./ytContext";
 
 type httpMetadata = {
-    apiKey: string, apiVersion: string, context: ytContext
+  apiKey: string;
+  context: ytContext;
 };
 
-export default httpMetadata
+export default httpMetadata;

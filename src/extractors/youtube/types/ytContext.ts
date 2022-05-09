@@ -1,7 +1,9 @@
-import ytClient from './ytClient';
+import ytClient from "./ytClient";
 
 type ytContext = {
-    client: ytClient
-}
+  client: ytClient;
+  user: { lockedSafetyMode: boolean };
+  request: { useSsl: boolean };
+};
 
 export default ytContext;

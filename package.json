@@ -1,6 +1,6 @@
 {
   "name": "vuetube-extractor",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Core API wrapper for VueTube",
   "main": "dict/index.js",
   "types": "dist/index.d.ts",

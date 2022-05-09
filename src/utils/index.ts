@@ -1,10 +1,12 @@
 import UserAgent from "user-agents";
 
+export { default as utilityErrors } from "./errors";
+
 /**
  * @abstract - Main helper class, should be extended by other helpers
  * If any method is only used by a single extractor, it should be moved to that extractor's util class to prevent clutter
  */
-export default abstract class UtilsBase {
+export abstract class UtilsBase {
   /**
    * Finds the string between two delimiters from a given string
    *
