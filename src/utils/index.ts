@@ -1,10 +1,10 @@
 import UserAgent from "user-agents";
 
 /**
- * Main helper class, should be extended by other helpers
+ * @abstract - Main helper class, should be extended by other helpers
  * If any method is only used by a single extractor, it should be moved to that extractor's util class to prevent clutter
  */
-export default abstract class Utils {
+export default abstract class UtilsBase {
   /**
    * Finds the string between two delimiters from a given string
    *
