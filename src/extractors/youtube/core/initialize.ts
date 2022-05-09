@@ -1,18 +1,96 @@
 import { Http } from "@capacitor-community/http";
-import { Context } from "vm";
+import proto from "../proto";
+import { YouTubeHTTPOptions, YtUtils, ytConstants, ytErrors } from "../utils";
+import ytContext from "../types/ytContext";
+import ytcfg from "../types/ytcfg";
+import config from "../types/config";
 
-class initialization {
-    private config: object;
-    private innertubeKey: string;
+export default class initialization {
+  private config: config;
 
-    constructor(config: object) {
-        this.config = config;
+  private innertubeKey: string;
+  private ready: boolean = false;
+  private context: ytContext;
+  protected baseHttpOptions: YouTubeHTTPOptions;
+
+  constructor(config: config) {
+    this.config = config;
+  }
+
+  /**
+   * Must be run before any other methods. Changes readiness to true on success.
+   *
+   * @returns {Promise<initialization>}
+   */
+  async initAsync(): Promise<initialization> {
+    const data = await this.getDefaultConfig();
+    this.innertubeKey = data.INNERTUBE_API_KEY;
+
+    this.context = await this.buildContext();
+    this.buildBaseHttpOptions();
+
+    this.ready = true;
+    return this;
+  }
+
+  /**
+   * Returns context information for the YouTube extractor.
+   * @returns {ytContext}
+   */
+  private buildContext(): ytContext {
+    const userAgent = YtUtils.randomMobileUserAgent();
+
+    const visitorId = YtUtils.randomString(11); // 11 characters long
+    const visitorData = proto.encodeVisitorData(visitorId, Date.now());
+
+    const context: ytContext = {
+      client: {
+        gl: this.config.gl?.toUpperCase() || "US",
+        hl: this.config.hl?.toLowerCase() || "en",
+        deviceMake: userAgent.vendor,
+        deviceModel: userAgent.platform,
+        visitorData: visitorData,
+        userAgent: userAgent.userAgent,
+        clientName: ytConstants.YTAPIVAL.CLIENTNAME as "ANDROID",
+        clientVersion: ytConstants.YTAPIVAL.VERSION,
+        osName: "Android",
+        platform: "MOBILE",
+      },
+      user: { lockedSafetyMode: false },
+      request: { useSsl: true },
+    };
+
+    return context;
+  }
+
+  /**
+   * builds and sets the base HTTP options for the YouTube extractor.
+   * @returns {void}
+   */
+  private buildBaseHttpOptions(): void {
+    if (!this.ready) return;
+    this.baseHttpOptions = new YouTubeHTTPOptions({
+      apiKey: this.innertubeKey,
+      context: this.context,
+    });
+  }
+
+  /**
+   * Fetches the innertube key from the YouTube API.
+   * @returns {Promise<string>}
+   */
+  private async getDefaultConfig(): Promise<ytcfg> {
+    const response = await Http.get({
+      url: `${ytConstants.URL.YT_MOBILE}/sw.js`,
+    });
+
+    if (response instanceof Error) {
+      throw new ytErrors.InitializationError(response.message, {
+        status: response.status || 0,
+        message: response.message || "",
+      });
     }
 
-    async initAsync(): Promise<Context> {
-
-        return this
-    }
-
-
+    return JSON.parse(YtUtils.findBetween(response.data, "ytcfg.set(", ");"));
+  }
 }

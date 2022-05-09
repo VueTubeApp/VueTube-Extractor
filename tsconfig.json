@@ -12,6 +12,7 @@
     "noUnusedParameters": true /* Report errors on unused parameters. */,
     "noImplicitReturns": true /* Report error when not all code paths in function return a value. */,
     "noFallthroughCasesInSwitch": true /* Report errors for fallthrough cases in switch statement. */,
+    "strictPropertyInitialization": false,
     "importHelpers": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -20,7 +21,8 @@
     "sourceMap": true,
     "outDir": "./dist/",
     "types": ["node", "jest"],
-    "lib": ["ES6"]
+    "lib": ["ES6"],
+    "baseUrl": "src"
   },
   "include": ["src/**/*.ts", "tests/main.test.ts"],
   "exclude": ["node_modules", "**/*.test.ts"]
