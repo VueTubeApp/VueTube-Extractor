@@ -1,8 +1,8 @@
-const package_json = require("~/package.json");
+const package_json = require("~/../package.json");
 
 /**
- * Base error class. It is recommended to extend this class for custom errors.
- * @class VueTubeExtractorError
+ * Base error class. Extend this class for custom errors.
+ * @abstract VueTubeExtractorError
  * @extends {Error} The base error class.
  *
  * @property {string} message - Error message
@@ -11,7 +11,7 @@ const package_json = require("~/package.json");
  * @property {string} version - The version of the package
  * @property {string} details - The details of the error/additional information
  */
-class VueTubeExtractorError extends Error {
+abstract class VueTubeExtractorError extends Error {
   timestamp: number;
   process: string;
   version: string;
@@ -26,4 +26,6 @@ class VueTubeExtractorError extends Error {
   }
 }
 
-export default { VueTubeExtractorError };
+class ExtractorNotReadyError extends VueTubeExtractorError { }
+
+export default { VueTubeExtractorError, ExtractorNotReadyError };

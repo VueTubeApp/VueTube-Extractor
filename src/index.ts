@@ -1,1 +1,1 @@
-export { default as YouTube } from "extractors/youtube";
+export { default as YouTube } from "./extractors/youtube";

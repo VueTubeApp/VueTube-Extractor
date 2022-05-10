@@ -1,9 +1,9 @@
-import { utilityErrors } from "utils";
+import { utilityErrors } from "~/utils";
 
 /**
  * @class General error class for the YouTube extractor. It is recommended to extend this class for more detailed error names.
  */
-class YoutubeError extends utilityErrors.VueTubeExtractorError {}
+class YoutubeError extends utilityErrors.VueTubeExtractorError { }
 
 /**
  * @abstract Errors for http requests.
@@ -18,20 +18,20 @@ abstract class PageError extends YoutubeError {
   }
 }
 
-abstract class VideoError extends PageError {}
+abstract class VideoError extends PageError { }
 
-class AgeRestrictionError extends VideoError {}
-class VideoNotFoundError extends VideoError {}
-class VideoNotAvailableError extends VideoError {}
-class NoStreamingDataError extends VideoError {}
+class AgeRestrictionError extends VideoError { }
+class VideoNotFoundError extends VideoError { }
+class VideoNotAvailableError extends VideoError { }
+class NoStreamingDataError extends VideoError { }
 
-abstract class PlaylistError extends PageError {}
-class PlaylistNotFoundError extends PlaylistError {}
-class PlaylistNotAvailableError extends PlaylistError {}
+abstract class PlaylistError extends PageError { }
+class PlaylistNotFoundError extends PlaylistError { }
+class PlaylistNotAvailableError extends PlaylistError { }
 
-abstract class ChannelError extends PageError {}
-class ChannelNotFoundError extends ChannelError {}
-class ChannelNotAvailableError extends ChannelError {}
+abstract class ChannelError extends PageError { }
+class ChannelNotFoundError extends ChannelError { }
+class ChannelNotAvailableError extends ChannelError { }
 
 /**
  * @class Errors for search requests.
@@ -58,6 +58,7 @@ class InitializationError extends YoutubeError {
     this.trials = trials;
   }
 }
+
 
 export default {
   YoutubeError,

@@ -1,4 +1,4 @@
-import { Http } from "@capacitor-community/http";
+import { Http, HttpResponse } from "@capacitor-community/http";
 import proto from "../proto";
 import { YouTubeHTTPOptions, YtUtils, ytConstants, ytErrors } from "../utils";
 import ytContext from "../types/ytContext";
@@ -33,9 +33,10 @@ export default class initialization {
     this.innertubeKey = data.INNERTUBE_API_KEY;
 
     this.context = await this.buildContext();
+    this.ready = true;
+
     this.buildBaseHttpOptions();
 
-    this.ready = true;
     return this;
   }
 
@@ -86,17 +87,16 @@ export default class initialization {
    * @returns {Promise<string>}
    */
   private async getDefaultConfig(): Promise<ytcfg> {
-    const response = await Http.get({
+    const response: any = await Http.get({
       url: `${ytConstants.URL.YT_MOBILE}/sw.js`,
+    }).catch((err) => {
+      if (typeof err === "string") {
+        throw new ytErrors.InitializationError(err.toUpperCase());
+
+      } else if (err instanceof Error) {
+        throw new ytErrors.InitializationError(err.message);
+      }
     });
-
-    if (response instanceof Error) {
-      throw new ytErrors.InitializationError(response.message, {
-        status: response.status || 0,
-        message: response.message || "",
-      });
-    }
-
     return JSON.parse(YtUtils.findBetween(response.data, "ytcfg.set(", ");"));
   }
 

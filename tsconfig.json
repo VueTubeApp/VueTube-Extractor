@@ -8,8 +8,8 @@
     "noImplicitAny": true /* Raise error on expressions and declarations with an implied 'any' type. */,
     "strictNullChecks": true /* Enable strict null checks. */,
     "strictFunctionTypes": true /* Enable strict checking of function types. */,
-    "noUnusedLocals": true /* Report errors on unused locals. */,
-    "noUnusedParameters": true /* Report errors on unused parameters. */,
+    "noUnusedLocals": false /* Report errors on unused locals. */,
+    "noUnusedParameters": false /* Report errors on unused parameters. */,
     "noImplicitReturns": true /* Report error when not all code paths in function return a value. */,
     "noFallthroughCasesInSwitch": true /* Report errors for fallthrough cases in switch statement. */,
     "strictPropertyInitialization": false,
@@ -20,10 +20,27 @@
     "experimentalDecorators": true,
     "sourceMap": true,
     "outDir": "./dist/",
-    "types": ["node", "jest"],
-    "lib": ["ES6"],
-    "baseUrl": "src"
+    "types": [
+      "node",
+      "jest"
+    ],
+    "lib": [
+      "ES6"
+    ],
+    "baseUrl": "./src",
+    "rootDir": "./src",
+    "paths": {
+      "~/*": [
+        "*"
+      ]
+    }
   },
-  "include": ["src/**/*.ts", "tests/main.test.ts"],
-  "exclude": ["node_modules", "**/*.test.ts"]
+  "include": [
+    "src/**/*.ts",
+    "tests/main.test.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.test.ts"
+  ]
 }
