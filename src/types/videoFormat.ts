@@ -1,3 +1,6 @@
+/**
+ * Type for video endpoints.
+ */
 type videoFormat = {
   itag: number;
   url: string;

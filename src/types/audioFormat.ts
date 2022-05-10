@@ -1,3 +1,6 @@
+/**
+ * Type for audio endpoints.
+ */
 type audioFormat = {
   itag: number;
   url: string;

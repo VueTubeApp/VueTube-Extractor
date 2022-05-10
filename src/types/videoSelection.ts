@@ -1,3 +1,6 @@
+/**
+ * For video selection on the search page, home page, etc.
+ */
 type videoSelection = {
   id: string;
   title: string;
