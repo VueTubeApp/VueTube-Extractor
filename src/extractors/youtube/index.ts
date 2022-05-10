@@ -5,9 +5,9 @@ import { YouTubeHTTPOptions, ytErrors } from "./utils";
 export default class YouTube {
   private config: userConfig;
   private baseHttpOptions: YouTubeHTTPOptions;
-  private ready: boolean = false;
+  private ready = false;
 
-  protected retry_count: number = 0;
+  protected retry_count = 0;
 
   /**
    * extractor for YouTube
@@ -15,7 +15,7 @@ export default class YouTube {
    * import { YouTube } from 'vuetube-extractor';
    * const yt = await new YouTube().initAsync();
    * ```
-   * 
+   *
    * @param {userConfig} [config] The config parameter is optional.
    */
   constructor(config?: userConfig) {
@@ -30,17 +30,23 @@ export default class YouTube {
     } catch (err) {
       if (this.retry_count < (this.config.maxRetryCount || 5)) {
         this.initAsync();
-      }
-      else {
+      } else {
         let errorDetails = { info: "maxRetryCount reached" };
         if (typeof err === "string") {
-          throw new ytErrors.InitializationError(err.toUpperCase(), errorDetails, this.retry_count);
-        }
-        else if (err instanceof ytErrors.YoutubeError) {
+          throw new ytErrors.InitializationError(
+            err.toUpperCase(),
+            errorDetails,
+            this.retry_count
+          );
+        } else if (err instanceof ytErrors.YoutubeError) {
           if (err.details instanceof Object) {
             errorDetails = { ...errorDetails, ...err.details };
           }
-          throw new ytErrors.InitializationError(err.message, errorDetails, this.retry_count);
+          throw new ytErrors.InitializationError(
+            err.message,
+            errorDetails,
+            this.retry_count
+          );
         }
       }
     }

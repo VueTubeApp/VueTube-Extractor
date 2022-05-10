@@ -9,7 +9,7 @@ export default class initialization {
   private config: userConfig;
 
   private innertubeKey: string;
-  private ready: boolean = false;
+  private ready = false;
   private context: ytContext;
   private baseHttpOptions: YouTubeHTTPOptions;
 
@@ -92,7 +92,6 @@ export default class initialization {
     }).catch((err) => {
       if (typeof err === "string") {
         throw new ytErrors.InitializationError(err.toUpperCase());
-
       } else if (err instanceof Error) {
         throw new ytErrors.InitializationError(err.message);
       }

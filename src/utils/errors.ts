@@ -1,4 +1,4 @@
-const package_json = require("~/../package.json");
+import package_json from "~/../package.json";
 
 /**
  * Base error class. Extend this class for custom errors.
@@ -26,6 +26,6 @@ abstract class VueTubeExtractorError extends Error {
   }
 }
 
-class ExtractorNotReadyError extends VueTubeExtractorError { }
+class ExtractorNotReadyError extends VueTubeExtractorError {}
 
 export default { VueTubeExtractorError, ExtractorNotReadyError };
