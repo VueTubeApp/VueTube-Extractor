@@ -53,4 +53,6 @@ export default class YouTube {
     this.ready = true;
     return this;
   }
+
+  async getVideoInfoAsync(videoId: string) {}
 }
