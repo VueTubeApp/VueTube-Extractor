@@ -24,7 +24,7 @@ export default class YouTube {
 
   async initAsync() {
     try {
-      const initial = await new initialization(this.config).initAsync();
+      const initial = await new initialization(this.config).buildAsync();
 
       this.baseHttpOptions = initial.getBaseHttpOptions();
     } catch (err) {

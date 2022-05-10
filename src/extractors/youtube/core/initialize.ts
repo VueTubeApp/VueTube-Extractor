@@ -1,4 +1,4 @@
-import { Http, HttpResponse } from "@capacitor-community/http";
+import { Http } from "@capacitor-community/http";
 import proto from "../proto";
 import { YouTubeHTTPOptions, YtUtils, ytConstants, ytErrors } from "../utils";
 import ytContext from "../types/ytContext";
@@ -9,7 +9,6 @@ export default class initialization {
   private config: userConfig;
 
   private innertubeKey: string;
-  private ready = false;
   private context: ytContext;
   private baseHttpOptions: YouTubeHTTPOptions;
 
@@ -28,12 +27,11 @@ export default class initialization {
    *
    * @returns {Promise<initialization>}
    */
-  async initAsync(): Promise<initialization> {
+  async buildAsync(): Promise<initialization> {
     const data = await this.getDefaultConfig();
     this.innertubeKey = data.INNERTUBE_API_KEY;
 
     this.context = await this.buildContext();
-    this.ready = true;
 
     this.buildBaseHttpOptions();
 
@@ -75,7 +73,6 @@ export default class initialization {
    * @returns {void}
    */
   private buildBaseHttpOptions(): void {
-    if (!this.ready) return;
     this.baseHttpOptions = new YouTubeHTTPOptions({
       apiKey: this.innertubeKey,
       context: this.context,
