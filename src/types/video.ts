@@ -1,11 +1,11 @@
 import videoFormat from "./videoFormat";
 import audioFormat from "./audioFormat";
-import videoSelection from "./videoSelection";
+import videoSelection from "./gridVideo";
 
 type video = {
   title: string;
   descriptionText: string;
-  descriptionFormatted: Array<object>;
+  descriptionFormatted?: Array<object>;
   thumbnails: Array<{
     url: string;
     width: number;
@@ -13,13 +13,13 @@ type video = {
   }>;
   metadata: {
     lengthSeconds: number;
-    views: number;
+    views?: number;
     isLive: boolean;
     wasLive?: boolean;
     isFamilyFriendly?: boolean;
     isUnlisted?: boolean;
     isPrivate?: boolean;
-    category: string;
+    category?: string;
     publishedAt: string;
     tags: Array<string>;
     channel: {
@@ -31,15 +31,15 @@ type video = {
         width: number;
         height: number;
       }>;
-      subscriberCount: number;
+      subscriberCount?: number;
     };
-    ratings: {
+    ratings?: {
       hasRating: boolean;
       likes: number;
       isLiked: boolean;
       isDisliked: boolean;
     };
-    playbackEndpoints: Array<videoFormat | audioFormat>;
+    playbackEndpoints?: Array<videoFormat | audioFormat>;
     relatedVideos?: Array<videoSelection>;
   };
 };
