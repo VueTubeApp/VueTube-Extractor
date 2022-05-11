@@ -1,16 +1,13 @@
 import videoFormat from "./videoFormat";
 import audioFormat from "./audioFormat";
 import videoSelection from "./gridVideo";
+import imageData from "./imageData";
 
 interface video {
   title: string;
   descriptionText: string;
   descriptionFormatted?: Array<object>;
-  thumbnails: Array<{
-    url: string;
-    width: number;
-    height: number;
-  }>;
+  thumbnails: Array<imageData>;
   metadata: {
     lengthSeconds: number;
     views?: number;
@@ -26,11 +23,7 @@ interface video {
       channelId: string;
       channelUrl: string;
       channelName: string;
-      channelThumbnails: Array<{
-        url: string;
-        width: number;
-        height: number;
-      }>;
+      channelThumbnails: Array<imageData>;
       subscriberCount?: number;
     };
     ratings?: {
@@ -42,6 +35,6 @@ interface video {
     playbackEndpoints?: Array<videoFormat | audioFormat>;
     relatedVideos?: Array<videoSelection>;
   };
-};
+}
 
 export default video;

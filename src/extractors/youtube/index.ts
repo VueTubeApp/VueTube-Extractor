@@ -1,4 +1,4 @@
-import initialization from "./core/initialize";
+import initialization from "./core/initializer";
 import userConfig from "./types/userConfig";
 import { YouTubeHTTPOptions, ytErrors } from "./utils";
 import video from "./types/video";
@@ -55,9 +55,14 @@ export default class YouTube {
     return this;
   }
 
-  async getVideoInfoAsync(videoId: string, includeRecommendations: boolean = false): Promise<video> {
+  async getVideoInfoAsync(
+    videoId: string,
+    includeRecommendations: boolean = false
+  ): Promise<video> {
     if (!this.ready) {
-      throw new ytErrors.ExtractorNotReadyError("Extractor is not ready. Please call initAsync() first.");
+      throw new ytErrors.ExtractorNotReadyError(
+        "Extractor is not ready. Please call initAsync() first."
+      );
     }
     return videoInfo;
   }
