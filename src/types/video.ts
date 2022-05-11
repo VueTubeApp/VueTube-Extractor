@@ -2,7 +2,7 @@ import videoFormat from "./videoFormat";
 import audioFormat from "./audioFormat";
 import videoSelection from "./gridVideo";
 
-type video = {
+interface video {
   title: string;
   descriptionText: string;
   descriptionFormatted?: Array<object>;
