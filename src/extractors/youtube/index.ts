@@ -2,10 +2,12 @@ import initialization from "./core/initializer";
 import userConfig from "./types/userConfig";
 import { YouTubeHTTPOptions, ytErrors } from "./utils";
 import video from "./types/video";
+import youtubeRequester from "./core/requester";
 
 export default class YouTube {
   private config: userConfig;
   private baseHttpOptions: YouTubeHTTPOptions;
+  private requester: youtubeRequester;
   private ready = false;
 
   protected retry_count = 0;
@@ -28,6 +30,7 @@ export default class YouTube {
       const initial = await new initialization(this.config).buildAsync();
 
       this.baseHttpOptions = initial.getBaseHttpOptions();
+      this.requester = new youtubeRequester(this);
     } catch (err) {
       if (this.retry_count < (this.config.maxRetryCount || 5)) {
         this.initAsync();
@@ -55,7 +58,7 @@ export default class YouTube {
     return this;
   }
 
-  async getVideoInfoAsync(
+  async getVideoDetails(
     videoId: string,
     includeRecommendations: boolean = false
   ): Promise<video> {
@@ -64,6 +67,14 @@ export default class YouTube {
         "Extractor is not ready. Please call initAsync() first."
       );
     }
-    return videoInfo;
+    const videoInfo = await this.requester.getVideoInfo(
+      videoId,
+      includeRecommendations
+    );
+    // return videoInfo;
+  }
+
+  getBaseHttpOptions(): YouTubeHTTPOptions {
+    return this.baseHttpOptions;
   }
 }

@@ -1,5 +1,6 @@
 import { HttpOptions } from "@capacitor-community/http";
 import httpMetadata from "../types/httpMetadata";
+import { ytConstants } from ".";
 
 /**
  * Constructs an HTTP object with the correct headers and base data for YouTube.
@@ -20,7 +21,7 @@ export default class YouTubeHTTPOptions {
    */
   private setBaseOptions(): HttpOptions {
     const base: HttpOptions = {
-      url: "",
+      url: ytConstants.URL.YT_BASE_API,
       headers: {},
       data: {},
       params: {},
@@ -53,12 +54,12 @@ export default class YouTubeHTTPOptions {
    * Joining the base options with the given options is done by overwriting the base options
    * except for sub arrays and objects, which is combined when possible.
    *
+   * @param {Partial<HttpOptions>} options - the options to merge with the base options
    * @param {string} url - the endpoint url
-   * @param {HttpOptions} options - the options to merge with the base options
    *
    * @returns {HttpOptions}
    */
-  public getOptions(url: string, options: HttpOptions): HttpOptions {
+  public getOptions(options: Partial<HttpOptions>, url?: string): HttpOptions {
     const mergedOptions: HttpOptions = { ...this.baseOptions };
     for (const key in options) {
       if (Array.isArray(options[key as keyof HttpOptions])) {
@@ -74,7 +75,7 @@ export default class YouTubeHTTPOptions {
           options[key as keyof HttpOptions];
       }
     }
-    mergedOptions.url = url;
+    mergedOptions.url = url || "";
     return mergedOptions;
   }
 }
