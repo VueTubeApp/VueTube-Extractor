@@ -1,8 +1,6 @@
 import video from "~/types/video";
 import abstractParser from "./abstractParser";
 import playerResponse from "../types/playerResponse";
-const at = require("array.prototype.at");
-
 /**
  * ```typescript
  * import parser from './parsers/ytVideo';
