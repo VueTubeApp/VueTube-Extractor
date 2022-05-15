@@ -25,7 +25,11 @@ export default class YouTube {
     this.config = config || {};
   }
 
-  async initAsync() {
+  /**
+   * Initializes the extractor. This is required before any other method can be called.
+   * @returns {Promise<YouTube>}
+   */
+  async initAsync(): Promise<YouTube> {
     try {
       const initial = await new initialization(this.config).buildAsync();
 
@@ -58,20 +62,25 @@ export default class YouTube {
     return this;
   }
 
+  /**
+   *
+   * Retrieves the video details for a given video id.
+   *
+   * @param {string} videoId video id to get the details for
+   * @param {boolean} includeRecommendations whether to include recommendations or not
+   * @returns {Promise<video>}
+   */
   async getVideoDetails(
     videoId: string,
-    includeRecommendations: boolean = false
+    includeRecommendations = false
   ): Promise<video> {
     if (!this.ready) {
       throw new ytErrors.ExtractorNotReadyError(
         "Extractor is not ready. Please call initAsync() first."
       );
     }
-    const videoInfo = await this.requester.getVideoInfo(
-      videoId,
-      includeRecommendations
-    );
-    // return videoInfo;
+    const videoInfo = await this.requester.getVideoInfo(videoId);
+    return videoInfo;
   }
 
   getBaseHttpOptions(): YouTubeHTTPOptions {

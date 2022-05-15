@@ -84,7 +84,7 @@ export default class initialization {
    * @returns {Promise<string>}
    */
   private async getDefaultConfig(): Promise<ytcfg> {
-    const response: any = await Http.get({
+    const response: unknown = await Http.get({
       url: `${ytConstants.URL.YT_MOBILE}/sw.js`,
     }).catch((err) => {
       if (typeof err === "string") {

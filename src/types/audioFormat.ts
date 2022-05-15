@@ -11,6 +11,7 @@ type audioFormat = {
   quality: string;
   sampleRate: number;
   audioChannels: number;
+  [x: string | number | symbol]: unknown;
 };
 
 export default audioFormat;

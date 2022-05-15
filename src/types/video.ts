@@ -5,6 +5,7 @@ import imageData from "./imageData";
 
 interface video {
   title: string;
+  id: string;
   descriptionText: string;
   descriptionFormatted?: Array<object>;
   thumbnails: Array<imageData>;
@@ -18,8 +19,9 @@ interface video {
     isPrivate?: boolean;
     category?: string;
     publishedAt: string;
+    uploadedAt: string;
     tags: Array<string>;
-    channel: {
+    channel?: {
       channelId: string;
       channelUrl: string;
       channelName: string;

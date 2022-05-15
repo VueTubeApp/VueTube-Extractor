@@ -11,6 +11,7 @@ type videoFormat = {
   fps: number;
   quality: string;
   qualityLabel?: string;
+  [x: string | number | symbol]: unknown;
 };
 
 export default videoFormat;
