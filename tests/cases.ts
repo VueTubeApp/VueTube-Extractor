@@ -5,9 +5,9 @@ type testCaseVideo = {
   expected: Partial<video>;
 };
 
-const getYoutubeVideoInfoTest: Array<testCaseVideo> = [
+export const getYoutubeVideoInfoTest: testCaseVideo[] = [
   {
-    input: "https://www.youtube.com/watch?v=mN0zPOpADL4",
+    input: "mN0zPOpADL4",
     expected: {
       title: "Agent 327: Operation Barbershop",
       id: "mN0zPOpADL4",
@@ -59,5 +59,3 @@ const getYoutubeVideoInfoTest: Array<testCaseVideo> = [
     },
   },
 ];
-
-export default { getYoutubeVideoInfoTest };

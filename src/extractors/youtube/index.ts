@@ -3,6 +3,7 @@ import userConfig from "./types/userConfig";
 import { YouTubeHTTPOptions, ytErrors } from "./utils";
 import video from "./types/video";
 import youtubeRequester from "./core/requester";
+import Parser from "./parsers";
 
 export default class YouTube {
   private config: userConfig;
@@ -16,7 +17,7 @@ export default class YouTube {
    * extractor for YouTube
    * ```typescript
    * import { YouTube } from 'vuetube-extractor';
-   * const yt = await new YouTube().initAsync();
+   * const yt = await new YouTube().init();
    * ```
    *
    * @param {userConfig} [config] The config parameter is optional.
@@ -29,7 +30,7 @@ export default class YouTube {
    * Initializes the extractor. This is required before any other method can be called.
    * @returns {Promise<YouTube>}
    */
-  async initAsync(): Promise<YouTube> {
+  async init(): Promise<YouTube> {
     try {
       const initial = await new initialization(this.config).buildAsync();
 
@@ -37,7 +38,7 @@ export default class YouTube {
       this.requester = new youtubeRequester(this);
     } catch (err) {
       if (this.retry_count < (this.config.maxRetryCount || 5)) {
-        this.initAsync();
+        this.init();
       } else {
         let errorDetails = { info: "maxRetryCount reached" };
         if (typeof err === "string") {
@@ -76,11 +77,12 @@ export default class YouTube {
   ): Promise<video> {
     if (!this.ready) {
       throw new ytErrors.ExtractorNotReadyError(
-        "Extractor is not ready. Please call initAsync() first."
+        "Extractor is not ready. Please call init() first."
       );
     }
     const videoInfo = await this.requester.getVideoInfo(videoId);
-    return videoInfo;
+    const parsed = new Parser("videoDetail", { player: videoInfo.player.videoDetails, next: videoInfo.next }).parse();
+    return parsed as video;
   }
 
   getBaseHttpOptions(): YouTubeHTTPOptions {

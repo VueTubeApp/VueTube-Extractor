@@ -33,7 +33,7 @@ export default class youtubeRequester {
       { data: { videoId: videoId } },
       "/player"
     );
-    const responsePlayer = await Http.get(httpOptionsPlayer);
+    const responsePlayer = await Http.post(httpOptionsPlayer);
     const responseNext = await this.getNext({ videoId: videoId });
     return { player: responsePlayer.data, next: responseNext.data };
   }

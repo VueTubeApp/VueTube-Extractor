@@ -1,4 +1,4 @@
-import { Http } from "@capacitor-community/http";
+import { Http, HttpResponse } from "@capacitor-community/http";
 import proto from "../proto";
 import { YouTubeHTTPOptions, YtUtils, ytConstants, ytErrors } from "../utils";
 import ytContext from "../types/ytContext";
@@ -11,10 +11,11 @@ export default class initialization {
   private innertubeKey: string;
   private context: ytContext;
   private baseHttpOptions: YouTubeHTTPOptions;
+  private INNERTUBE_CONTEXT: object;
 
   /**
    * ```typescript
-   * const initial = new initialization(config).initAsync();
+   * const initial = new initialization(config).buildAsync();
    * ```
    * @param {userConfig} config
    */
@@ -30,6 +31,7 @@ export default class initialization {
   async buildAsync(): Promise<initialization> {
     const data = await this.getDefaultConfig();
     this.innertubeKey = data.INNERTUBE_API_KEY;
+    this.INNERTUBE_CONTEXT = data.INNERTUBE_CONTEXT;
 
     this.context = await this.buildContext();
 
@@ -49,20 +51,23 @@ export default class initialization {
     const visitorData = proto.encodeVisitorData(visitorId, Date.now());
 
     const context: ytContext = {
-      client: {
-        gl: this.config.gl?.toUpperCase() || "US",
-        hl: this.config.hl?.toLowerCase() || "en",
-        deviceMake: userAgent.vendor,
-        deviceModel: userAgent.platform,
-        visitorData: visitorData,
-        userAgent: userAgent.userAgent,
-        clientName: ytConstants.YTAPIVAL.CLIENTNAME as "ANDROID",
-        clientVersion: ytConstants.YTAPIVAL.VERSION,
-        osName: "Android",
-        platform: "MOBILE",
+      ...{
+        client: {
+          gl: this.config.gl?.toUpperCase() || "US",
+          hl: this.config.hl?.toLowerCase() || "en",
+          deviceMake: userAgent.vendor,
+          deviceModel: userAgent.platform,
+          visitorData: visitorData,
+          userAgent: userAgent.userAgent,
+          clientName: ytConstants.YTAPIVAL.CLIENT_WEB_Mobile as "ANDROID",
+          clientVersion: ytConstants.YTAPIVAL.VERSION_WEB,
+          osName: "Android",
+          platform: "MOBILE",
+        },
+        user: { lockedSafetyMode: false },
+        request: { useSsl: true },
       },
-      user: { lockedSafetyMode: false },
-      request: { useSsl: true },
+      ...this.INNERTUBE_CONTEXT
     };
 
     return context;
@@ -84,7 +89,7 @@ export default class initialization {
    * @returns {Promise<string>}
    */
   private async getDefaultConfig(): Promise<ytcfg> {
-    const response: unknown = await Http.get({
+    const response: void | HttpResponse = await Http.get({
       url: `${ytConstants.URL.YT_MOBILE}/sw.js`,
     }).catch((err) => {
       if (typeof err === "string") {
@@ -93,7 +98,8 @@ export default class initialization {
         throw new ytErrors.InitializationError(err.message);
       }
     });
-    return JSON.parse(YtUtils.findBetween(response.data, "ytcfg.set(", ");"));
+    if (!response) { throw new ytErrors.InitializationError("No response from YouTube API"); }
+    return JSON.parse(YtUtils.findBetween(response.data.toString(), "ytcfg.set(", ");"));
   }
 
   getBaseHttpOptions(): YouTubeHTTPOptions {

@@ -1,6 +1,7 @@
 import { HttpOptions } from "@capacitor-community/http";
 import httpMetadata from "../types/httpMetadata";
 import { ytConstants } from ".";
+import path from "path";
 
 /**
  * Constructs an HTTP object with the correct headers and base data for YouTube.
@@ -42,7 +43,7 @@ export default class YouTubeHTTPOptions {
       ? ["user-agent"] || ""
       : this.metadata.context.client.userAgent;
 
-    base.data = this.metadata.context;
+    base.data.context = this.metadata.context;
 
     base.params = { ...{ key: this.metadata.apiKey }, ...base.params };
 
@@ -59,23 +60,17 @@ export default class YouTubeHTTPOptions {
    *
    * @returns {HttpOptions}
    */
-  public getOptions(options: Partial<HttpOptions>, url?: string): HttpOptions {
+  public getOptions(options: Partial<HttpOptions>, url: string): HttpOptions {
     const mergedOptions: HttpOptions = { ...this.baseOptions };
-    for (const key in options) {
-      if (Array.isArray(options[key as keyof HttpOptions])) {
-        mergedOptions[key as keyof HttpOptions] = [
-          ...options[key as keyof HttpOptions],
-        ];
-      } else if (typeof options[key as keyof HttpOptions] === "object") {
-        mergedOptions[key as keyof HttpOptions] = {
-          ...options[key as keyof HttpOptions],
-        };
-      } else {
-        mergedOptions[key as keyof HttpOptions] =
-          options[key as keyof HttpOptions];
-      }
+    mergedOptions.data = { ...mergedOptions.data, ...options.data };
+    mergedOptions.headers = { ...mergedOptions.headers, ...options.headers };
+    const urlTest = new RegExp('^(?:[a-z]+:)?//', 'i');
+    if (urlTest.test(url)) { mergedOptions.url = url }
+    else {
+      const originalUrl = new URL(mergedOptions.url);
+      mergedOptions.url = new URL(path.join(originalUrl.pathname, url), originalUrl).href.toString()
     }
-    mergedOptions.url = url || "";
+
     return mergedOptions;
   }
 }
