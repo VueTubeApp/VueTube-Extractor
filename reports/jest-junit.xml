@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="jest tests" tests="5" failures="0" errors="0" time="6.878">
+  <testsuite name="tests\main.test.ts" errors="0" failures="0" skipped="0" timestamp="2022-05-16T09:24:50" time="6.677" tests="5">
+    <testcase classname="YouTube test suite › getVideoInfo tests" name="if getVideoInfo works as expected" time="0.795">
+    </testcase>
+    <testcase classname="YouTube test suite › getVideoInfo tests" name="if getVideoInfo works as expected" time="0.738">
+    </testcase>
+    <testcase classname="YouTube test suite › getVideoInfo tests" name="if getVideoInfo works as expected" time="0.742">
+    </testcase>
+    <testcase classname="YouTube test suite › getVideoInfo tests" name="if getVideoInfo handles errors correctly" time="0.648">
+    </testcase>
+    <testcase classname="YouTube test suite › getVideoInfo tests" name="if getVideoInfo handles errors correctly" time="0.65">
+    </testcase>
+  </testsuite>
+</testsuites>

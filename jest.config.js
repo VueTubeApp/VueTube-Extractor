@@ -10,5 +10,6 @@ module.exports = {
   moduleFileExtensions: ["ts", "tsx", "js", "json"],
   moduleNameMapper: {
     "~/(.*)": "<rootDir>/src/$1",
-  }
+  },
+  reporters: ["default", "jest-junit"],
 };
