@@ -22,8 +22,17 @@
     "ts-node": "^10.7.0",
     "typescript": "^4.6.4"
   },
+  "jest-junit": {
+    "outputDirectory": "reports",
+    "outputName": "jest-junit.xml",
+    "ancestorSeparator": " › ",
+    "uniqueOutputName": "false",
+    "suiteNameTemplate": "{filepath}",
+    "classNameTemplate": "{classname}",
+    "titleTemplate": "{title}"
+  },
   "scripts": {
-    "test": "jest",
+    "test": "jest --ci --reporters=default --reporters=jest-Junit",
     "test-build": "npm run build && npm run test",
     "lint": "eslint src/ --ext .js,.jsx,.ts,.tsx",
     "build": "npm run clean && tsc -p tsconfig.json && npm run copy-files",
