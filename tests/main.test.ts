@@ -18,11 +18,11 @@ describe("YouTube test suite", () => {
     globalYoutube = await new YouTube().init();
   });
 
-  test("if getVideoInfoAsync works as expected", async function () {
-    for (const testCase in getYoutubeVideoInfoTest) {
-      console.log(typeof getYoutubeVideoInfoTest);
-      // const result = await globalYoutube.getVideoDetails(testCase.input);
-      // expect(result).toEqual(false);
-    };
-  });
+  test.each(getYoutubeVideoInfoTest)(
+    "if getVideoInfo works as expected",
+    async function (testCase) {
+      const result = await globalYoutube.getVideoDetails(testCase.input);
+      expect(result).toMatchObject(testCase.expected);
+    }
+  );
 });

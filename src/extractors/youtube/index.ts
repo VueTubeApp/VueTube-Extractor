@@ -81,7 +81,10 @@ export default class YouTube {
       );
     }
     const videoInfo = await this.requester.getVideoInfo(videoId);
-    const parsed = new Parser("videoDetail", { player: videoInfo.player.videoDetails, next: videoInfo.next }).parse();
+    const parsed = new Parser("videoDetail", {
+      player: videoInfo.player,
+      next: videoInfo.next,
+    }).parse();
     return parsed as video;
   }
 

@@ -13,9 +13,11 @@ export default class ytVideo extends abstractParser {
    * @param data The data to parse
    * @returns {video}
    */
-  protected parseOperation(data: { player: playerResponse; next: object }): video {
+  protected parseOperation(data: {
+    player: playerResponse;
+    next: object;
+  }): video {
     // Play endpoint data
-    console.log(data.player);
     const videoDetails = data.player.videoDetails;
     const microformat = data.player.microformat.playerMicroformatRenderer;
     const playbackTracking = data.player.playbackTracking;
@@ -31,7 +33,7 @@ export default class ytVideo extends abstractParser {
       descriptionText: videoDetails.shortDescription,
       thumbnails: videoDetails.thumbnail.thumbnails,
       metadata: {
-        lengthSeconds: videoDetails.lengthSeconds,
+        lengthSeconds: Number(videoDetails.lengthSeconds),
         views: videoDetails.viewCount,
         isLive: videoDetails.isLiveContent,
         isFamilyFriendly: microformat.isFamilySafe,
