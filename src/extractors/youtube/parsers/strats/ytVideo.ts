@@ -21,7 +21,7 @@ export default class ytVideo extends abstractParser {
     const videoDetails = data.player.videoDetails;
     const microformat = data.player.microformat.playerMicroformatRenderer;
     const playbackTracking = data.player.playbackTracking;
-    const captions = data.player.captions.playerCaptionsTracklistRenderer;
+    const captions = data.player.captions?.playerCaptionsTracklistRenderer;
     const streamingData = data.player.streamingData;
 
     // Next endpoint data

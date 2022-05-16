@@ -35,4 +35,31 @@ export const getYoutubeVideoInfoTest: testCaseVideo[] = [
       },
     },
   },
+  {
+    input: "aqz-KE-bpKQ",
+    expected: {
+      title: "Big Buck Bunny 60fps 4K - Official Blender Foundation Short Film",
+      id: "aqz-KE-bpKQ",
+      descriptionText:
+        "Enjoy this UHD High Frame rate version of one of the iconic short films produced by Blender Institute!\nLearn more about the project here http://bbb3d.renderfarming.net. Support more Open Content at http://cloud.blender.org.\n\nNOTE: currently, YouTube allows 60fps only on 1080p videos. We uploaded the video in UHD, so maybe in the future it will be available in UHD 60p. You can download the original version at http://bbb3d.renderfarming.net.",
+      metadata: {
+        lengthSeconds: 635,
+        isLive: false,
+        isUnlisted: false,
+        isPrivate: false,
+        publishedAt: "2014-11-10",
+        uploadedAt: "2014-11-10",
+        tags: [
+          "blender",
+          "animation",
+          "4K",
+          "UHD",
+          "Big Buck Bunny (Film)",
+          "Blender Foundation (Nonprofit Organization)",
+          "Short Film (Film Genre)",
+          "4K Resolution",
+        ],
+      },
+    },
+  },
 ];

@@ -20,7 +20,7 @@ interface playerResponse {
     videostatsWatchtimeUrl: { baseUrl: string };
     [x: string | number | symbol]: unknown;
   };
-  captions: {
+  captions?: {
     playerCaptionsTracklistRenderer: {
       captionTracks: [
         {
