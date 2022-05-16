@@ -33,7 +33,7 @@
   },
   "scripts": {
     "test": "jest",
-    "ci": "jest --ci --reporters=default --reporters=jest-Junit",
+    "ci": "jest --ci --reporters=default --reporters=jest-junit",
     "test-build": "npm run build && npm run test",
     "lint": "eslint src/ --ext .js,.jsx,.ts,.tsx",
     "build": "npm run clean && tsc -p tsconfig.json && npm run copy-files",
