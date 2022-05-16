@@ -5,7 +5,8 @@ import imageData from "~/types/imageData";
 interface playerResponse {
   playabilityStatus: {
     status: string;
-    playableInEmbed: boolean;
+    playableInEmbed?: boolean;
+    reason?: string;
     contextParams: string;
     [x: string | number | symbol]: unknown;
   };

@@ -81,6 +81,24 @@ export default class YouTube {
       );
     }
     const videoInfo = await this.requester.getVideoInfo(videoId);
+    if (videoInfo.player.playabilityStatus.status == "ERROR") {
+      throw new ytErrors.VideoNotFoundError(
+        videoId,
+        videoInfo.player.playabilityStatus.reason || "UNKNOWN",
+        videoInfo.player
+      );
+    } else if (videoInfo.player.playabilityStatus.status == "UNPLAYABLE") {
+      throw new ytErrors.VideoNotAvailableError(
+        videoId,
+        videoInfo.player.playabilityStatus.reason || "UNKNOWN",
+        videoInfo.player
+      );
+    } else if (videoInfo.player.playabilityStatus.status == "LOGIN_REQUIRED") {
+      throw new ytErrors.LoginRequiredError(
+        videoInfo.player.playabilityStatus.reason || "UNKNOWN",
+        videoInfo.player
+      );
+    }
     const parsed = new Parser("videoDetail", {
       player: videoInfo.player,
       next: videoInfo.next,

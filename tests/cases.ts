@@ -1,11 +1,16 @@
 import video from "../src/types/video";
+import { ytErrors } from "../src/extractors/youtube/utils";
 
-type testCaseVideo = {
+interface testCase {
   input: string;
-  expected: Partial<video>;
-};
+  expected: object;
+}
 
-export const getYoutubeVideoInfoTest: testCaseVideo[] = [
+interface testCaseVideo extends testCase {
+  expected: Partial<video>;
+}
+
+export const getYoutubeVideoInfoTest: Array<testCaseVideo> = [
   {
     input: "mN0zPOpADL4",
     expected: {
@@ -61,5 +66,34 @@ export const getYoutubeVideoInfoTest: testCaseVideo[] = [
         ],
       },
     },
+  },
+  {
+    input: "-uleG_Vecis",
+    expected: {
+      title: "100+ Computer Science Concepts Explained",
+      id: "-uleG_Vecis",
+      descriptionText:
+        "Learn the fundamentals of Computer Science with a quick breakdown of jargon that every software engineer should know. Over 100 technical concepts from the CS curriculum are explained to provide a foundation for programmers.\n\n#compsci #programming #tech\n\n🔗 Resources\n\n- Computer Science https://undergrad.cs.umd.edu/what-computer-science\n- CS101 Stanford https://online.stanford.edu/courses/soe-ycscs101-sp-computer-science-101\n- Controversial Developer Opinions https://youtu.be/goy4lZfDtCE\n- Design Patterns https://youtu.be/tv-_1er1mWI\n\n\n🔥 Get More Content - Upgrade to PRO\n\nUpgrade to Fireship PRO at https://fireship.io/pro\nUse code lORhwXd2 for 25% off your first payment. \n\n🎨 My Editor Settings\n\n- Atom One Dark \n- vscode-icons\n- Fira Code Font\n\n🔖 Topics Covered\n\nTurning Machine\nCPU\nTransistor\nBit\nByte\nCharacter Encoding ASCII\nBinary\nHexadecimal\nNibble\nMachine Code\nRAM\nMemory Address\nI/O\nKernel (Drivers)\nShell\nCommand Line Interface\nSSH\nMainframe\nProgramming Language\nAbstraction\nInterpreted\nCompiled\nExecutable\nData Types\nVariable\nDynamic Typing\nStatic Typing\nPointer\nGarbage Collector\nint \nsigned / unsigned\nfloat \nDouble\nChar\nstring\nBig endian\nLittle endian\nArray\nLinked List\nSet\nStack\nQueue\nHash\nTree\nGraph\nNodes and Edges\nAlgorithms\nFunctions\nReturn\nArguments\nOperators\nBoolean\nExpression\nStatement\nConditional Logic\nWhile Loop\nFor Loop\nIterable\nVoid\nRecursion\nCall Stack\nStack Overflow\nBase Condition\nBig-O\nTime Complexity\nSpace Complexity\nBrute Force\nDivide and conquer\nDynamic Programming\nMemoization\nGreedy\nDijkstra's Shortest Path\nBacktracking\nDeclarative\nFunctional Language\nImperative\nProcedural Language\nMultiparadigm\nOOP\nClass\nProperties\nMethods\nInheritance\nDesign Patterns\nInstantiate\nHeap Memory\nReference\nThreads\nParallelism\nConcurrency\nBare Metal\nVirtual Machine\nIP Address\nURL\nDNS\nTCP\nPackets. \nSSL\nHTTP\nAPI\nPrinters",
+      metadata: {
+        lengthSeconds: 787,
+        isLive: false,
+        isUnlisted: false,
+        isPrivate: false,
+        publishedAt: "2022-05-04",
+        uploadedAt: "2022-05-04",
+        tags: ["webdev", "app development", "lesson", "tutorial"],
+      },
+    },
+  },
+];
+
+export const YoutubeVideoInfoErrorTest: Array<testCase> = [
+  {
+    input: "abcde",
+    expected: ytErrors.VideoNotFoundError,
+  },
+  {
+    input: "QB9q9HzR-Gk",
+    expected: ytErrors.LoginRequiredError,
   },
 ];

@@ -10,7 +10,7 @@
 
 const fetch = require("isomorphic-fetch"); // So that fetch is available in the test environment
 import { YouTube } from "../src";
-import { getYoutubeVideoInfoTest } from "./cases";
+import { getYoutubeVideoInfoTest, YoutubeVideoInfoErrorTest } from "./cases";
 
 describe("YouTube test suite", () => {
   let globalYoutube: YouTube;
@@ -18,11 +18,21 @@ describe("YouTube test suite", () => {
     globalYoutube = await new YouTube().init();
   });
 
-  test.each(getYoutubeVideoInfoTest)(
-    "if getVideoInfo works as expected",
-    async function (testCase) {
-      const result = await globalYoutube.getVideoDetails(testCase.input);
-      expect(result).toMatchObject(testCase.expected);
-    }
-  );
+  describe("getVideoInfo tests", () => {
+    test.each(getYoutubeVideoInfoTest)(
+      "if getVideoInfo works as expected",
+      async function (testCase) {
+        const result = await globalYoutube.getVideoDetails(testCase.input);
+        expect(result).toMatchObject(testCase.expected);
+      }
+    );
+    test.each(YoutubeVideoInfoErrorTest)(
+      "if getVideoInfo handles errors correctly",
+      async function (testCase) {
+        await expect(
+          globalYoutube.getVideoDetails(testCase.input)
+        ).rejects.toThrow(testCase.expected as Error);
+      }
+    );
+  });
 });

@@ -3,39 +3,40 @@ import { utilityErrors } from "~/utils";
 /**
  * @class General error class for the YouTube extractor. It is recommended to extend this class for more detailed error names.
  */
-class YoutubeError extends utilityErrors.VueTubeExtractorError { }
+class YoutubeError extends utilityErrors.VueTubeExtractorError {}
 
 /**
  * @abstract Errors for http requests.
  *
- * @param {string} url - the url of the video
+ * @param {string} id - the id of the video
  */
 abstract class PageError extends YoutubeError {
-  url: string;
-  constructor(url: string, message: string, details?: unknown) {
+  id: string;
+  constructor(id: string, message: string, details?: unknown) {
     super(message, details);
-    this.url = url;
+    this.id = id;
   }
 }
 
-abstract class VideoError extends PageError { }
+abstract class VideoError extends PageError {}
 
-class AgeRestrictionError extends VideoError { }
-class VideoNotFoundError extends VideoError { }
-class VideoNotAvailableError extends VideoError { }
-class NoStreamingDataError extends VideoError { }
+class AgeRestrictionError extends VideoError {}
+class VideoNotFoundError extends VideoError {}
+class VideoNotAvailableError extends VideoError {}
+class NoStreamingDataError extends VideoError {}
 
-abstract class PlaylistError extends PageError { }
-class PlaylistNotFoundError extends PlaylistError { }
-class PlaylistNotAvailableError extends PlaylistError { }
+abstract class PlaylistError extends PageError {}
+class PlaylistNotFoundError extends PlaylistError {}
+class PlaylistNotAvailableError extends PlaylistError {}
 
-abstract class ChannelError extends PageError { }
-class ChannelNotFoundError extends ChannelError { }
-class ChannelNotAvailableError extends ChannelError { }
+abstract class ChannelError extends PageError {}
+class ChannelNotFoundError extends ChannelError {}
+class ChannelNotAvailableError extends ChannelError {}
 
-class ExtractorNotReadyError extends utilityErrors.ExtractorNotReadyError { }
+class ExtractorNotReadyError extends utilityErrors.ExtractorNotReadyError {}
 
-class ParserError extends YoutubeError { }
+class ParserError extends YoutubeError {}
+class LoginRequiredError extends YoutubeError {}
 
 /**
  * @class Errors for search requests.
@@ -76,5 +77,6 @@ export default {
   SearchError,
   InitializationError,
   ExtractorNotReadyError,
-  ParserError
+  ParserError,
+  LoginRequiredError,
 };
