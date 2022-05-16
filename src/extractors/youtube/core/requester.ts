@@ -2,6 +2,7 @@ import { YouTubeHTTPOptions } from "../utils";
 import YouTube from "..";
 import { Http, HttpResponse } from "@capacitor-community/http";
 import playerResponse from "../types/playerResponse";
+import { ytVideoData } from "../types/parserData";
 
 export default class youtubeRequester {
   private session: YouTube;
@@ -22,11 +23,9 @@ export default class youtubeRequester {
    * @param {string} videoId The video id to get the details for
    * @param {boolean} includeRecommendations Whether to include recommendations or not
    *
-   * @returns {Promise<{ player: HttpResponse["data"]; next: HttpResponse["data"] }>}
+   * @returns {Promise<ytVideoData>}
    */
-  async getVideoInfo(
-    videoId: string
-  ): Promise<{ player: playerResponse; next: HttpResponse["data"] }> {
+  async getVideoInfo(videoId: string): Promise<ytVideoData> {
     const httpOptionsPlayer = this.baseHttpOptions.getOptions(
       { data: { videoId: videoId } },
       "/player"

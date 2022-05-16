@@ -15,7 +15,7 @@ interface playerResponse {
     formats: Array<videoFormat | audioFormat>;
     adaptiveFormats: Array<videoFormat | audioFormat>;
   };
-  playBackTracking: {
+  playbackTracking: {
     videostatsPlaybackUrl: { baseUrl: string };
     videostatsDelayplayUrl: { baseUrl: string };
     videostatsWatchtimeUrl: { baseUrl: string };
@@ -82,6 +82,5 @@ interface playerResponse {
       [x: string | number | symbol]: unknown;
     };
   };
-  [x: string | number | symbol]: unknown;
 }
 export default playerResponse;

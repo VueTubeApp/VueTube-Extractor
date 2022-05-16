@@ -1,6 +1,6 @@
 import video from "~/types/video";
 import abstractParser from "./abstractParser";
-import playerResponse from "../../types/playerResponse";
+import { ytVideoData } from "../../types/parserData";
 /**
  * ```typescript
  * import {ytVideo} from './parsers';
@@ -13,10 +13,7 @@ export default class ytVideo extends abstractParser {
    * @param data The data to parse
    * @returns {video}
    */
-  protected parseOperation(data: {
-    player: playerResponse;
-    next: object;
-  }): video {
+  protected parseOperation(data: ytVideoData): video {
     // Play endpoint data
     const videoDetails = data.player.videoDetails;
     const microformat = data.player.microformat.playerMicroformatRenderer;
