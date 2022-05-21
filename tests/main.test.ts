@@ -12,13 +12,30 @@ const fetch = require("isomorphic-fetch"); // So that fetch is available in the 
 import { YouTube } from "../src";
 import { getYoutubeVideoInfoTest, YoutubeVideoInfoErrorTest } from "./cases";
 
+// Mock
+import initialization from "../src/extractors/youtube/core/initializer";
+
+
 describe("YouTube test suite", () => {
   let globalYoutube: YouTube;
   beforeAll(async function () {
     globalYoutube = await new YouTube().init();
   });
 
+  describe("initilization tests", () => {
+    test("if init can handle error during initialization", async () => {
+      const mockInit = jest.spyOn(initialization.prototype, "buildAsync").mockRejectedValue(new Error("test"));
+      const youtube = new YouTube();
+      await expect(youtube.init()).rejects.toThrow();
+      expect(mockInit).toHaveBeenCalled();
+    })
+  })
+
+
   describe("getVideoInfo tests", () => {
+    beforeAll(function () {
+      jest.unmock("@capacitor-community/http");
+    })
     test.each(getYoutubeVideoInfoTest)(
       "if getVideoInfo works as expected",
       async function (testCase) {

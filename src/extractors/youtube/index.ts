@@ -31,36 +31,48 @@ export default class YouTube {
    * @returns {Promise<YouTube>}
    */
   async init(): Promise<YouTube> {
-    try {
-      const initial = await new initialization(this.config).buildAsync();
+    let initError;
+    for (this.retry_count; this.retry_count <= (this.config.maxRetryCount || 5); this.retry_count++) {
+      try {
+        const initial = await new initialization(this.config).buildAsync();
 
-      this.baseHttpOptions = initial.getBaseHttpOptions();
-      this.requester = new youtubeRequester(this);
-    } catch (err) {
-      if (this.retry_count < (this.config.maxRetryCount || 5)) {
-        this.init();
-      } else {
-        let errorDetails = { info: "maxRetryCount reached" };
-        if (typeof err === "string") {
-          throw new ytErrors.InitializationError(
-            err.toUpperCase(),
-            errorDetails,
-            this.retry_count
-          );
-        } else if (err instanceof ytErrors.YoutubeError) {
-          if (err.details instanceof Object) {
-            errorDetails = { ...errorDetails, ...err.details };
-          }
-          throw new ytErrors.InitializationError(
-            err.message,
-            errorDetails,
-            this.retry_count
-          );
+        this.baseHttpOptions = initial.getBaseHttpOptions();
+        this.requester = new youtubeRequester(this);
+        this.ready = true;
+        return this;
+      } catch (err) {
+        if (this.retry_count < (this.config.maxRetryCount || 5)) {
+          this.retry_count++;
+          console.warn("Failed, retrying...", this.retry_count);
+          console.warn(err)
+        } else {
+          initError = err;
         }
       }
     }
-    this.ready = true;
-    return this;
+    let errorDetails = { info: "maxRetryCount reached" };
+    if (typeof initError === "string") {
+      throw new ytErrors.InitializationError(
+        initError.toUpperCase(),
+        errorDetails,
+        this.retry_count
+      );
+    } else if (initError instanceof ytErrors.YoutubeError) {
+      if (initError.details instanceof Object) {
+        errorDetails = { ...errorDetails, ...initError.details };
+      }
+      throw new ytErrors.InitializationError(
+        initError.message,
+        errorDetails,
+        this.retry_count
+      );
+    } else {
+      throw new ytErrors.InitializationError(
+        "UNKNOWN",
+        errorDetails,
+        this.retry_count
+      );
+    }
   }
 
   /**
