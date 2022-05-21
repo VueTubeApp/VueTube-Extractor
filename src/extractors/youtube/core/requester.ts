@@ -1,8 +1,7 @@
 import { YouTubeHTTPOptions } from "../utils";
 import YouTube from "..";
 import { Http, HttpResponse } from "@capacitor-community/http";
-import playerResponse from "../types/playerResponse";
-import { ytVideoData } from "../types/parserData";
+import { ytVideoData, playerResponse } from "../types";
 
 export default class youtubeRequester {
   private session: YouTube;

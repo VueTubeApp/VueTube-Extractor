@@ -1,8 +1,8 @@
-import videoFormat from "~/types/videoFormat";
-import audioFormat from "~/types/audioFormat";
-import imageData from "~/types/imageData";
+import { imageData, audioFormat, videoFormat } from "~/types";
 
-interface playerResponse {
+export { video as video } from "~/types";
+
+export interface playerResponse {
   playabilityStatus: {
     status: string;
     playableInEmbed?: boolean;
@@ -83,4 +83,54 @@ interface playerResponse {
     };
   };
 }
-export default playerResponse;
+
+export type userConfig = {
+  hl?: string;
+  gl?: string;
+  maxRetryCount?: number;
+};
+
+export type ytcfg = {
+  EXPERIMENT_FLAGS: Record<string, unknown>;
+  INNERTUBE_API_KEY: string;
+  INNERTUBE_API_VERSION: string;
+  INNERTUBE_CLIENT_NAME: string;
+  INNERTUBE_CLIENT_VERSION: string;
+  INNERTUBE_CONTEXT: Record<string, unknown>;
+  INNERTUBE_CONTEXT_CLIENT_NAME: number;
+  INNERTUBE_CONTEXT_CLIENT_VERSION: number;
+  LATEST_ECATCHER_SERVICE_TRACKING_PARAMS: Record<string, unknown>;
+};
+
+export type ytClient = {
+  gl: string;
+  hl: string;
+  deviceMake?: string;
+  deviceModel?: string;
+  userAgent: string;
+  clientName: "ANDROID" | "IOS" | 1 | 2;
+  clientVersion: string;
+  osName: "Android" | "iOS" | "Windows" | "MacOS" | "Linux" | "MWeb";
+  osVersion?: number;
+  platform: "MOBILE" | "DESKTOP";
+  remoteHost?: string;
+  visitorData?: string;
+};
+
+export type ytContext = {
+  client: ytClient;
+  user: { lockedSafetyMode: boolean };
+  request: { useSsl: boolean };
+};
+
+export type httpMetadata = {
+  apiKey: string;
+  context: ytContext;
+};
+
+// -- parsers -- //
+
+export type ytVideoData = {
+  player: playerResponse;
+  next: object;
+};

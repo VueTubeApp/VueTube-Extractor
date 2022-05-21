@@ -1,6 +1,5 @@
-import video from "~/types/video";
 import abstractParser from "./abstractParser";
-import { ytVideoData } from "../../types/parserData";
+import { ytVideoData, video } from "../../types";
 /**
  * ```typescript
  * import {ytVideo} from './parsers';
