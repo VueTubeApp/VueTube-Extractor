@@ -1,4 +1,4 @@
-import video from "../src/types/video";
+import { video } from "../src/types";
 import { ytErrors } from "../src/extractors/youtube/utils";
 
 interface testCase {
