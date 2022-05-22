@@ -1,9 +1,7 @@
 import { Http, HttpResponse } from "@capacitor-community/http";
 import proto from "../proto";
 import { YouTubeHTTPOptions, YtUtils, ytConstants, ytErrors } from "../utils";
-import ytContext from "../types/ytContext";
-import ytcfg from "../types/ytcfg";
-import userConfig from "../types/userConfig";
+import { ytContext, ytcfg, userConfig } from "../types";
 
 export default class initialization {
   private config: userConfig;
@@ -67,7 +65,7 @@ export default class initialization {
         user: { lockedSafetyMode: false },
         request: { useSsl: true },
       },
-      ...this.INNERTUBE_CONTEXT
+      ...this.INNERTUBE_CONTEXT,
     };
 
     return context;
@@ -98,8 +96,12 @@ export default class initialization {
         throw new ytErrors.InitializationError(err.message);
       }
     });
-    if (!response) { throw new ytErrors.InitializationError("No response from YouTube API"); }
-    return JSON.parse(YtUtils.findBetween(response.data.toString(), "ytcfg.set(", ");"));
+    if (!response) {
+      throw new ytErrors.InitializationError("No response from YouTube API");
+    }
+    return JSON.parse(
+      YtUtils.findBetween(response.data.toString(), "ytcfg.set(", ");")
+    );
   }
 
   getBaseHttpOptions(): YouTubeHTTPOptions {

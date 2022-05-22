@@ -1,7 +1,6 @@
 import initialization from "./core/initializer";
-import userConfig from "./types/userConfig";
+import { userConfig, video } from "./types";
 import { YouTubeHTTPOptions, ytErrors } from "./utils";
-import video from "./types/video";
 import youtubeRequester from "./core/requester";
 import Parser from "./parsers";
 
@@ -32,10 +31,13 @@ export default class YouTube {
    */
   async init(): Promise<YouTube> {
     let initError;
-    for (this.retry_count; this.retry_count <= (this.config.maxRetryCount || 5); this.retry_count++) {
+    for (
+      this.retry_count;
+      this.retry_count <= (this.config.maxRetryCount || 5);
+      this.retry_count++
+    ) {
       try {
         const initial = await new initialization(this.config).buildAsync();
-
         this.baseHttpOptions = initial.getBaseHttpOptions();
         this.requester = new youtubeRequester(this);
         this.ready = true;
@@ -44,7 +46,7 @@ export default class YouTube {
         if (this.retry_count < (this.config.maxRetryCount || 5)) {
           this.retry_count++;
           console.warn("Failed, retrying...", this.retry_count);
-          console.warn(err)
+          console.warn(err);
         } else {
           initError = err;
         }

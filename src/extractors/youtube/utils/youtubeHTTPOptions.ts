@@ -1,5 +1,5 @@
 import { HttpOptions } from "@capacitor-community/http";
-import httpMetadata from "../types/httpMetadata";
+import { httpMetadata } from "../types";
 import { ytConstants } from ".";
 import path from "path";
 
@@ -64,11 +64,15 @@ export default class YouTubeHTTPOptions {
     const mergedOptions: HttpOptions = { ...this.baseOptions };
     mergedOptions.data = { ...mergedOptions.data, ...options.data };
     mergedOptions.headers = { ...mergedOptions.headers, ...options.headers };
-    const urlTest = new RegExp('^(?:[a-z]+:)?//', 'i');
-    if (urlTest.test(url)) { mergedOptions.url = url }
-    else {
+    const urlTest = new RegExp("^(?:[a-z]+:)?//", "i");
+    if (urlTest.test(url)) {
+      mergedOptions.url = url;
+    } else {
       const originalUrl = new URL(mergedOptions.url);
-      mergedOptions.url = new URL(path.join(originalUrl.pathname, url), originalUrl).href.toString()
+      mergedOptions.url = new URL(
+        path.join(originalUrl.pathname, url),
+        originalUrl
+      ).href.toString();
     }
 
     return mergedOptions;
