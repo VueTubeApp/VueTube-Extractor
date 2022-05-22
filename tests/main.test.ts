@@ -24,6 +24,7 @@ describe("YouTube test suite", () => {
 
   describe("initilization tests", () => {
     test("if init can handle error during initialization", async () => {
+      jest.spyOn(console, 'warn').mockImplementation(() => { }); // Supress console warns
       const mockInit = jest.spyOn(initialization.prototype, "buildAsync").mockRejectedValue(new Error("test"));
       const youtube = new YouTube();
       await expect(youtube.init()).rejects.toThrow();

@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="jest tests" tests="6" failures="0" errors="0" time="2.209">
-  <testsuite name="tests\main.test.ts" errors="0" failures="0" skipped="5" timestamp="2022-05-21T01:29:40" time="2.042" tests="6">
-    <testcase classname="YouTube test suite › initilization tests" name="if init can handle error during initialization" time="0.069">
+<testsuites name="jest tests" tests="6" failures="0" errors="0" time="6.231">
+  <testsuite name="tests\main.test.ts" errors="0" failures="0" skipped="0" timestamp="2022-05-21T01:34:16" time="6.118" tests="6">
+    <testcase classname="YouTube test suite › initilization tests" name="if init can handle error during initialization" time="0.08">
     </testcase>
-    <testcase classname="YouTube test suite › getVideoInfo tests" name="if getVideoInfo works as expected" time="0.738">
+    <testcase classname="YouTube test suite › getVideoInfo tests" name="if getVideoInfo works as expected" time="0.797">
     </testcase>
-    <testcase classname="YouTube test suite › getVideoInfo tests" name="if getVideoInfo works as expected" time="0.742">
+    <testcase classname="YouTube test suite › getVideoInfo tests" name="if getVideoInfo works as expected" time="0.799">
     </testcase>
-    <testcase classname="YouTube test suite › getVideoInfo tests" name="if getVideoInfo handles errors correctly" time="0.648">
+    <testcase classname="YouTube test suite › getVideoInfo tests" name="if getVideoInfo works as expected" time="0.697">
     </testcase>
-    <testcase classname="YouTube test suite › getVideoInfo tests" name="if getVideoInfo handles errors correctly" time="0.65">
+    <testcase classname="YouTube test suite › getVideoInfo tests" name="if getVideoInfo handles errors correctly" time="0.612">
+    </testcase>
+    <testcase classname="YouTube test suite › getVideoInfo tests" name="if getVideoInfo handles errors correctly" time="0.627">
     </testcase>
   </testsuite>
 </testsuites>
