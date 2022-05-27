@@ -1,4 +1,4 @@
-import { HttpOptions } from "@capacitor-community/http";
+import { HttpOptions } from "@vuetubeapp/http";
 import { httpMetadata } from "../types";
 import { ytConstants } from ".";
 import path from "path";

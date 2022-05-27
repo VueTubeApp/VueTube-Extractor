@@ -15,7 +15,6 @@ import { getYoutubeVideoInfoTest, YoutubeVideoInfoErrorTest } from "./cases";
 // Mock
 import initialization from "../src/extractors/youtube/core/initializer";
 
-
 describe("YouTube test suite", () => {
   let globalYoutube: YouTube;
   beforeAll(async function () {
@@ -24,19 +23,20 @@ describe("YouTube test suite", () => {
 
   describe("initilization tests", () => {
     test("if init can handle error during initialization", async () => {
-      jest.spyOn(console, 'warn').mockImplementation(() => { }); // Supress console warns
-      const mockInit = jest.spyOn(initialization.prototype, "buildAsync").mockRejectedValue(new Error("test"));
+      jest.spyOn(console, "warn").mockImplementation(() => {}); // Supress console warns
+      const mockInit = jest
+        .spyOn(initialization.prototype, "buildAsync")
+        .mockRejectedValue(new Error("test"));
       const youtube = new YouTube();
       await expect(youtube.init()).rejects.toThrow();
       expect(mockInit).toHaveBeenCalled();
-    })
-  })
-
+    });
+  });
 
   describe("getVideoInfo tests", () => {
     beforeAll(function () {
-      jest.unmock("@capacitor-community/http");
-    })
+      jest.unmock("@vuetubeapp/http");
+    });
     test.each(getYoutubeVideoInfoTest)(
       "if getVideoInfo works as expected",
       async function (testCase) {

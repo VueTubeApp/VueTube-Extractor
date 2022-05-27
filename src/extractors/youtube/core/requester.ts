@@ -1,6 +1,6 @@
 import { YouTubeHTTPOptions } from "../utils";
 import YouTube from "..";
-import { Http, HttpResponse } from "@capacitor-community/http";
+import { Http, HttpResponse } from "@vuetubeapp/http";
 import { ytVideoData, playerResponse } from "../types";
 
 export default class youtubeRequester {

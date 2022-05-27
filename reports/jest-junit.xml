@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="jest tests" tests="6" failures="0" errors="0" time="6.231">
-  <testsuite name="tests\main.test.ts" errors="0" failures="0" skipped="0" timestamp="2022-05-21T01:34:16" time="6.118" tests="6">
-    <testcase classname="YouTube test suite › initilization tests" name="if init can handle error during initialization" time="0.08">
+<testsuites name="jest tests" tests="6" failures="0" errors="0" time="9.556">
+  <testsuite name="tests\main.test.ts" errors="0" failures="0" skipped="0" timestamp="2022-05-27T06:49:06" time="9.399" tests="6">
+    <testcase classname="YouTube test suite › initilization tests" name="if init can handle error during initialization" time="0.009">
     </testcase>
-    <testcase classname="YouTube test suite › getVideoInfo tests" name="if getVideoInfo works as expected" time="0.797">
+    <testcase classname="YouTube test suite › getVideoInfo tests" name="if getVideoInfo works as expected" time="2.026">
     </testcase>
-    <testcase classname="YouTube test suite › getVideoInfo tests" name="if getVideoInfo works as expected" time="0.799">
+    <testcase classname="YouTube test suite › getVideoInfo tests" name="if getVideoInfo works as expected" time="1.327">
     </testcase>
-    <testcase classname="YouTube test suite › getVideoInfo tests" name="if getVideoInfo works as expected" time="0.697">
+    <testcase classname="YouTube test suite › getVideoInfo tests" name="if getVideoInfo works as expected" time="1.227">
     </testcase>
-    <testcase classname="YouTube test suite › getVideoInfo tests" name="if getVideoInfo handles errors correctly" time="0.612">
+    <testcase classname="YouTube test suite › getVideoInfo tests" name="if getVideoInfo handles errors correctly" time="1.234">
     </testcase>
-    <testcase classname="YouTube test suite › getVideoInfo tests" name="if getVideoInfo handles errors correctly" time="0.627">
+    <testcase classname="YouTube test suite › getVideoInfo tests" name="if getVideoInfo handles errors correctly" time="1.129">
     </testcase>
   </testsuite>
 </testsuites>

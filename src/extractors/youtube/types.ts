@@ -90,17 +90,7 @@ export type userConfig = {
   maxRetryCount?: number;
 };
 
-export type ytcfg = {
-  EXPERIMENT_FLAGS: Record<string, unknown>;
-  INNERTUBE_API_KEY: string;
-  INNERTUBE_API_VERSION: string;
-  INNERTUBE_CLIENT_NAME: string;
-  INNERTUBE_CLIENT_VERSION: string;
-  INNERTUBE_CONTEXT: Record<string, unknown>;
-  INNERTUBE_CONTEXT_CLIENT_NAME: number;
-  INNERTUBE_CONTEXT_CLIENT_VERSION: number;
-  LATEST_ECATCHER_SERVICE_TRACKING_PARAMS: Record<string, unknown>;
-};
+export type clientName = "ANDROID" | "IOS" | "WEB" | "MWEB";
 
 export type ytClient = {
   gl: string;
@@ -108,7 +98,7 @@ export type ytClient = {
   deviceMake?: string;
   deviceModel?: string;
   userAgent: string;
-  clientName: "ANDROID" | "IOS" | 1 | 2;
+  clientName: clientName;
   clientVersion: string;
   osName: "Android" | "iOS" | "Windows" | "MacOS" | "Linux" | "MWeb";
   osVersion?: number;
