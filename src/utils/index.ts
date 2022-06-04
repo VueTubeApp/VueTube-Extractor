@@ -23,8 +23,10 @@ export abstract class UtilsBase {
    * @returns {string} a random string
    */
   static randomString(length: number): string {
-    return Math.random()
+    const response = Math.random()
       .toString(36)
       .substring(2, length + 2);
+    // if response is not length, recursively call until it is
+    return response.length === length ? response : this.randomString(length);
   }
 }

@@ -1,17 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="jest tests" tests="10" failures="0" errors="0" time="6.522">
-  <testsuite name="src\extractors\youtube\parsers\__tests__\parserTest.test.ts" errors="0" failures="0" skipped="3" timestamp="2022-06-04T11:26:03" time="2.069" tests="3">
-    <testcase classname="parser error handling › if parser throws error on bad input" name="videoDetail" time="0">
-      <skipped/>
-    </testcase>
-    <testcase classname="parser error handling › if parser throws error on bad input" name="homePage" time="0">
-      <skipped/>
-    </testcase>
-    <testcase classname="parser error handling › if parser throws error on bad input" name="bad toParse" time="0">
-      <skipped/>
-    </testcase>
-  </testsuite>
-  <testsuite name="tests\main.test.ts" errors="0" failures="0" skipped="6" timestamp="2022-06-04T11:26:03" time="5.896" tests="7">
+<testsuites name="jest tests" tests="7" failures="1" errors="0" time="5.519">
+  <testsuite name="tests\main.test.ts" errors="0" failures="1" skipped="6" timestamp="2022-06-04T11:59:27" time="5.338" tests="7">
     <testcase classname="YouTube test suite › initilization tests" name="if init can handle error during initialization" time="0">
       <skipped/>
     </testcase>
@@ -30,7 +19,15 @@
     <testcase classname="YouTube test suite › getVideoInfo tests" name="if getVideoInfo handles errors correctly" time="0">
       <skipped/>
     </testcase>
-    <testcase classname="YouTube test suite" name="if home page can be fetched" time="2.627">
+    <testcase classname="YouTube test suite" name="if home page can be fetched" time="2.965">
+      <failure>Error: No section contents
+    at homePage.parse (C:\Programming\Github\VueTube-Extractor\src\extractors\youtube\parsers\strats\homePage.ts:29:13)
+    at Parser.parse (C:\Programming\Github\VueTube-Extractor\src\extractors\youtube\parsers\index.ts:41:31)
+    at parseHome (C:\Programming\Github\VueTube-Extractor\src\extractors\youtube\index.ts:132:54)
+    at YouTube.&lt;anonymous&gt; (C:\Programming\Github\VueTube-Extractor\src\extractors\youtube\index.ts:151:18)
+    at Generator.next (&lt;anonymous&gt;)
+    at fulfilled (C:\Programming\Github\VueTube-Extractor\node_modules\tslib\tslib.js:112:62)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)</failure>
     </testcase>
   </testsuite>
 </testsuites>
