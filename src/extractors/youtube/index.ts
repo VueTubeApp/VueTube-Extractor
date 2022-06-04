@@ -1,12 +1,12 @@
 import initialization from "./core/initializer";
-import { userConfig, video } from "./types";
+import { userConfig, video, genericPage } from "./types";
 import { YouTubeHTTPOptions, ytErrors } from "./utils";
 import youtubeRequester from "./core/requester";
 import Parser from "./parsers";
 
 export default class YouTube {
   private config: userConfig;
-  private baseHttpOptions: YouTubeHTTPOptions;
+  private baseData: initialization;
   private requester: youtubeRequester;
   private ready = false;
 
@@ -37,8 +37,7 @@ export default class YouTube {
       this.retry_count++
     ) {
       try {
-        const initial = await new initialization(this.config).buildAsync();
-        this.baseHttpOptions = initial.getBaseHttpOptions();
+        this.baseData = await new initialization(this.config).buildAsync();
         this.requester = new youtubeRequester(this);
         this.ready = true;
         return this;
@@ -87,7 +86,7 @@ export default class YouTube {
    */
   async getVideoDetails(
     videoId: string,
-    includeRecommendations = false
+    includeRecommendations = true
   ): Promise<video> {
     if (!this.ready) {
       throw new ytErrors.ExtractorNotReadyError(
@@ -120,7 +119,43 @@ export default class YouTube {
     return parsed as video;
   }
 
-  getBaseHttpOptions(): YouTubeHTTPOptions {
-    return this.baseHttpOptions;
+  async getHomepage(): Promise<genericPage> {
+    if (!this.ready) {
+      throw new ytErrors.ExtractorNotReadyError(
+        "Extractor is not ready. Please call init() first."
+      );
+    }
+    const homepage = (await this.requester.browse("FEwhat_to_watch", {
+      isContinuation: false,
+    })) as { [key: string]: any };
+    const parseHome = (toParse: { [key: string]: any }) => {
+      const parsed = new Parser("homePage", toParse).parse() as genericPage;
+      parsed.continue = async () => {
+        const sectionContinuations = (
+          toParse.continuationContents?.sectionListContinuation ||
+          toParse.contents?.singleColumnBrowseResultsRenderer?.tabs[0]
+            ?.tabRenderer?.content.sectionListRenderer
+        ).continuations?.find(
+          (continuation: { [key: string]: any }) =>
+            continuation.nextContinuationData?.continuation
+        ).nextContinuationData?.continuation;
+        if (!sectionContinuations)
+          throw new ytErrors.EndOfPageError("No more recommendations!");
+        const continueResponse = await this.requester.browse(
+          sectionContinuations,
+          {
+            isContinuation: true,
+          }
+        );
+        return parseHome(continueResponse);
+      };
+      return parsed;
+    };
+
+    return parseHome(homepage);
+  }
+
+  getBaseHttpOptions(optionType?: "android" | "web"): YouTubeHTTPOptions {
+    return this.baseData.getBaseHttpOptions(optionType);
   }
 }

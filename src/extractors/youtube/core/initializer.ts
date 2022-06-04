@@ -8,7 +8,10 @@ export default class initialization {
 
   private innertubeKey: string;
   private context: ytContext;
+  private androidContext: ytContext;
+
   private baseHttpOptions: YouTubeHTTPOptions;
+  private androidHttpOptions: YouTubeHTTPOptions;
   private INNERTUBE_CONTEXT: object;
 
   /**
@@ -31,16 +34,15 @@ export default class initialization {
     data = data[0][2];
     this.innertubeKey = data[1];
     this.INNERTUBE_CONTEXT = {
-      client: {
-        gl: this.config.gl || data[0][0][1],
-        hl: this.config.hl || data[0][0][0],
-        clientVersion: data[0][0][16],
-        clientName: ytConstants.YTAPIVAL.CLIENT_WEB_Mobile as clientName,
-        remoteHost: data[0][0][3],
-      },
+      gl: this.config.gl || data[0][0][1],
+      hl: this.config.hl || data[0][0][0],
+      clientVersion: data[0][0][16],
+      clientName: ytConstants.YTAPIVAL.CLIENT_WEB_Mobile as clientName,
+      remoteHost: data[0][0][3],
     };
 
-    this.context = await this.buildContext();
+    this.context = this.buildContext();
+    this.androidContext = this.buildAndroidContext();
 
     this.buildBaseHttpOptions();
 
@@ -55,11 +57,14 @@ export default class initialization {
     const userAgent = YtUtils.randomMobileUserAgent();
 
     const visitorId = YtUtils.randomString(11); // 11 characters long
-    const visitorData = proto.encodeVisitorData(visitorId, Date.now());
+    const visitorData = proto.encodeVisitorData(
+      visitorId,
+      Math.floor(Date.now() / 1000)
+    );
 
     const context: ytContext = {
-      ...{
-        client: {
+      client: {
+        ...{
           gl: "US",
           hl: "en",
           deviceMake: userAgent.vendor,
@@ -71,13 +76,22 @@ export default class initialization {
           osName: "Android",
           platform: "MOBILE",
         },
-        user: { lockedSafetyMode: false },
-        request: { useSsl: true },
+        ...this.INNERTUBE_CONTEXT,
       },
-      ...this.INNERTUBE_CONTEXT,
+      user: { lockedSafetyMode: false },
+      request: { useSsl: true },
     };
 
     return context;
+  }
+
+  private buildAndroidContext(): ytContext {
+    const androidContext = JSON.parse(JSON.stringify(this.context));
+    androidContext.client.clientName = ytConstants.YTAPIVAL
+      .CLIENTNAME as clientName;
+    androidContext.client.clientVersion = ytConstants.YTAPIVAL.VERSION;
+    androidContext.client.clientFormFactor = "SMALL_FORM_FACTOR";
+    return androidContext;
   }
 
   /**
@@ -88,6 +102,10 @@ export default class initialization {
     this.baseHttpOptions = new YouTubeHTTPOptions({
       apiKey: this.innertubeKey,
       context: this.context,
+    });
+    this.androidHttpOptions = new YouTubeHTTPOptions({
+      apiKey: this.innertubeKey,
+      context: this.androidContext,
     });
   }
 
@@ -112,7 +130,10 @@ export default class initialization {
     return JSON.parse(response.data.replace(")]}'", ""));
   }
 
-  getBaseHttpOptions(): YouTubeHTTPOptions {
+  getBaseHttpOptions(
+    optionType: "android" | "web" = "web"
+  ): YouTubeHTTPOptions {
+    if (optionType === "android") return this.androidHttpOptions;
     return this.baseHttpOptions;
   }
 }

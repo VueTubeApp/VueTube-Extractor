@@ -1,3 +1,5 @@
+import { Method } from "protobufjs";
+
 /**
  * Type for audio endpoints.
  */
@@ -75,6 +77,13 @@ export type videoFormat = {
   [x: string | number | symbol]: unknown;
 };
 
+interface channelData {
+  channelId: string;
+  channelUrl: string;
+  channelName?: string;
+  channelThumbnails: Array<imageData>;
+  subscriberCount?: number;
+}
 export interface video {
   title: string;
   id: string;
@@ -93,13 +102,7 @@ export interface video {
     publishedAt: string;
     uploadedAt: string;
     tags: Array<string>;
-    channel?: {
-      channelId: string;
-      channelUrl: string;
-      channelName: string;
-      channelThumbnails: Array<imageData>;
-      subscriberCount?: number;
-    };
+    channel?: channelData;
     ratings?: {
       hasRating: boolean;
       likes: number;
@@ -109,4 +112,42 @@ export interface video {
     playbackEndpoints?: Array<videoFormat | audioFormat>;
     relatedVideos?: Array<videoSelection>;
   };
+}
+
+export interface videoCard {
+  title: string;
+  details: string;
+  videoId: string;
+  thumbnails: Array<imageData>;
+  timestamp: {
+    text: string;
+    style: string;
+  };
+  channelData: channelData;
+}
+
+/**
+ * Types for page data.
+ */
+
+/**
+ * Segment of a page.
+ */
+export type pageSegmentTypes = "video" | "shortsShelf" | "post" | "divider";
+export interface pageSegment {
+  type: pageSegmentTypes;
+  data: any;
+}
+
+export interface videoSegment extends pageSegment {
+  data: videoCard;
+}
+
+/**
+ * Page types.
+ */
+export interface genericPage {
+  segments: Array<pageSegment>;
+  chips?: Array<string>;
+  continue?: Function;
 }

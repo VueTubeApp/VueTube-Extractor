@@ -1,8 +1,8 @@
-import { ytVideo, abstractParser } from "./strats";
+import { ytVideo, abstractParser, homePage } from "./strats";
 import { ytErrors } from "../utils";
 import { ytVideoData, playerResponse } from "../types";
 
-type parseTypes = "videoDetail";
+type parseTypes = "videoDetail" | "homePage";
 
 export default class Parser {
   private toParse: parseTypes;
@@ -25,9 +25,11 @@ export default class Parser {
             id: this.toParse,
           });
         }
-        formatter.player = formatter.player as playerResponse;
         this.data = formatter;
         parser = new ytVideo();
+        break;
+      case "homePage":
+        parser = new homePage();
         break;
       default:
         break;

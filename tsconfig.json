@@ -28,6 +28,6 @@
       "~/*": ["*"]
     }
   },
-  "include": ["src/**/*.ts", "tests/main.test.ts"],
+  "include": ["src/**/*.ts"],
   "exclude": ["node_modules", "**/*.test.ts"]
 }

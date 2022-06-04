@@ -1,11 +1,12 @@
 import { YouTubeHTTPOptions } from "../utils";
 import YouTube from "..";
-import { Http, HttpResponse } from "@vuetubeapp/http";
-import { ytVideoData, playerResponse } from "../types";
+import { Http, HttpResponse, HttpOptions } from "@vuetubeapp/http";
+import { ytVideoData, playerResponse, browseConfig } from "../types";
 
 export default class youtubeRequester {
   private session: YouTube;
   private baseHttpOptions: YouTubeHTTPOptions;
+  private androidHttpOptions: YouTubeHTTPOptions;
 
   /**
    * the requester for all YouTube requests. Do not use directly.
@@ -13,7 +14,8 @@ export default class youtubeRequester {
    */
   constructor(session: YouTube) {
     this.session = session;
-    this.baseHttpOptions = session.getBaseHttpOptions();
+    this.baseHttpOptions = session.getBaseHttpOptions("web");
+    this.androidHttpOptions = session.getBaseHttpOptions("android");
   }
 
   /**
@@ -35,6 +37,27 @@ export default class youtubeRequester {
   }
 
   /**
+   *
+   * Calls the Youtube browse endpoint.
+   * This is most commonly used for getting
+   * the home page.
+   *
+   * @param {string} id The id to call the browse endpoint with
+   * @param {Record<string, unknown>} args The arguments to pass to the browse endpoint
+   * @returns {Promise<HttpResponse>} The response from the browse endpoint
+   */
+  async browse(id: string, args: browseConfig = {}): Promise<HttpResponse> {
+    const data: HttpOptions["data"] = args.data || {};
+    (args.isContinuation && (data.continuation = id)) || (data.browseId = id);
+    const httpOptionsNext = this.androidHttpOptions.getOptions(
+      { data: data || {}, params: args.params || {} },
+      `/browse`
+    );
+    const response = await Http.post(httpOptionsNext);
+    return response.data;
+  }
+
+  /**
    * Calls Youtube's next endpoint. This is mostly used for pagination, however it can also be used to get page data
    *
    * @param {Record<string, unknown>} args The arguments to pass to the next endpoint
@@ -43,7 +66,7 @@ export default class youtubeRequester {
    *
    */
   async getNext(args: Record<string, unknown>): Promise<HttpResponse> {
-    const httpOptionsNext = this.baseHttpOptions.getOptions(args, "/next");
+    const httpOptionsNext = this.androidHttpOptions.getOptions(args, "/next");
     return Http.post(httpOptionsNext);
   }
 }

@@ -1,6 +1,13 @@
 import { imageData, audioFormat, videoFormat } from "~/types";
 
-export { video as video } from "~/types";
+export {
+  video,
+  videoCard,
+  pageSegment,
+  videoSegment,
+  genericPage,
+  pageSegmentTypes,
+} from "~/types";
 
 export interface playerResponse {
   playabilityStatus: {
@@ -84,6 +91,16 @@ export interface playerResponse {
   };
 }
 
+interface requesterConfig {
+  data?: ytContext;
+  params?: any;
+}
+
+export interface browseConfig extends requesterConfig {
+  isContinuation?: boolean;
+  data?: any;
+}
+
 export type userConfig = {
   hl?: string;
   gl?: string;
@@ -104,6 +121,7 @@ export type ytClient = {
   osVersion?: number;
   platform: "MOBILE" | "DESKTOP";
   remoteHost?: string;
+  clientFormFactor?: string;
   visitorData?: string;
 };
 

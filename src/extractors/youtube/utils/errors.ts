@@ -38,6 +38,7 @@ class ExtractorNotReadyError extends utilityErrors.ExtractorNotReadyError {}
 class ParserError extends YoutubeError {}
 class LoginRequiredError extends YoutubeError {}
 
+class EndOfPageError extends YoutubeError {}
 /**
  * @class Errors for search requests.
  *
@@ -79,4 +80,5 @@ export default {
   ExtractorNotReadyError,
   ParserError,
   LoginRequiredError,
+  EndOfPageError,
 };

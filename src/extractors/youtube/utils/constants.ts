@@ -6,10 +6,10 @@ export default {
     YT_BASE_API: "https://www.youtube.com/youtubei/v1",
   },
   YTAPIVAL: {
-    VERSION: "16.25",
+    VERSION: "17.20",
     CLIENTNAME: "ANDROID",
     VERSION_WEB: "2.20220411.09.00",
-    CLIENT_WEB_Mobile: "2",
-    CLIENT_WEB_Desktop: "1",
+    CLIENT_WEB_Mobile: "MWEB",
+    CLIENT_WEB_Desktop: "WEB",
   },
 };

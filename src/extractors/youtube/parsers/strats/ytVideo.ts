@@ -6,13 +6,13 @@ import { ytVideoData, video } from "../../types";
  * const video = new ytVideo.parse(data);
  * ```
  */
-export default class ytVideo extends abstractParser {
+export default class ytVideo implements abstractParser {
   /**
    * Main parse function.
    * @param data The data to parse
    * @returns {video}
    */
-  protected parseOperation(data: ytVideoData): video {
+  parse(data: ytVideoData): video {
     // Play endpoint data
     const videoDetails = data.player.videoDetails;
     const microformat = data.player.microformat.playerMicroformatRenderer;

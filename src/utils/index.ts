@@ -8,24 +8,6 @@ export { default as utilityErrors } from "./errors";
  */
 export abstract class UtilsBase {
   /**
-   * Finds the string between two delimiters from a given string
-   *
-   * @param {string} base - the string to search in
-   * @param {string} start - the delimiter to start searching from
-   * @param {string} end - the delimiter to end searching from
-   *
-   * @returns {string} the string between the delimiters
-   */
-  static findBetween(base: string, start: string, end: string): string {
-    const startIndex = base.indexOf(start);
-    const endIndex = base.indexOf(end);
-    if (startIndex === -1 || endIndex === -1) {
-      return "";
-    }
-    return base.substring(startIndex + start.length, endIndex);
-  }
-
-  /**
    * Generates a random mobile UserAgent
    * @returns {UserAgent["data"]} a random mobile UserAgent
    */
