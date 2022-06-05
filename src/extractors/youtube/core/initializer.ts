@@ -57,10 +57,8 @@ export default class initialization {
     const userAgent = YtUtils.randomMobileUserAgent();
 
     const visitorId = YtUtils.randomString(11); // 11 characters long
-    const visitorData = proto.encodeVisitorData(
-      visitorId,
-      Math.floor(Date.now() / 1000)
-    );
+    const currentTime = Math.floor(Date.now() / 1000);
+    const visitorData = proto.encodeVisitorData(visitorId, currentTime);
 
     const context: ytContext = {
       client: {

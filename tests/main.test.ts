@@ -54,12 +54,11 @@ describe("YouTube test suite", () => {
     );
   });
 
-  jest.setTimeout(30000);
   test("if home page can be fetched", async () => {
     const result = await globalYoutube.getHomepage();
     expect(result).toBeDefined();
     expect(result.continue).toBeDefined();
     const continued = await result.continue?.();
     expect(continued).toBeDefined();
-  });
+  }, 30000);
 });

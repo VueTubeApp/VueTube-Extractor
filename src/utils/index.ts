@@ -23,10 +23,14 @@ export abstract class UtilsBase {
    * @returns {string} a random string
    */
   static randomString(length: number): string {
-    const response = Math.random()
-      .toString(36)
-      .substring(2, length + 2);
-    // if response is not length, recursively call until it is
-    return response.length === length ? response : this.randomString(length);
+    let result = "";
+    const characters =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
+    const charactersLength = characters.length;
+    for (let i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+
+    return result;
   }
 }
