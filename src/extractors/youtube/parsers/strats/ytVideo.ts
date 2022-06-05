@@ -1,4 +1,4 @@
-import abstractParser from "./abstractParser";
+import abstractParser from "../abstractParser";
 import { ytVideoData, video } from "../../types";
 /**
  * ```typescript

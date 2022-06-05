@@ -1,4 +1,4 @@
-import abstractParser from "./abstractParser";
+import abstractParser from "../abstractParser";
 import { pageSegment, genericPage, pageSegmentTypes } from "../../types";
 import { ytErrors } from "../../utils";
 

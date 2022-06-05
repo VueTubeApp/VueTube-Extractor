@@ -1,4 +1,4 @@
-import abstractParser from "./abstractParser";
+import abstractParser from "../abstractParser";
 import { videoSegment } from "../../types";
 import { ytErrors } from "../../utils";
 
