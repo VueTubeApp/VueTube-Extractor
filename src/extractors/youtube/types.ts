@@ -7,6 +7,7 @@ export {
   videoSegment,
   genericPage,
   pageSegmentTypes,
+  searchResult,
 } from "~/types";
 
 export interface playerResponse {
@@ -92,13 +93,32 @@ export interface playerResponse {
 }
 
 interface requesterConfig {
-  data?: ytContext;
+  data?: any;
   params?: any;
 }
 
 export interface browseConfig extends requesterConfig {
   isContinuation?: boolean;
-  data?: any;
+}
+
+export type searchFeatures =
+  | "live"
+  | "video4k"
+  | "hd"
+  | "subtitles"
+  | "cc"
+  | "video360"
+  | "vr180"
+  | "video3d"
+  | "hdr"
+  | "location"
+  | "purchased";
+export interface searchFilter {
+  uploadDate: "hour" | "day" | "week" | "month" | "year" | "all";
+  order: "relevance" | "viewCount" | "rating" | "uploadDate";
+  type: "video" | "playlist" | "channel" | "all";
+  duration: "short" | "medium" | "long" | "all";
+  features: Array<searchFeatures>;
 }
 
 export type userConfig = {

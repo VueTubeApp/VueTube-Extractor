@@ -5,3 +5,29 @@ message VisitorData {
   string id = 1;
   int32 timestamp = 5;
 }
+
+message SearchFilter {
+  optional int32 filter = 1; // sort by
+  optional int32 noCorrection = 8;
+  optional int32 noFilter = 19;
+  
+  message Filters {
+    optional int32 param_0 = 1; // upload date
+    optional int32 param_1 = 2; // type
+    optional int32 param_2 = 3; // duration
+    // type filters
+    optional int32 featuresHd = 4; // hd filter
+    optional int32 featuresSubtitles = 5; // subtitles filter
+    optional int32 featuresCreativeCommons = 6; // creative commons filter
+    optional int32 features3d = 7; // 3d filter
+    optional int32 featuresLive = 8; // live filter
+    optional int32 featuresPurchased = 9; // purchased filter
+    optional int32 features4k = 14; // 4k filter
+    optional int32 features360 = 15; // 360 view filter
+    optional int32 featuresLocation  = 23; // location filter
+    optional int32 featuresHdr = 25; // hdr filter
+    optional int32 featuresVr180 = 26; // vr180 filter
+  }
+  
+  optional Filters filters = 2;
+}

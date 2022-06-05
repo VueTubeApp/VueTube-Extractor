@@ -1,7 +1,13 @@
 import { YouTubeHTTPOptions } from "../utils";
 import YouTube from "..";
 import { Http, HttpResponse, HttpOptions } from "@vuetubeapp/http";
-import { ytVideoData, playerResponse, browseConfig } from "../types";
+import {
+  ytVideoData,
+  playerResponse,
+  browseConfig,
+  searchFilter,
+} from "../types";
+import proto from "../proto";
 
 export default class youtubeRequester {
   private session: YouTube;
@@ -66,7 +72,28 @@ export default class youtubeRequester {
    *
    */
   async getNext(args: Record<string, unknown>): Promise<HttpResponse> {
-    const httpOptionsNext = this.androidHttpOptions.getOptions(args, "/next");
+    const httpOptionsNext = this.androidHttpOptions.getOptions(
+      { data: args },
+      "/next"
+    );
     return Http.post(httpOptionsNext);
+  }
+
+  /**
+   * Calls the Youtube search endpoint.
+   * @param {string} query - The query to search for
+   * @param {Partial<searchFilter>} filters - The filters to pass to the search endpoint
+   */
+  async search(
+    query: string,
+    filters: Partial<searchFilter>
+  ): Promise<HttpResponse> {
+    filters.features = [...new Set(filters.features)]; // enforce unique values
+    const params = proto.encodeSearchFilter(filters);
+    const httpOptions = this.androidHttpOptions.getOptions(
+      { data: { query, params } },
+      "/search"
+    );
+    return Http.post(httpOptions);
   }
 }

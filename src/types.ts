@@ -1,5 +1,3 @@
-import { Method } from "protobufjs";
-
 /**
  * Type for audio endpoints.
  */
@@ -150,4 +148,13 @@ export interface genericPage {
   segments: Array<pageSegment>;
   chips?: Array<string>;
   continue?: Function;
+}
+
+/**
+ * Type for search results
+ */
+export interface searchResult extends genericPage {
+  query: string;
+  correctQuery?: string;
+  resultCount: number;
 }

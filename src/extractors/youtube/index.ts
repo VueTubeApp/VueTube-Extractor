@@ -1,5 +1,5 @@
 import initialization from "./core/initializer";
-import { userConfig, video, genericPage } from "./types";
+import { userConfig, video, genericPage, searchResult } from "./types";
 import { YouTubeHTTPOptions, ytErrors } from "./utils";
 import youtubeRequester from "./core/requester";
 import Parser from "./parsers";
@@ -88,11 +88,7 @@ export default class YouTube {
     videoId: string,
     includeRecommendations = true
   ): Promise<video> {
-    if (!this.ready) {
-      throw new ytErrors.ExtractorNotReadyError(
-        "Extractor is not ready. Please call init() first."
-      );
-    }
+    this.checkReady();
     const videoInfo = await this.requester.getVideoInfo(videoId);
     if (videoInfo.player.playabilityStatus.status == "ERROR") {
       throw new ytErrors.VideoNotFoundError(
@@ -119,12 +115,12 @@ export default class YouTube {
     return parsed as video;
   }
 
+  /**
+   * Retrieves home page data.
+   * @returns {Promise<genericPage>}
+   */
   async getHomepage(): Promise<genericPage> {
-    if (!this.ready) {
-      throw new ytErrors.ExtractorNotReadyError(
-        "Extractor is not ready. Please call init() first."
-      );
-    }
+    this.checkReady();
     const homepage = (await this.requester.browse("FEwhat_to_watch", {
       isContinuation: false,
     })) as { [key: string]: any };
@@ -153,6 +149,26 @@ export default class YouTube {
     };
 
     return parseHome(homepage);
+  }
+
+  /**
+   * Searches youtube for a given query.
+   *
+   * @param {string} query - The query to search for.
+   * @param {object} filters - The filters to apply to the search.
+   * @returns {Promise<searchResult>}
+   */
+  async search(query: string, filters: object) {
+    this.checkReady();
+    const searchResponse = await this.requester.search(query, filters);
+  }
+
+  private checkReady() {
+    if (!this.ready) {
+      throw new ytErrors.ExtractorNotReadyError(
+        "Extractor is not ready. Please call init() first."
+      );
+    }
   }
 
   getBaseHttpOptions(optionType?: "android" | "web"): YouTubeHTTPOptions {
