@@ -123,6 +123,10 @@ export interface videoCard {
   };
   channelData: channelData;
 }
+export interface searchSuggestion {
+  query: string;
+  results: Array<string>;
+}
 
 /**
  * Types for page data.

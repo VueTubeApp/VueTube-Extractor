@@ -1,8 +1,8 @@
-import { ytVideo, abstractParser, homePage } from "./strats";
+import { ytVideo, abstractParser, homePage, searchSuggestions } from "./strats";
 import { ytErrors } from "../utils";
 import { ytVideoData, playerResponse } from "../types";
 
-type parseTypes = "videoDetail" | "homePage";
+type parseTypes = "videoDetail" | "homePage" | "searchSuggestions";
 
 export default class Parser {
   private toParse: parseTypes;
@@ -30,6 +30,9 @@ export default class Parser {
         break;
       case "homePage":
         parser = new homePage();
+        break;
+      case "searchSuggestions":
+        parser = new searchSuggestions();
         break;
       default:
         break;

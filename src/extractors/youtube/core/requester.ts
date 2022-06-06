@@ -8,6 +8,7 @@ import {
   searchFilter,
 } from "../types";
 import proto from "../proto";
+import constants from "../utils/constants";
 
 export default class youtubeRequester {
   private session: YouTube;
@@ -39,7 +40,7 @@ export default class youtubeRequester {
     );
     const responsePlayer = await Http.post(httpOptionsPlayer);
     const responseNext = await this.getNext({ videoId: videoId });
-    return { player: responsePlayer.data, next: responseNext.data };
+    return { player: responsePlayer.data, next: responseNext };
   }
 
   /**
@@ -76,13 +77,16 @@ export default class youtubeRequester {
       { data: args },
       "/next"
     );
-    return Http.post(httpOptionsNext);
+    const response = await Http.post(httpOptionsNext);
+    return response.data;
   }
 
   /**
    * Calls the Youtube search endpoint.
    * @param {string} query - The query to search for
    * @param {Partial<searchFilter>} filters - The filters to pass to the search endpoint
+   *
+   * @returns {Promise<HttpResponse>} The response from the search endpoint
    */
   async search(
     query: string,
@@ -94,6 +98,32 @@ export default class youtubeRequester {
       { data: { query, params } },
       "/search"
     );
-    return Http.post(httpOptions);
+    const response = await Http.post(httpOptions);
+    return response;
+  }
+
+  /**
+   * Gets youtube suggestions for a query
+   * @param {string} query - The query to get suggestions for
+   * @returns {Promise<HttpResponse>} The response from the suggestions endpoint
+   */
+  async getSuggestions(query: string) {
+    const params = this.baseHttpOptions.getOptions({}, "/search");
+    const hl = params.data.context.client.hl;
+    const gl = params.data.context.client.gl;
+    const response = await Http.get({
+      url: constants.URL.YT_SUGGESTION_API,
+      params: {
+        q: query,
+        ds: "yt",
+        client: "youtube",
+        xssi: "t",
+        oe: "utf8",
+        gl: gl,
+        hl: hl,
+      },
+      responseType: "text",
+    });
+    return response.data;
   }
 }

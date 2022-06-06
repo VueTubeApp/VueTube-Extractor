@@ -4,6 +4,7 @@ export default {
     YT_MOBILE: "https://m.youtube.com",
     YT_MUSIC_URL: "https://music.youtube.com",
     YT_BASE_API: "https://www.youtube.com/youtubei/v1",
+    YT_SUGGESTION_API: "https://suggestqueries.google.com/complete/search",
   },
   YTAPIVAL: {
     VERSION: "17.20",

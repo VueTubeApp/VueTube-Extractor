@@ -61,4 +61,9 @@ describe("YouTube test suite", () => {
     const continued = await result.continue?.();
     expect(continued).toBeDefined();
   }, 30000);
+
+  test("if search suggestions can be fetched", async () => {
+    const result = await globalYoutube.getSearchSuggestions("test");
+    expect(result).toBeDefined();
+  });
 });

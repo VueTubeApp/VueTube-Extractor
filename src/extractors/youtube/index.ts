@@ -1,5 +1,11 @@
 import initialization from "./core/initializer";
-import { userConfig, video, genericPage, searchResult } from "./types";
+import {
+  userConfig,
+  video,
+  genericPage,
+  searchResult,
+  searchSuggestion,
+} from "./types";
 import { YouTubeHTTPOptions, ytErrors } from "./utils";
 import youtubeRequester from "./core/requester";
 import Parser from "./parsers";
@@ -161,6 +167,21 @@ export default class YouTube {
   async search(query: string, filters: object) {
     this.checkReady();
     const searchResponse = await this.requester.search(query, filters);
+  }
+
+  /**
+   * Gets search suggestions for a given query.
+   * @param {string} query - The query to search for.
+   * @returns {Promise<{query: string, results:Array<string>}>}
+   */
+  async getSearchSuggestions(query: string): Promise<searchSuggestion> {
+    this.checkReady();
+    const searchResponse = await this.requester.getSuggestions(query);
+    const parsed = new Parser(
+      "searchSuggestions",
+      JSON.parse(searchResponse.replace(")]}'", ""))
+    ).parse() as searchSuggestion;
+    return parsed;
   }
 
   private checkReady() {

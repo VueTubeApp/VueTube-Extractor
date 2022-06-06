@@ -8,6 +8,7 @@ export {
   genericPage,
   pageSegmentTypes,
   searchResult,
+  searchSuggestion,
 } from "~/types";
 
 export interface playerResponse {
