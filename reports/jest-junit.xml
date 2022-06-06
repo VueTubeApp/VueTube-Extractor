@@ -1,17 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="jest tests" tests="18" failures="0" errors="0" time="3.259">
-  <testsuite name="src\extractors\youtube\parsers\__tests__\parserTest.test.ts" errors="0" failures="0" skipped="3" timestamp="2022-06-05T12:23:20" time="2.459" tests="3">
-    <testcase classname="parser error handling › if parser throws error on bad input" name="videoDetail" time="0">
-      <skipped/>
-    </testcase>
-    <testcase classname="parser error handling › if parser throws error on bad input" name="homePage" time="0">
-      <skipped/>
-    </testcase>
-    <testcase classname="parser error handling › if parser throws error on bad input" name="bad toParse" time="0">
-      <skipped/>
-    </testcase>
-  </testsuite>
-  <testsuite name="tests\main.test.ts" errors="0" failures="0" skipped="7" timestamp="2022-06-05T12:23:20" time="2.519" tests="7">
+<testsuites name="jest tests" tests="7" failures="0" errors="0" time="22.753">
+  <testsuite name="tests\main.test.ts" errors="0" failures="0" skipped="6" timestamp="2022-06-06T07:52:12" time="22.377" tests="7">
     <testcase classname="YouTube test suite › initilization tests" name="if init can handle error during initialization" time="0">
       <skipped/>
     </testcase>
@@ -30,37 +19,7 @@
     <testcase classname="YouTube test suite › getVideoInfo tests" name="if getVideoInfo handles errors correctly" time="0">
       <skipped/>
     </testcase>
-    <testcase classname="YouTube test suite" name="if home page can be fetched" time="0">
-      <skipped/>
-    </testcase>
-  </testsuite>
-  <testsuite name="src\extractors\youtube\proto\__tests__\protoTest.test.ts" errors="0" failures="0" skipped="0" timestamp="2022-06-05T12:23:20" time="2.645" tests="8">
-    <testcase classname="protobuf parsing tests › if encodeVisitorData works" name="abcd and 100 should be CgRhYmNkKGQ%3D" time="0.005">
-    </testcase>
-    <testcase classname="protobuf parsing tests › if encodeVisitorData works" name="efgh and 200 should be CgRlZmdoKMgB" time="0.001">
-    </testcase>
-    <testcase classname="protobuf parsing tests › if encodeVisitorData works" name="fgee-Eads1Q and 1640995200 should be CgtmZ2VlLUVhZHMxUSiAs76OBg%3D%3D" time="0">
-    </testcase>
-    <testcase classname="protobuf parsing tests › if encodeSearchFilter works" name="{
-  uploadDate: &apos;year&apos;,
-  order: &apos;rating&apos;,
-  type: &apos;video&apos;,
-  duration: &apos;medium&apos;
-} should be CAESBggFEAEYAw%3D%3D " time="0.003">
-    </testcase>
-    <testcase classname="protobuf parsing tests › if encodeSearchFilter works" name="{ type: &apos;channel&apos; } should be EgIQAg%3D%3D " time="0">
-    </testcase>
-    <testcase classname="protobuf parsing tests › if encodeSearchFilter works" name="{ features: [Array] } should be EgQgASgB " time="0.001">
-    </testcase>
-    <testcase classname="protobuf parsing tests › if encodeSearchFilter works" name="{ features: [Array] } should be EgVAAbgBAQ%3D%3D " time="0">
-    </testcase>
-    <testcase classname="protobuf parsing tests › if encodeSearchFilter works" name="{
-  uploadDate: &apos;week&apos;,
-  type: &apos;video&apos;,
-  duration: &apos;long&apos;,
-  features: [Array],
-  order: &apos;uploadDate&apos;
-} should be CAISCAgDEAEYAjgB " time="0">
+    <testcase classname="YouTube test suite" name="if home page can be fetched" time="10.78">
     </testcase>
   </testsuite>
 </testsuites>

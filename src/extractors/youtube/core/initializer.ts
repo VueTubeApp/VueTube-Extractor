@@ -39,6 +39,7 @@ export default class initialization {
       clientVersion: data[0][0][16],
       clientName: ytConstants.YTAPIVAL.CLIENT_WEB_Mobile as clientName,
       remoteHost: data[0][0][3],
+      visitorData: data[6],
     };
 
     this.context = this.buildContext();
@@ -55,11 +56,6 @@ export default class initialization {
    */
   private buildContext(): ytContext {
     const userAgent = YtUtils.randomMobileUserAgent();
-
-    const visitorId = YtUtils.randomString(11); // 11 characters long
-    const currentTime = Math.floor(Date.now() / 1000);
-    const visitorData = proto.encodeVisitorData(visitorId, currentTime);
-
     const context: ytContext = {
       client: {
         ...{
@@ -67,7 +63,6 @@ export default class initialization {
           hl: "en",
           deviceMake: userAgent.vendor,
           deviceModel: userAgent.platform,
-          visitorData: visitorData,
           userAgent: userAgent.userAgent,
           clientName: ytConstants.YTAPIVAL.CLIENT_WEB_Mobile as clientName,
           clientVersion: ytConstants.YTAPIVAL.VERSION_WEB,
