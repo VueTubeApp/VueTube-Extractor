@@ -1,6 +1,6 @@
 import { ytVideo, abstractParser, homePage, searchSuggestions } from "./strats";
 import { ytErrors } from "../utils";
-import { ytVideoData, playerResponse } from "../types";
+import { ytVideoData } from "../types";
 
 type parseTypes = "videoDetail" | "homePage" | "searchSuggestions";
 

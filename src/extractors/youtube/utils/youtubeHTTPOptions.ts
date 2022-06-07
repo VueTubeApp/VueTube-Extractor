@@ -23,26 +23,21 @@ export default class YouTubeHTTPOptions {
   private setBaseOptions(): HttpOptions {
     const base: HttpOptions = {
       url: ytConstants.URL.YT_BASE_API,
-      headers: {},
-      data: {},
-      params: {},
     };
-    base.headers
-      ? ["accept-language"] || ""
-      : `${this.metadata.context.client.gl.toLowerCase()}-${this.metadata.context.client.hl.toUpperCase()}`;
+    base.headers = {};
+    base.headers[
+      "accept-language"
+    ] = `${this.metadata.context.client.gl.toLowerCase()}-${this.metadata.context.client.hl.toUpperCase()}`;
 
-    base.headers
-      ? ["x-goog-visitor-id"] || ""
-      : this.metadata.context.client.visitorData;
+    base.headers["x-goog-visitor-id"] =
+      this.metadata.context.client.visitorData || "";
 
-    base.headers
-      ? ["x-youtube-client-version"] || ""
-      : this.metadata.context.client.clientVersion;
+    base.headers["x-youtube-client-version"] =
+      this.metadata.context.client.clientVersion;
 
-    base.headers
-      ? ["user-agent"] || ""
-      : this.metadata.context.client.userAgent;
+    base.headers["user-agent"] = this.metadata.context.client.userAgent;
 
+    base.data = {};
     base.data.context = this.metadata.context;
 
     base.params = { ...{ key: this.metadata.apiKey }, ...base.params };

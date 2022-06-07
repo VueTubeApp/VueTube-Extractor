@@ -1,5 +1,4 @@
 import { Http, HttpResponse } from "@vuetubeapp/http";
-import proto from "../proto";
 import { YouTubeHTTPOptions, YtUtils, ytConstants, ytErrors } from "../utils";
 import { ytContext, userConfig, clientName } from "../types";
 

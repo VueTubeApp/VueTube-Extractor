@@ -1,11 +1,5 @@
 import initialization from "./core/initializer";
-import {
-  userConfig,
-  video,
-  genericPage,
-  searchResult,
-  searchSuggestion,
-} from "./types";
+import { userConfig, video, genericPage, searchSuggestion } from "./types";
 import { YouTubeHTTPOptions, ytErrors } from "./utils";
 import youtubeRequester from "./core/requester";
 import Parser from "./parsers";
@@ -15,8 +9,6 @@ export default class YouTube {
   private baseData: initialization;
   private requester: youtubeRequester;
   private ready = false;
-
-  protected retry_count = 0;
 
   /**
    * extractor for YouTube
@@ -37,47 +29,38 @@ export default class YouTube {
    */
   async init(): Promise<YouTube> {
     let initError;
-    for (
-      this.retry_count;
-      this.retry_count <= (this.config.maxRetryCount || 5);
-      this.retry_count++
-    ) {
+    let retry_count = 0;
+    while (retry_count <= (this.config.maxRetryCount || 5)) {
       try {
         this.baseData = await new initialization(this.config).buildAsync();
         this.requester = new youtubeRequester(this);
         this.ready = true;
         return this;
       } catch (err) {
-        if (this.retry_count < (this.config.maxRetryCount || 5)) {
-          this.retry_count++;
-          console.warn("Failed, retrying...", this.retry_count);
-          console.warn(err);
-        } else {
-          initError = err;
-        }
+        retry_count++;
+        console.warn("Failed, retrying...", retry_count);
+        console.warn(err);
+        initError = err;
       }
     }
     let errorDetails = { info: "maxRetryCount reached" };
-    if (typeof initError === "string") {
-      throw new ytErrors.InitializationError(
-        initError.toUpperCase(),
-        errorDetails,
-        this.retry_count
-      );
-    } else if (initError instanceof ytErrors.YoutubeError) {
-      if (initError.details instanceof Object) {
+    if (initError instanceof Error) {
+      if (
+        initError instanceof ytErrors.YoutubeError &&
+        initError.details instanceof Object
+      ) {
         errorDetails = { ...errorDetails, ...initError.details };
       }
       throw new ytErrors.InitializationError(
         initError.message,
         errorDetails,
-        this.retry_count
+        retry_count
       );
     } else {
       throw new ytErrors.InitializationError(
         "UNKNOWN",
         errorDetails,
-        this.retry_count
+        retry_count
       );
     }
   }

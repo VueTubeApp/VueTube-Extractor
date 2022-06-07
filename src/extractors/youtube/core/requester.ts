@@ -1,12 +1,7 @@
 import { YouTubeHTTPOptions } from "../utils";
 import YouTube from "..";
 import { Http, HttpResponse, HttpOptions } from "@vuetubeapp/http";
-import {
-  ytVideoData,
-  playerResponse,
-  browseConfig,
-  searchFilter,
-} from "../types";
+import { ytVideoData, browseConfig, searchFilter } from "../types";
 import proto from "../proto";
 import constants from "../utils/constants";
 

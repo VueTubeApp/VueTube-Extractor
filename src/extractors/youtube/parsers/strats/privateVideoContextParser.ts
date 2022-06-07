@@ -1,6 +1,5 @@
 import abstractParser from "../abstractParser";
 import { videoSegment } from "../../types";
-import { ytErrors } from "../../utils";
 
 export default class privateVideoContextParser implements abstractParser {
   parse(data: { [key: string]: any }): videoSegment {
