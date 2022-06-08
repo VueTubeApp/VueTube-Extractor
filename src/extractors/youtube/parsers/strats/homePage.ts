@@ -15,6 +15,7 @@ const parserStrats: {
     segmentType: "video",
   },
 };
+
 export default class homePage implements abstractParser {
   parse(data: { [key: string]: any }): genericPage {
     const sectionContents = (
@@ -30,20 +31,24 @@ export default class homePage implements abstractParser {
     const response: genericPage = { segments: [], chips: [] };
 
     for (const itemSection of sectionContents) {
-      for (const itemElement of itemSection.itemSectionRenderer?.contents) {
-        const newElement = itemElement.elementRenderer.newElement;
-        const identifier: string =
-          newElement.properties.identifierProperties.identifier;
-        if (parserStrats[identifier.split(".")[0]]) {
-          response.segments.push(
-            parserStrats[identifier.split(".")[0]].parserObj.parse(
-              itemElement
-            ) as pageSegment
-          );
-        }
-      }
+      response.segments.concat(this.getSectionElements(itemSection));
     }
 
     return response;
+  }
+
+  getSectionElements(itemSection: { [key: string]: any }): Array<pageSegment> {
+    const segments = [];
+    for (const itemElement of itemSection.itemSectionRenderer.contents) {
+      const newElement = itemElement.elementRenderer.newElement;
+      const identifier: string =
+        newElement.properties.identifierProperties.identifier.split(".")[0];
+      if (!parserStrats[identifier]) continue;
+      const parsedElement = parserStrats[identifier].parserObj.parse(
+        itemElement
+      ) as pageSegment;
+      segments.push(parsedElement);
+    }
+    return segments;
   }
 }

@@ -1,5 +1,6 @@
 import abstractParser from "../abstractParser";
 import { ytVideoData, video } from "../../types";
+import { ytErrors } from "../../utils";
 /**
  * ```typescript
  * import {ytVideo} from './parsers';
@@ -13,6 +14,7 @@ export default class ytVideo implements abstractParser {
    * @returns {video}
    */
   parse(data: ytVideoData): video {
+    this.checkValidity(data);
     // Play endpoint data
     const videoDetails = data.player.videoDetails;
     const microformat = data.player.microformat.playerMicroformatRenderer;
@@ -46,5 +48,11 @@ export default class ytVideo implements abstractParser {
     };
 
     return response;
+  }
+
+  checkValidity(data: ytVideoData): void {
+    if (!data.player) {
+      throw new ytErrors.ParserError("No player data", { received: data });
+    }
   }
 }

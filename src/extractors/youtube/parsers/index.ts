@@ -1,8 +1,6 @@
 import { ytVideo, abstractParser, homePage, searchSuggestions } from "./strats";
 import { ytErrors } from "../utils";
-import { ytVideoData } from "../types";
-
-type parseTypes = "videoDetail" | "homePage" | "searchSuggestions";
+import { ytVideoData, parseTypes } from "../types";
 
 export default class Parser {
   private toParse: parseTypes;
@@ -14,34 +12,22 @@ export default class Parser {
   }
 
   parse(): object {
-    let parser: abstractParser | void;
-    let formatter;
-    switch (this.toParse) {
-      case "videoDetail":
-        formatter = this.data as ytVideoData;
-        if (!formatter.player) {
-          throw new ytErrors.ParserError("No player data found", {
-            data: this.data,
-            id: this.toParse,
-          });
-        }
-        this.data = formatter;
-        parser = new ytVideo();
-        break;
-      case "homePage":
-        parser = new homePage();
-        break;
-      case "searchSuggestions":
-        parser = new searchSuggestions();
-        break;
-      default:
-        break;
-    }
+    const parser = this.getParser();
     if (!parser)
       throw new ytErrors.ParserError("Parser not found", {
         toParse: this.toParse,
       });
     const parsedData = parser.parse(this.data);
     return parsedData;
+  }
+
+  getParser(): abstractParser | void {
+    const parserLookup: { [key in parseTypes]: abstractParser } = {
+      homePage: new homePage(),
+      videoDetail: new ytVideo(),
+      searchSuggestions: new searchSuggestions(),
+    };
+    const parser = parserLookup[this.toParse];
+    return parser;
   }
 }

@@ -7,7 +7,7 @@ message VisitorData {
 }
 
 message SearchFilter {
-  optional int32 filter = 1; // sort by
+  optional int32 sort = 1; // sort by
   optional int32 noCorrection = 8;
   optional int32 noFilter = 19;
   

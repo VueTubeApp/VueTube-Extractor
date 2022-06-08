@@ -1,24 +1,18 @@
 import parser from "../index";
+import { parseTypes } from "../../types";
 
 describe("parser error handling", () => {
-  describe("if parser throws error on bad input", () => {
-    test("videoDetail", () => {
-      const videoDetailParse = new parser("videoDetail", {});
+  const cases: Array<{ parser: parseTypes; errorCode: string }> = [
+    { parser: "videoDetail", errorCode: "No player data found" },
+    { parser: "homePage", errorCode: "No section contents" },
+    { parser: "bad" as any, errorCode: "Parser not found" },
+  ];
+  describe.each(cases)("$parser", (caseData) => {
+    const parserInstance = new parser(caseData.parser, {});
+    test("if parser throws error on bad input", () => {
       expect(() => {
-        videoDetailParse.parse();
-      }).toThrowError("No player data found");
-    });
-    test("homePage", () => {
-      const homePageParse = new parser("homePage", {});
-      expect(() => {
-        homePageParse.parse();
-      }).toThrowError("No section contents");
-    });
-    test("bad toParse", () => {
-      const badParse = new parser("bad" as any, {});
-      expect(() => {
-        badParse.parse();
-      }).toThrowError("Parser not found");
+        parserInstance.parse();
+      }).toThrowError(caseData.errorCode);
     });
   });
 });
