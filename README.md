@@ -13,9 +13,24 @@ This is the library for VueTube. The main repository is <a href="https://github.
 
 <p align="center">
   <a href="https://github.com/VueTubeApp/VueTube-Extractor/commits/master"><img src="https://img.shields.io/github/commit-activity/m/VueTubeApp/VueTube-Extractor?label=Commits" alt="Commits"></img></a>
-  <a href="https://github.com/VueTubeApp/VueTube-Extractor/issues" alt="Issues"><img src="https://img.shields.io/github/issues/VueTubeApp/VueTube-Extractor"></img></a>
-  <a href="https://github.com/VueTubeApp/VueTube-Extractor/blob/master/LICENSE" alt="License"><img src="https://img.shields.io/github/license/VueTubeApp/VueTube-Extractor"></img></a>
-  <a><img src="https://img.shields.io/github/stars/VueTubeApp/VueTube-Extractor" alt="Stars"></img></a>
+  <a href="https://github.com/VueTubeApp/VueTube-Extractor/issues" alt="Issues">
+    <img src="https://img.shields.io/github/issues/VueTubeApp/VueTube-Extractor"></img>
+  </a>
+  <a href="https://github.com/VueTubeApp/VueTube-Extractor/blob/master/LICENSE" alt="License">
+    <img src="https://img.shields.io/github/license/VueTubeApp/VueTube-Extractor"></img>
+  </a>
+  <a>
+    <img src="https://img.shields.io/github/stars/VueTubeApp/VueTube-Extractor" alt="Stars"></img>
+  </a>
+  <a href="https://codecov.io/gh/VueTubeApp/VueTube-Extractor">
+    <img src="https://codecov.io/gh/VueTubeApp/VueTube-Extractor/branch/master/graph/badge.svg?token=XDCN1XWYUF"/></img>
+  </a>
+  <a href="https://codeclimate.com/github/VueTubeApp/VueTube-Extractor/maintainability">
+    <img src="https://api.codeclimate.com/v1/badges/e280a83b032031c69545/maintainability"/></img>
+  </a>
+  <a href="https://lgtm.com/projects/g/VueTubeApp/VueTube-Extractor/context:javascript">
+    <img alt="Language grade: JavaScript" src="https://img.shields.io/lgtm/grade/javascript/g/VueTubeApp/VueTube-Extractor.svg?logo=lgtm&logoWidth=18"/>
+  </a>
 </p>
 
 VueTube Extractor is currently under active development, and is not a part of the main VueTube app. It is planned to completely replace the current API wrapper employed by VueTube upon completion.
