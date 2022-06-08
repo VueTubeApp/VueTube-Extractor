@@ -31,7 +31,9 @@ export default class homePage implements abstractParser {
     const response: genericPage = { segments: [], chips: [] };
 
     for (const itemSection of sectionContents) {
-      response.segments.concat(this.getSectionElements(itemSection));
+      response.segments = response.segments.concat(
+        this.getSectionElements(itemSection)
+      );
     }
 
     return response;
