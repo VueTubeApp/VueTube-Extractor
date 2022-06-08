@@ -2,7 +2,7 @@ import abstractParser from "../abstractParser";
 import { pageSegment, genericPage, pageSegmentTypes } from "../../types";
 import { ytErrors } from "../../utils";
 
-import privateVideoContextParser from "./privateVideoContextParser";
+import privateVideoContextParser from "../modelParsers/VideoContextParser";
 
 const parserStrats: {
   [key: string]: {
@@ -10,7 +10,7 @@ const parserStrats: {
     segmentType: pageSegmentTypes;
   };
 } = {
-  home_video_with_context: {
+  videoWithContextModel: {
     parserObj: new privateVideoContextParser(),
     segmentType: "video",
   },
@@ -43,8 +43,9 @@ export default class homePage implements abstractParser {
     const segments = [];
     for (const itemElement of itemSection.itemSectionRenderer.contents) {
       const newElement = itemElement.elementRenderer.newElement;
-      const identifier: string =
-        newElement.properties.identifierProperties.identifier.split(".")[0];
+      const identifier: string = Object.keys(
+        newElement.type.componentType.model
+      )[0];
       if (!parserStrats[identifier]) continue;
       const parsedElement = parserStrats[identifier].parserObj.parse(
         itemElement
