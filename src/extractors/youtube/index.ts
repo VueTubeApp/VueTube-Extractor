@@ -44,25 +44,17 @@ export default class YouTube {
       }
     }
     let errorDetails = { info: "maxRetryCount reached" };
+    let errorMsg = "UNKNOWN";
     if (initError instanceof Error) {
+      errorMsg = initError.message;
       if (
         initError instanceof ytErrors.YoutubeError &&
         initError.details instanceof Object
       ) {
         errorDetails = { ...errorDetails, ...initError.details };
       }
-      throw new ytErrors.InitializationError(
-        initError.message,
-        errorDetails,
-        retry_count
-      );
-    } else {
-      throw new ytErrors.InitializationError(
-        "UNKNOWN",
-        errorDetails,
-        retry_count
-      );
     }
+    throw new ytErrors.InitializationError(errorMsg, errorDetails, retry_count);
   }
 
   /**

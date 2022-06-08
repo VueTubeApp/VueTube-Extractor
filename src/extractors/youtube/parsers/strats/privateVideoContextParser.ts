@@ -3,19 +3,8 @@ import { videoSegment } from "../../types";
 
 export default class privateVideoContextParser implements abstractParser {
   parse(data: { [key: string]: any }): videoSegment {
-    const videoWithContextModel =
-      data.elementRenderer.newElement.type.componentType.model
-        .videoWithContextModel.videoWithContextData;
-    const metadata = videoWithContextModel.videoData.metadata;
-
-    const channelAvatar = (
-      videoWithContextModel.videoData.decoratedAvatar ||
-      videoWithContextModel.videoData
-    ).avatar;
-
-    const channelId =
-      videoWithContextModel.videoData.channelId ||
-      channelAvatar.endpoint?.innertubeCommand.browseEndpoint?.browseId;
+    const { videoWithContextModel, metadata, channelId, channelAvatar } =
+      this.getAliases(data);
 
     const response: videoSegment = {
       data: {
@@ -37,5 +26,24 @@ export default class privateVideoContextParser implements abstractParser {
       type: "video",
     };
     return response;
+  }
+
+  getAliases(data: { [key: string]: any }) {
+    const videoWithContextModel =
+      data.elementRenderer.newElement.type.componentType.model
+        .videoWithContextModel.videoWithContextData;
+
+    const metadata = videoWithContextModel.videoData.metadata;
+
+    const channelAvatar = (
+      videoWithContextModel.videoData.decoratedAvatar ||
+      videoWithContextModel.videoData
+    ).avatar;
+
+    const channelId =
+      videoWithContextModel.videoData.channelId ||
+      channelAvatar.endpoint?.innertubeCommand.browseEndpoint?.browseId;
+
+    return { videoWithContextModel, metadata, channelId, channelAvatar };
   }
 }

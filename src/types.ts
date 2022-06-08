@@ -151,7 +151,7 @@ export interface videoSegment extends pageSegment {
 export interface genericPage {
   segments: Array<pageSegment>;
   chips?: Array<string>;
-  continue?: Function;
+  continue?: () => Promise<genericPage>;
 }
 
 /**
