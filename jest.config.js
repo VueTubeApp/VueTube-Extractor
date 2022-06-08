@@ -12,7 +12,6 @@ module.exports = {
     "~/(.*)": "<rootDir>/src/$1",
   },
   reporters: ["default", "jest-junit"],
-  collectCoverage: true,
   collectCoverageFrom: ["./src/**"],
   coveragePathIgnorePatterns: [
     "node_modules",
