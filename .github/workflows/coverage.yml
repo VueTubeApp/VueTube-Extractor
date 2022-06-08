@@ -3,22 +3,33 @@
 name: coverage
 # Controls when the workflow will run
 on:
-  # Triggers the workflow on pull request events but only for the master branch
-  pull_request:
+  # Triggers the workflow on pull request or push events but only for the master branch
+  [push, pull_request]:
     branches: [master]
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
 jobs:
-  coverage:
-    permissions:
-      checks: write
-      pull-requests: write
+  build:
+
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+
     steps:
-      - uses: actions/checkout@v1
-      - uses: ArtiomTr/jest-coverage-report-action@v2
-        with:
-          package-manager: yarn
-          test-script: yarn jest
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Run the tests
+      run: npm test -- --coverage
+
+    - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3

@@ -7,9 +7,20 @@ module.exports = {
   transform: {
     "^.+\\.(ts|tsx)$": "ts-jest",
   },
-  moduleFileExtensions: ["ts", "tsx", "js", "json"],
+  moduleFileExtensions: ["ts", "tsx", "js"],
   moduleNameMapper: {
     "~/(.*)": "<rootDir>/src/$1",
   },
   reporters: ["default", "jest-junit"],
+  collectCoverageFrom: ["./src/**"],
+  coveragePathIgnorePatterns: [
+    "node_modules",
+    "test-config",
+    "interfaces",
+    "jestGlobalMocks.ts",
+    ".module.ts",
+    ".mock.ts",
+    ".json",
+    "__tests__",
+  ],
 };
