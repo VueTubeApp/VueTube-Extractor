@@ -1,21 +1,27 @@
 import abstractParser from "../abstractParser";
 import { videoSegment } from "../../types";
+import { ytErrors } from "../../utils";
 
 export default class privateVideoContextParser implements abstractParser {
   parse(data: { [key: string]: any }): videoSegment {
-    const { videoWithContextModel, metadata, channelId, channelAvatar } =
-      this.getAliases(data);
+    const {
+      videoWithContextData,
+      metadata,
+      channelId,
+      channelAvatar,
+      expandableMetadata,
+    } = this.getAliases(data);
 
     const response: videoSegment = {
       data: {
         title: metadata.title,
         details: metadata.metadataDetails,
-        thumbnails: videoWithContextModel.videoData.thumbnail.image.sources,
+        thumbnails: videoWithContextData.videoData.thumbnail.image.sources,
         videoId:
-          videoWithContextModel.onTap.innertubeCommand.watchEndpoint.videoId,
+          videoWithContextData.onTap.innertubeCommand.watchEndpoint.videoId,
         timestamp: {
-          text: videoWithContextModel.videoData.timestampText,
-          style: videoWithContextModel.videoData.timestampStyle,
+          text: videoWithContextData.videoData.timestampText,
+          style: videoWithContextData.videoData.timestampStyle,
         },
         channelData: {
           channelId: channelId,
@@ -28,22 +34,40 @@ export default class privateVideoContextParser implements abstractParser {
     return response;
   }
 
-  getAliases(data: { [key: string]: any }) {
-    const videoWithContextModel =
-      data.elementRenderer.newElement.type.componentType.model
-        .videoWithContextModel.videoWithContextData;
+  private getAliases(data: { [key: string]: any }) {
+    const componentType =
+      data.elementRenderer.newElement.type.componentType.model;
+    let videoWithContextModel;
 
-    const metadata = videoWithContextModel.videoData.metadata;
+    if (componentType.videoWithContextModel) {
+      videoWithContextModel = componentType.videoWithContextModel;
+    } else if (componentType.videoWithContextSlotsModel) {
+      videoWithContextModel = componentType.videoWithContextSlotsModel;
+    } else {
+      throw new ytErrors.ParserError("No videoWithContextModel found");
+    }
+
+    const videoWithContextData = videoWithContextModel.videoWithContextData;
+
+    const metadata = videoWithContextData.videoData.metadata;
 
     const channelAvatar = (
-      videoWithContextModel.videoData.decoratedAvatar ||
-      videoWithContextModel.videoData
+      videoWithContextData.videoData.decoratedAvatar ||
+      videoWithContextData.videoData
     ).avatar;
 
     const channelId =
-      videoWithContextModel.videoData.channelId ||
+      videoWithContextData.videoData.channelId ||
       channelAvatar.endpoint?.innertubeCommand.browseEndpoint?.browseId;
 
-    return { videoWithContextModel, metadata, channelId, channelAvatar };
+    const expandableMetadata = videoWithContextModel.expandableMetadata || {};
+
+    return {
+      videoWithContextData,
+      metadata,
+      channelId,
+      channelAvatar,
+      expandableMetadata,
+    };
   }
 }

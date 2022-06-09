@@ -39,7 +39,9 @@ export default class homePage implements abstractParser {
     return response;
   }
 
-  getSectionElements(itemSection: { [key: string]: any }): Array<pageSegment> {
+  private getSectionElements(itemSection: {
+    [key: string]: any;
+  }): Array<pageSegment> {
     const segments = [];
     for (const itemElement of itemSection.itemSectionRenderer.contents) {
       const newElement = itemElement.elementRenderer.newElement;

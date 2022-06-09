@@ -50,7 +50,7 @@ export default class ytVideo implements abstractParser {
     return response;
   }
 
-  checkValidity(data: ytVideoData): void {
+  private checkValidity(data: ytVideoData): void {
     if (!data.player) {
       throw new ytErrors.ParserError("No player data found", {
         received: data,
