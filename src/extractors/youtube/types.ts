@@ -122,7 +122,11 @@ export interface searchFilter {
   features: Array<searchFeatures>;
 }
 
-export type parseTypes = "videoDetail" | "homePage" | "searchSuggestions";
+export type parseTypes =
+  | "videoDetail"
+  | "homePage"
+  | "searchSuggestions"
+  | "searchResult";
 
 export type userConfig = {
   hl?: string;

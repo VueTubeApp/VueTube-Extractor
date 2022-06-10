@@ -1,4 +1,10 @@
-import { ytVideo, abstractParser, homePage, searchSuggestions } from "./strats";
+import {
+  ytVideo,
+  abstractParser,
+  homePage,
+  searchSuggestions,
+  searchPage,
+} from "./strats";
 import { ytErrors } from "../utils";
 import { ytVideoData, parseTypes } from "../types";
 
@@ -26,6 +32,7 @@ export default class Parser {
       homePage: new homePage(),
       videoDetail: new ytVideo(),
       searchSuggestions: new searchSuggestions(),
+      searchResult: new searchPage(),
     };
     const parser = parserLookup[this.toParse];
     return parser;

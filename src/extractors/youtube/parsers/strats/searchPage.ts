@@ -1,20 +1,24 @@
 import pageParser from "../pageParser";
-import { genericPage } from "../../types";
+import { searchResult } from "../../types";
 import { ytErrors } from "../../utils";
 
 export default class homePage extends pageParser {
-  parse(data: { [key: string]: any }): genericPage {
+  parse(data: { [key: string]: any }): searchResult {
     const sectionContents = (
       data.continuationContents?.sectionListContinuation ||
-      data.contents?.singleColumnBrowseResultsRenderer?.tabs[0]?.tabRenderer
-        ?.content.sectionListRenderer
-    )?.contents;
+      data.contents?.itemSectionRenderer
+    )?.contents?.[0]?.itemSectionRenderer?.contents;
     if (!sectionContents)
       throw new ytErrors.ParserError("No section contents", {
         receivedObject: data,
       });
 
-    const response: genericPage = { segments: [], chips: [] };
+    const response: searchResult = {
+      segments: [],
+      chips: [],
+      searchRefinements: data.refinements,
+      resultCount: data.estimatedResults,
+    };
 
     for (const itemSection of sectionContents) {
       response.segments = response.segments.concat(

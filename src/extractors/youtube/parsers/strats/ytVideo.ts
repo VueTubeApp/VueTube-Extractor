@@ -7,7 +7,7 @@ import { ytErrors } from "../../utils";
  * const video = new ytVideo.parse(data);
  * ```
  */
-export default class ytVideo implements abstractParser {
+export default class ytVideo extends abstractParser {
   /**
    * Main parse function.
    * @param data The data to parse

@@ -55,7 +55,15 @@ describe("YouTube test suite", () => {
   });
 
   test("if home page can be fetched", async () => {
-    const result = await globalYoutube.getHomepage();
+    const result = await globalYoutube.getHomePage();
+    expect(result).toBeDefined();
+    expect(result.continue).toBeDefined();
+    const continued = await result.continue?.();
+    expect(continued).toBeDefined();
+  }, 30000);
+
+  test("if search page can be fetched", async () => {
+    const result = await globalYoutube.getSearchPage("LTT");
     expect(result).toBeDefined();
     expect(result.continue).toBeDefined();
     const continued = await result.continue?.();

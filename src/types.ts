@@ -158,7 +158,7 @@ export interface genericPage {
  * Type for search results
  */
 export interface searchResult extends genericPage {
-  query: string;
   correctQuery?: string;
+  searchRefinements?: Array<string>;
   resultCount: number;
 }

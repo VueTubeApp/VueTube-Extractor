@@ -85,16 +85,17 @@ export default class youtubeRequester {
    */
   async search(
     query: string,
-    filters: Partial<searchFilter>
-  ): Promise<HttpResponse> {
-    filters.features = [...new Set(filters.features)]; // enforce unique values
-    const params = proto.encodeSearchFilter(filters);
-    const httpOptions = this.androidHttpOptions.getOptions(
-      { data: { query, params } },
-      "/search"
-    );
+    options: { filters: Partial<searchFilter>; isContinuation: boolean },
+    continuation?: string
+  ): Promise<HttpResponse["data"]> {
+    options.filters.features = [...new Set(options.filters.features)]; // enforce unique values
+    const params = proto.encodeSearchFilter(options.filters);
+    const data: HttpOptions["data"] = { params };
+    (options.isContinuation && (data.continuation = continuation)) ||
+      (data.query = query);
+    const httpOptions = this.androidHttpOptions.getOptions({ data }, "/search");
     const response = await Http.post(httpOptions);
-    return response;
+    return response.data;
   }
 
   /**
