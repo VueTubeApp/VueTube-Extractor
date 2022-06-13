@@ -1,70 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="jest tests" tests="21" failures="1" errors="0" time="21.78">
-  <testsuite name="src\extractors\youtube\proto\__tests__\protoTest.test.ts" errors="0" failures="0" skipped="0" timestamp="2022-06-10T09:23:36" time="2.641" tests="8">
-    <testcase classname="protobuf parsing tests › if encodeVisitorData works" name="abcd and 100 should be CgRhYmNkKGQ%3D" time="0.005">
+<testsuites name="jest tests" tests="9" failures="1" errors="0" time="4.608">
+  <testsuite name="tests\main.test.ts" errors="0" failures="1" skipped="8" timestamp="2022-06-13T08:51:31" time="4.365" tests="9">
+    <testcase classname="YouTube test suite › initilization tests" name="if init can handle error during initialization" time="0">
+      <skipped/>
     </testcase>
-    <testcase classname="protobuf parsing tests › if encodeVisitorData works" name="efgh and 200 should be CgRlZmdoKMgB" time="0.001">
+    <testcase classname="YouTube test suite › getVideoInfo tests" name="if getVideoInfo works as expected" time="0">
+      <skipped/>
     </testcase>
-    <testcase classname="protobuf parsing tests › if encodeVisitorData works" name="fgee-Eads1Q and 1640995200 should be CgtmZ2VlLUVhZHMxUSiAs76OBg%3D%3D" time="0.001">
+    <testcase classname="YouTube test suite › getVideoInfo tests" name="if getVideoInfo works as expected" time="0">
+      <skipped/>
     </testcase>
-    <testcase classname="protobuf parsing tests › if encodeSearchFilter works" name="{
-  uploadDate: &apos;year&apos;,
-  order: &apos;rating&apos;,
-  type: &apos;video&apos;,
-  duration: &apos;medium&apos;
-} should be CAESBggFEAEYAw%3D%3D " time="0.004">
+    <testcase classname="YouTube test suite › getVideoInfo tests" name="if getVideoInfo works as expected" time="0">
+      <skipped/>
     </testcase>
-    <testcase classname="protobuf parsing tests › if encodeSearchFilter works" name="{ type: &apos;channel&apos; } should be EgIQAg%3D%3D " time="0">
+    <testcase classname="YouTube test suite › getVideoInfo tests" name="if getVideoInfo handles errors correctly" time="0">
+      <skipped/>
     </testcase>
-    <testcase classname="protobuf parsing tests › if encodeSearchFilter works" name="{ features: [Array] } should be EgQgASgB " time="0.001">
+    <testcase classname="YouTube test suite › getVideoInfo tests" name="if getVideoInfo handles errors correctly" time="0">
+      <skipped/>
     </testcase>
-    <testcase classname="protobuf parsing tests › if encodeSearchFilter works" name="{ features: [Array] } should be EgVAAbgBAQ%3D%3D " time="0">
+    <testcase classname="YouTube test suite" name="if home page can be fetched" time="0">
+      <skipped/>
     </testcase>
-    <testcase classname="protobuf parsing tests › if encodeSearchFilter works" name="{
-  uploadDate: &apos;week&apos;,
-  type: &apos;video&apos;,
-  duration: &apos;long&apos;,
-  features: [Array],
-  order: &apos;uploadDate&apos;
-} should be CAISCAgDEAEYAjgB " time="0">
-    </testcase>
-  </testsuite>
-  <testsuite name="src\extractors\youtube\parsers\__tests__\parserTest.test.ts" errors="0" failures="0" skipped="0" timestamp="2022-06-10T09:23:36" time="2.791" tests="4">
-    <testcase classname="parser error handling › videoDetail" name="if parser throws error on bad input" time="0.012">
-    </testcase>
-    <testcase classname="parser error handling › homePage" name="if parser throws error on bad input" time="0.003">
-    </testcase>
-    <testcase classname="parser error handling › bad" name="if parser throws error on bad input" time="0.001">
-    </testcase>
-    <testcase classname="parser handling" name="searchSuggestions" time="0.002">
-    </testcase>
-  </testsuite>
-  <testsuite name="tests\main.test.ts" errors="0" failures="1" skipped="0" timestamp="2022-06-10T09:23:36" time="21.082" tests="9">
-    <testcase classname="YouTube test suite › initilization tests" name="if init can handle error during initialization" time="0.013">
-    </testcase>
-    <testcase classname="YouTube test suite › getVideoInfo tests" name="if getVideoInfo works as expected" time="2.402">
-    </testcase>
-    <testcase classname="YouTube test suite › getVideoInfo tests" name="if getVideoInfo works as expected" time="2.354">
-    </testcase>
-    <testcase classname="YouTube test suite › getVideoInfo tests" name="if getVideoInfo works as expected" time="2.599">
-    </testcase>
-    <testcase classname="YouTube test suite › getVideoInfo tests" name="if getVideoInfo handles errors correctly" time="0.704">
-    </testcase>
-    <testcase classname="YouTube test suite › getVideoInfo tests" name="if getVideoInfo handles errors correctly" time="0.792">
-    </testcase>
-    <testcase classname="YouTube test suite" name="if home page can be fetched" time="5.219">
-    </testcase>
-    <testcase classname="YouTube test suite" name="if search page can be fetched" time="2.983">
-      <failure>Error: No section contents
-    at homePage.parse (C:\Programming\Github\VueTube-Extractor\src\extractors\youtube\parsers\strats\searchPage.ts:12:13)
+    <testcase classname="YouTube test suite" name="if search page can be fetched" time="1.629">
+      <failure>TypeError: Cannot read properties of undefined (reading &apos;contents&apos;)
+    at homePage.getSectionElements (C:\Programming\Github\VueTube-Extractor\src\extractors\youtube\parsers\abstractParser.ts:13:63)
+    at homePage.parse (C:\Programming\Github\VueTube-Extractor\src\extractors\youtube\parsers\strats\searchPage.ts:25:15)
     at Parser.parse (C:\Programming\Github\VueTube-Extractor\src\extractors\youtube\parsers\index.ts:26:31)
     at parsedSearch (C:\Programming\Github\VueTube-Extractor\src\extractors\youtube\index.ts:162:9)
     at YouTube.&lt;anonymous&gt; (C:\Programming\Github\VueTube-Extractor\src\extractors\youtube\index.ts:182:12)
     at Generator.next (&lt;anonymous&gt;)
     at fulfilled (C:\Programming\Github\VueTube-Extractor\node_modules\tslib\tslib.js:112:62)
+    at runMicrotasks (&lt;anonymous&gt;)
     at processTicksAndRejections (node:internal/process/task_queues:96:5)</failure>
     </testcase>
-    <testcase classname="YouTube test suite" name="if search suggestions can be fetched" time="0.386">
+    <testcase classname="YouTube test suite" name="if search suggestions can be fetched" time="0">
+      <skipped/>
     </testcase>
   </testsuite>
 </testsuites>

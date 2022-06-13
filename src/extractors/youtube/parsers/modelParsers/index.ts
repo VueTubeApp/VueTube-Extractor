@@ -12,6 +12,10 @@ const parserStrats: {
     parserObj: new privateVideoContextParser(),
     segmentType: "video",
   },
+  videoWithContextSlotsModel: {
+    parserObj: new privateVideoContextParser(),
+    segmentType: "video",
+  },
 };
 
 export default parserStrats;

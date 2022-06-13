@@ -6,8 +6,8 @@ export default class homePage extends pageParser {
   parse(data: { [key: string]: any }): searchResult {
     const sectionContents = (
       data.continuationContents?.sectionListContinuation ||
-      data.contents?.itemSectionRenderer
-    )?.contents?.[0]?.itemSectionRenderer?.contents;
+      data.contents?.sectionListRenderer
+    )?.contents;
     if (!sectionContents)
       throw new ytErrors.ParserError("No section contents", {
         receivedObject: data,

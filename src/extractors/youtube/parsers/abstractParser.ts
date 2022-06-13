@@ -1,4 +1,10 @@
 import { pageSegment } from "../types";
+import {
+  toplevelIdentifierFinder,
+  elementRendererIdentifierFinder,
+  itemSectionRendererFinder,
+  shelfRenderer,
+} from "./stratIdentifiers";
 
 /**
  * The abstract parser class. Extend this class to create a new parser.
@@ -10,11 +16,9 @@ export default abstract class YouTubeParser {
     [key: string]: any;
   }): Array<pageSegment> {
     const segments = [];
-    for (const itemElement of itemSection.itemSectionRenderer.contents) {
-      const newElement = itemElement.elementRenderer.newElement;
-      const identifier: string = Object.keys(
-        newElement.type.componentType.model
-      )[0];
+    const sectionList = this.findSectionList(itemSection);
+    for (const itemElement of sectionList) {
+      const identifier = this.findIdentifiers(itemElement);
       const parsedElement = this.callParsers(
         identifier,
         itemElement
@@ -30,4 +34,25 @@ export default abstract class YouTubeParser {
       [key: string]: any;
     }
   ): void {}
+
+  protected findIdentifiers(itemElement: { [key: string]: any }): string {
+    const finders = [
+      new elementRendererIdentifierFinder(),
+      new toplevelIdentifierFinder(),
+    ];
+    for (const finder of finders) {
+      const identifier = finder.find(itemElement);
+      if (identifier) return identifier;
+    }
+    return "";
+  }
+
+  protected findSectionList(itemSection: { [key: string]: any }): Array<any> {
+    const finders = [new itemSectionRendererFinder(), new shelfRenderer()];
+    for (const finder of finders) {
+      const sectionList = finder.find(itemSection);
+      if (sectionList) return sectionList;
+    }
+    return [];
+  }
 }
