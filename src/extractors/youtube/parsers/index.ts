@@ -17,14 +17,28 @@ export default class Parser {
     this.data = data;
   }
 
-  parse(): object {
-    const parser = this.getParser();
-    if (!parser)
-      throw new ytErrors.ParserError("Parser not found", {
-        toParse: this.toParse,
-      });
-    const parsedData = parser.parse(this.data);
-    return parsedData;
+  parse(): object | void {
+    try {
+      const parser = this.getParser();
+      if (!parser)
+        throw new ytErrors.ParserError("Parser not found", {
+          toParse: this.toParse,
+        });
+      const parsedData = parser.parse(this.data);
+      return parsedData;
+    } catch (error) {
+      if (error instanceof ytErrors.YoutubeError) {
+        throw error;
+      } else if (error instanceof Error) {
+        throw new ytErrors.ParserError(error.message, {
+          toParse: this.toParse,
+        });
+      } else {
+        throw new ytErrors.ParserError("Unknown error", {
+          toParse: this.toParse,
+        });
+      }
+    }
   }
 
   getParser(): abstractParser | void {
