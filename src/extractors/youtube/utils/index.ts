@@ -1,4 +1,4 @@
-import { UtilsBase } from "~/utils";
+import { UtilsBase } from "@utils";
 
 export { default as ytConstants } from "./constants";
 

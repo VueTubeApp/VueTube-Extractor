@@ -1,4 +1,4 @@
-import { imageData, audioFormat, videoFormat } from "~/types";
+import { imageData, audioFormat, videoFormat } from "@types";
 
 export {
   video,
@@ -9,7 +9,7 @@ export {
   pageSegmentTypes,
   searchResult,
   searchSuggestion,
-} from "~/types";
+} from "@types";
 
 export interface playerResponse {
   playabilityStatus: {
