@@ -8,7 +8,8 @@ interface identityFinder {
 
 class elementRendererIdentifierFinder implements identityFinder {
   find(itemElement: { [key: string]: any }): string | void {
-    if (itemElement.elementRenderer) return itemElement.elementRenderer.id;
+    const model = itemElement?.elementRenderer?.newElement?.type?.componentType?.model
+    if (model) return Object.keys(model)[0]; else return undefined;
   }
 }
 

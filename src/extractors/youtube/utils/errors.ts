@@ -14,7 +14,7 @@ abstract class PageError extends YoutubeError {
   id: string;
   constructor(id: string, message: string, details?: unknown) {
     super(message, details);
-    Object.setPrototypeOf(this, PageError.prototype);
+    // Object.setPrototypeOf(this, PageError.prototype);
     this.id = id;
   }
 }
@@ -49,7 +49,7 @@ class SearchError extends YoutubeError {
   query: string;
   constructor(query: string, message: string, details?: unknown) {
     super(message, details);
-    Object.setPrototypeOf(this, SearchError.prototype);
+    // Object.setPrototypeOf(this, SearchError.prototype);
     this.query = query;
   }
 }

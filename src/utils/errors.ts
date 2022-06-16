@@ -19,7 +19,7 @@ abstract class VueTubeExtractorError extends Error {
 
   constructor(message: string, details?: unknown) {
     super(message);
-    Object.setPrototypeOf(this, VueTubeExtractorError.prototype);
+    // Object.setPrototypeOf(this, VueTubeExtractorError.prototype);
     this.timestamp = Date.now();
     this.process = process.title;
     this.version = package_json.version;
