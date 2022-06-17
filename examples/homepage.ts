@@ -5,7 +5,7 @@ const fetch = require("isomorphic-fetch"); // So that fetch is available in the 
 async function getHomePage() {
     const youtube = await new YouTube().init();
     const homePage = await youtube.getHomePage();
-    console.log(util.inspect(homePage));
+    console.log(util.inspect(homePage, false, null, true));
 }
 
 getHomePage();

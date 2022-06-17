@@ -20,8 +20,8 @@ export default class privateVideoContextParser extends abstractParser {
         videoId:
           videoWithContextData.onTap.innertubeCommand.watchEndpoint.videoId,
         timestamp: {
-          text: videoWithContextData.videoData.timestampText,
-          style: videoWithContextData.videoData.timestampStyle,
+          text: videoWithContextData.videoData.thumbnail.timestampText,
+          style: videoWithContextData.videoData.thumbnail.timestampStyle,
         },
         channelData: {
           channelId: channelId,
