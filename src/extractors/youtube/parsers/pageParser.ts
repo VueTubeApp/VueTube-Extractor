@@ -1,17 +1,16 @@
 import modelParsers from "./modelParsers";
 import abstractParser from "./abstractParser";
-import { pageSegment } from "../types";
+import { pageElements } from "../types";
 
 export default abstract class YoutubePageParsers extends abstractParser {
   protected callParsers(
     identifier: string,
-    itemElement: { [key: string]: any },
-    contextElement: { [key: string]: any }
-  ): pageSegment | false {
+    itemElement: { [key: string]: any }
+  ): pageElements | false {
     if (!modelParsers[identifier]) return false;
     const parsedElement = modelParsers[identifier].parserObj.parse(
       itemElement
-    ) as pageSegment;
+    ) as pageElements;
     return parsedElement;
   }
 }

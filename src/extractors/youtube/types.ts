@@ -4,11 +4,12 @@ export {
   video,
   videoCard,
   pageSegment,
-  videoSegment,
   genericPage,
   pageSegmentTypes,
+  shelfSegment,
   searchResult,
   searchSuggestion,
+  pageElements,
 } from "@types";
 
 export interface playerResponse {

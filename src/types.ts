@@ -112,6 +112,21 @@ export interface video {
   };
 }
 
+export type pageElements = videoCard | channelCard;
+
+export interface channelCard {
+  channelId: string;
+  thumbnail: Array<imageData>;
+  channelName: string;
+  videoCountText?: string;
+  subScriberCountText?: string;
+  navigationEndpoint?: {
+    browseId: string;
+    canonicalBaseUrl: string;
+  };
+  banner?: Array<imageData>;
+}
+
 export interface videoCard {
   title: string;
   details: string;
@@ -122,6 +137,7 @@ export interface videoCard {
     style: string;
   };
   channelData: channelData;
+  type: "video";
 }
 export interface searchSuggestion {
   query: string;
@@ -135,14 +151,17 @@ export interface searchSuggestion {
 /**
  * Segment of a page.
  */
-export type pageSegmentTypes = "video" | "shortsShelf" | "post" | "divider";
+export type pageSegmentTypes = "genericSegment" | "shortsShelf" | "post" | "divider" | "shelf";
 export interface pageSegment {
   type: pageSegmentTypes;
-  data: any;
+  contents: Array<pageElements>;
 }
 
-export interface videoSegment extends pageSegment {
-  data: videoCard;
+export interface shelfSegment extends pageSegment {
+  header?: string;
+  collapseCount?: number;
+  collapseText?: string;
+  type: "shelf";
 }
 
 /**

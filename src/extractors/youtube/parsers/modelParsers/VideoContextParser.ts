@@ -1,19 +1,17 @@
 import abstractParser from "../abstractParser";
-import { videoSegment } from "../../types";
+import { videoCard } from "../../types";
 import { ytErrors } from "../../utils";
 
 export default class privateVideoContextParser extends abstractParser {
-  parse(data: { [key: string]: any }): videoSegment {
+  parse(data: { [key: string]: any }): videoCard {
     const {
       videoWithContextData,
       metadata,
       channelId,
       channelAvatar,
-      expandableMetadata,
     } = this.getAliases(data);
 
-    const response: videoSegment = {
-      data: {
+    const response: videoCard = {
         title: metadata.title,
         details: metadata.metadataDetails,
         thumbnails: videoWithContextData.videoData.thumbnail.image.sources,
@@ -28,8 +26,7 @@ export default class privateVideoContextParser extends abstractParser {
           channelUrl: `/channel/${channelId}`,
           channelThumbnails: channelAvatar.image.sources,
         },
-      },
-      type: "video",
+        type: "video"
     };
     return response;
   }
@@ -60,14 +57,11 @@ export default class privateVideoContextParser extends abstractParser {
       videoWithContextData.videoData.channelId ||
       channelAvatar.endpoint?.innertubeCommand.browseEndpoint?.browseId;
 
-    const expandableMetadata = videoWithContextModel.expandableMetadata || {};
-
     return {
       videoWithContextData,
       metadata,
       channelId,
       channelAvatar,
-      expandableMetadata,
     };
   }
 }

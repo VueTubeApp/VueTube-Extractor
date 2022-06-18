@@ -1,9 +1,11 @@
-import { pageSegment } from "../types";
+import { pageSegment, pageElements } from "../types";
 import {
   toplevelIdentifierFinder,
   elementRendererIdentifierFinder,
   itemSectionRendererFinder,
   shelfRenderer,
+  shelfSegmentMaker,
+  pageSegmentMaker
 } from "./stratIdentifiers";
 
 /**
@@ -14,30 +16,38 @@ export default abstract class YouTubeParser {
 
   protected getSectionElements(itemSection: {
     [key: string]: any;
-  }): Array<pageSegment> {
+  }): pageSegment | void {
     const segments = [];
     const sectionList = this.findSectionList(itemSection);
     for (const itemElement of sectionList) {
       const identifier = this.findIdentifiers(itemElement);
       const parsedElement = this.callParsers(
         identifier,
-        itemElement,
-        sectionList
-      ) as unknown as pageSegment;
+        itemElement
+      ) as unknown as pageElements;
       if (parsedElement) segments.push(parsedElement);
     }
-    return segments;
+    return this.makePageSegment(segments, itemSection);
   }
 
   protected callParsers(
     identifier: string,
     itemElement: {
       [key: string]: any;
-    },
-    contextElement: {
-      [key: string]: any;
     }
-  ): void { }
+  ): void {}
+
+  protected makePageSegment(
+    itemElement: Array<pageElements>,
+    contextElement: { [key: string]: any }
+  ): pageSegment | void {
+    const makers = [new pageSegmentMaker(), new shelfSegmentMaker()];
+    for (const maker of makers) {
+      const segment = maker.make(itemElement, contextElement);
+      if (segment) return segment;
+    }
+    return undefined;
+  }
 
   protected findIdentifiers(itemElement: { [key: string]: any }): string {
     const finders = [
