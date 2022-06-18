@@ -21,7 +21,8 @@ export default abstract class YouTubeParser {
       const identifier = this.findIdentifiers(itemElement);
       const parsedElement = this.callParsers(
         identifier,
-        itemElement
+        itemElement,
+        sectionList
       ) as unknown as pageSegment;
       if (parsedElement) segments.push(parsedElement);
     }
@@ -32,8 +33,11 @@ export default abstract class YouTubeParser {
     identifier: string,
     itemElement: {
       [key: string]: any;
+    },
+    contextElement: {
+      [key: string]: any;
     }
-  ): void {}
+  ): void { }
 
   protected findIdentifiers(itemElement: { [key: string]: any }): string {
     const finders = [
