@@ -40,8 +40,7 @@ class itemSectionRendererFinder implements sectionListFinder {
 
 class shelfRenderer implements sectionListFinder {
   find(itemSection: { [key: string]: any }) {
-    // return itemSection.shelfRenderer?.contents?.verticalListRenderer?.items;
-    return [];
+    return itemSection.shelfRenderer?.content?.verticalListRenderer?.items;
   }
 }
 
@@ -73,12 +72,12 @@ class shelfSegmentMaker implements pageSegmentMaker {
         header:
           contextSection.shelfRenderer?.headerRenderer?.elementRenderer
             ?.newElement?.type?.componentType?.model
-            ?.shelfHeaderModelshelfHeaderData?.title,
+            ?.shelfHeaderModel?.shelfHeaderData?.title,
         collapseCount:
           contextSection.shelfRenderer?.content?.verticalListRenderer
             ?.collapsedItemCount || undefined,
         collapseText:
-          contextSection.shelfRenderer?.content?.collapsedStateButtonText
+          contextSection.shelfRenderer?.content?.verticalListRenderer?.collapsedStateButtonText
             ?.runs?.[0].text || undefined,
       };
     }
