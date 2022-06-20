@@ -2,7 +2,7 @@ import abstractParser from "../abstractParser";
 import { channelCard } from "../../types";
 import { YtUtils } from "../../utils";
 
-export default class privateVideoContextParser extends abstractParser {
+export default class VideoContextParser extends abstractParser {
     parse(data: { [key: string]: any }): channelCard {
         data = data.compactChannelRenderer
         const response: channelCard = {

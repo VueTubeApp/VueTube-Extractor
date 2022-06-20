@@ -4,6 +4,7 @@ export {
   video,
   videoCard,
   channelCard,
+  playlist,
   pageSegment,
   genericPage,
   pageSegmentTypes,
@@ -12,6 +13,7 @@ export {
   searchResult,
   searchSuggestion,
   pageElements,
+  thumbnail
 } from "@types";
 
 export interface playerResponse {

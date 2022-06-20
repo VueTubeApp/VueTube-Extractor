@@ -21,42 +21,21 @@ export type caption = {
   languageCode: string;
 };
 
-/**
- * For video selection on the search page, home page, etc.
- */
-export type videoSelection = {
-  id: string;
-  title: string;
-  descriptionText: string;
-  channel: {
-    channelId: string;
-    channelUrl: string;
-    channelName: string;
-    channelThumbnails: Array<{
-      url: string;
-      width: number;
-      height: number;
-    }>;
-  };
-  metadata: {
-    views: number;
-    published?: string;
-    overlay?: {
-      text: string;
-      style: string;
-    };
-    thumbnails: Array<{
-      url: string;
-      width: number;
-      height: number;
-    }>;
-  };
-};
-
 export type imageData = {
   url: string;
   width: number;
   height: number;
+};
+
+export type thumbnail = {
+  thumbnails: Array<imageData>;
+  videoCount?: string;
+  isPlaylist?: boolean;
+  isMix?: boolean;
+  sampledThumbnailColor?: string;
+  timestampText?: string;
+  timestampStyle?: string;
+  timestampTextA11y?: string;
 };
 
 /**
@@ -108,7 +87,7 @@ export interface video {
       isDisliked: boolean;
     };
     playbackEndpoints?: Array<videoFormat | audioFormat>;
-    relatedVideos?: Array<videoSelection>;
+    relatedVideos?: Array<videoCard>;
   };
 }
 
@@ -135,13 +114,19 @@ export interface videoCard {
   title: string;
   details: string;
   videoId: string;
-  thumbnails: Array<imageData>;
-  timestamp: {
-    text: string;
-    style: string;
-  };
+  thumbnails: thumbnail;
   channelData: channelData;
   type: "video";
+}
+
+export interface playlist {
+  title: string;
+  playlistId: string;
+  byline?: string;
+  details?: string;
+  thumbnails: thumbnail;
+  videoId?: string;
+  type: "playlist";
 }
 export interface searchSuggestion {
   query: string;

@@ -8,7 +8,7 @@ export default abstract class YoutubePageParsers extends abstractParser {
     itemElement: { [key: string]: any }
   ): pageElements | false {
     if (!modelParsers[identifier]) return false;
-    const parsedElement = modelParsers[identifier].parserObj.parse(
+    const parsedElement = modelParsers[identifier].parse(
       itemElement
     ) as pageElements;
     return parsedElement;

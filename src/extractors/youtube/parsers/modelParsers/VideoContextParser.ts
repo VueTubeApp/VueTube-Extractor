@@ -1,40 +1,52 @@
 import abstractParser from "../abstractParser";
-import { videoCard } from "../../types";
+import PlaylistParser from "./PlaylistParser";
+import Thumbnail from "./thumbnail";
+import { videoCard, playlist } from "../../types";
 import { ytErrors } from "../../utils";
-import util from "util";
 
-export default class privateVideoContextParser extends abstractParser {
-  parse(data: { [key: string]: any }): videoCard {
-    const {
-      videoWithContextData,
-      metadata,
-      channelId,
-      channelAvatar,
-    } = this.getAliases(data);
-
-    const response: videoCard = {
-      title: metadata.title,
-      details: metadata.metadataDetails,
-      thumbnails: videoWithContextData.videoData.thumbnail.image.sources,
-      videoId:
-        videoWithContextData.onTap.innertubeCommand.watchEndpoint.videoId,
-      timestamp: {
-        text: videoWithContextData.videoData.thumbnail.timestampText,
-        style: videoWithContextData.videoData.thumbnail.timestampStyle,
-      },
-      channelData: {
-        channelId: channelId,
-        channelUrl: `/channel/${channelId}`,
-        channelThumbnails: channelAvatar?.image.sources,
-      },
-      type: "video"
-    };
-    return response;
+export default class VideoContextParser extends abstractParser {
+  private data: {[key: string]: any}
+  private contextData: { [key: string]: any };
+  private metadata: { [key: string]: any };
+  private channelId: string;
+  private channelAvatar: { [key: string]: any };
+  
+  parse(data: { [key: string]: any }): videoCard | playlist {
+    this.data = data
+    this.getAliases();
+    if (this.isPlaylist()) {
+      return this.parsePlaylist();
+    } else {
+      return this.parseVideo();
+    }
   }
 
-  private getAliases(data: { [key: string]: any }) {
+  private parseVideo(): videoCard {
+    return {
+      title: this.metadata.title,
+      details: this.metadata.metadataDetails,
+      thumbnails: new Thumbnail(this.contextData.videoData.thumbnail),
+      videoId: this.contextData.onTap.innertubeCommand.watchEndpoint.videoId,
+      channelData: {
+        channelId: this.channelId,
+        channelUrl: `/channel/${this.channelId}`,
+        channelThumbnails: this.channelAvatar?.image.sources,
+      },
+      type: "video",
+    };
+  }
+
+  private parsePlaylist(): playlist {
+    return new PlaylistParser().parse(this.data);
+  }
+
+  private isPlaylist(): boolean {
+    return this.metadata?.isPlaylistMix ? true : false;
+  }
+
+  private getAliases() {
     const componentType =
-      data.elementRenderer.newElement.type.componentType.model;
+      this.data.elementRenderer.newElement.type.componentType.model;
     let videoWithContextModel;
 
     if (componentType.videoWithContextModel) {
@@ -45,29 +57,16 @@ export default class privateVideoContextParser extends abstractParser {
       throw new ytErrors.ParserError("No videoWithContextModel found");
     }
 
-    const videoWithContextData = videoWithContextModel.videoWithContextData;
+    this.contextData = videoWithContextModel.videoWithContextData;
 
-    const metadata = videoWithContextData.videoData.metadata;
+    this.metadata = this.contextData.videoData.metadata;
 
-    const channelAvatar = (
-      videoWithContextData.videoData.decoratedAvatar ||
-      videoWithContextData.videoData
+    this.channelAvatar = (
+      this.contextData.videoData.decoratedAvatar || this.contextData.videoData
     ).avatar;
 
-    const channelId =
-      videoWithContextData.videoData.channelId ||
-      channelAvatar?.endpoint?.innertubeCommand.browseEndpoint?.browseId;
-
-    if (!channelAvatar) {
-      console.log("uhhh no channel avatar");
-      console.log(util.inspect(videoWithContextData, false, null, true));
-    }
-
-    return {
-      videoWithContextData,
-      metadata,
-      channelId,
-      channelAvatar,
-    };
+    this.channelId =
+      this.contextData.videoData.channelId ||
+      this.channelAvatar?.endpoint?.innertubeCommand.browseEndpoint?.browseId;
   }
 }

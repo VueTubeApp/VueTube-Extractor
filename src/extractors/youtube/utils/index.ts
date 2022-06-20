@@ -35,4 +35,11 @@ export class YtUtils extends UtilsBase {
       return acc;
     }, "");
   }
+
+  /**
+   * Converts binary string to a hex string
+   */
+  static binaryToHex(binary: string): string {
+    return Buffer.from(binary, "binary").toString("hex");
+  }
 }
