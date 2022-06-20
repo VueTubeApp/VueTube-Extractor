@@ -17,8 +17,9 @@ export default class homePage extends pageParser {
     const response: genericPage = { segments: [], chips: [] };
 
     for (const itemSection of sectionContents) {
-      response.segments = response.segments.concat(
-        super.getSectionElements(itemSection)
+      const nextSection = super.getSectionElements(itemSection);
+      if (nextSection) response.segments = response.segments.concat(
+        nextSection
       );
     }
 

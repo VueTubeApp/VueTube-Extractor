@@ -1,4 +1,5 @@
 import { pageSegment, shelfSegment, pageElements } from "../types";
+import { YtUtils } from "../utils";
 
 interface sectionListFinder {
   find(itemSection: { [key: string]: any }): Array<any> | void;
@@ -76,9 +77,8 @@ class shelfSegmentMaker implements pageSegmentMaker {
         collapseCount:
           contextSection.shelfRenderer?.content?.verticalListRenderer
             ?.collapsedItemCount || undefined,
-        collapseText:
-          contextSection.shelfRenderer?.content?.verticalListRenderer?.collapsedStateButtonText
-            ?.runs?.[0].text || undefined,
+        collapseText: YtUtils.getStringFromRuns(contextSection.shelfRenderer?.content?.verticalListRenderer?.collapsedStateButtonText
+          ?.runs),
       };
     }
     return undefined;

@@ -1,5 +1,5 @@
 import pageParser from "../pageParser";
-import { searchResult } from "../../types";
+import { searchResult, pageSegment } from "../../types";
 import { ytErrors } from "../../utils";
 
 export default class homePage extends pageParser {

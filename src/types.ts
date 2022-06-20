@@ -112,19 +112,23 @@ export interface video {
   };
 }
 
-export type pageElements = videoCard | channelCard;
+export type pageElements = videoCard | channelCard | pageDivider;
 
+export interface pageDivider {
+  type: "divider";
+}
 export interface channelCard {
   channelId: string;
   thumbnail: Array<imageData>;
   channelName: string;
   videoCountText?: string;
-  subScriberCountText?: string;
+  subscriberCountText?: string;
   navigationEndpoint?: {
     browseId: string;
     canonicalBaseUrl: string;
   };
   banner?: Array<imageData>;
+  type: "channel";
 }
 
 export interface videoCard {

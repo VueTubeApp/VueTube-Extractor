@@ -3,9 +3,11 @@ import { imageData, audioFormat, videoFormat } from "@types";
 export {
   video,
   videoCard,
+  channelCard,
   pageSegment,
   genericPage,
   pageSegmentTypes,
+  pageDivider,
   shelfSegment,
   searchResult,
   searchSuggestion,
