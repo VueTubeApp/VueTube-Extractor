@@ -1,5 +1,5 @@
 import abstractParser from "../abstractParser";
-import Thumbnail from "./thumbnail";
+import Thumbnail from "./Thumbnail";
 import { playlist } from "../../types";
 import { ytErrors } from "../../utils";
 

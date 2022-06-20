@@ -1,6 +1,6 @@
 import abstractParser from "../abstractParser";
 import PlaylistParser from "./PlaylistParser";
-import Thumbnail from "./thumbnail";
+import Thumbnail from "./Thumbnail";
 import { videoCard, playlist } from "../../types";
 import { ytErrors } from "../../utils";
 
