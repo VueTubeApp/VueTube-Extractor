@@ -24,7 +24,7 @@ export default class privateVideoContextParser extends abstractParser {
       channelData: {
         channelId: channelId,
         channelUrl: `/channel/${channelId}`,
-        channelThumbnails: channelAvatar.image.sources,
+        channelThumbnails: channelAvatar?.image.sources,
       },
       type: "video"
     };
