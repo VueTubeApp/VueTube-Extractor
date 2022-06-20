@@ -1,6 +1,7 @@
 import abstractParser from "../abstractParser";
 import { videoCard } from "../../types";
 import { ytErrors } from "../../utils";
+import util from "util";
 
 export default class privateVideoContextParser extends abstractParser {
   parse(data: { [key: string]: any }): videoCard {
@@ -56,6 +57,11 @@ export default class privateVideoContextParser extends abstractParser {
     const channelId =
       videoWithContextData.videoData.channelId ||
       channelAvatar?.endpoint?.innertubeCommand.browseEndpoint?.browseId;
+
+    if (!channelAvatar) {
+      console.log("uhhh no channel avatar");
+      console.log(util.inspect(videoWithContextData, false, null, true));
+    }
 
     return {
       videoWithContextData,
