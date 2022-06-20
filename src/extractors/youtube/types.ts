@@ -1,15 +1,18 @@
-import { imageData, audioFormat, videoFormat } from "~/types";
+import { imageData, audioFormat, videoFormat } from "@types";
 
 export {
   video,
   videoCard,
+  channelCard,
   pageSegment,
-  videoSegment,
   genericPage,
   pageSegmentTypes,
+  pageDivider,
+  shelfSegment,
   searchResult,
   searchSuggestion,
-} from "~/types";
+  pageElements,
+} from "@types";
 
 export interface playerResponse {
   playabilityStatus: {
@@ -122,7 +125,11 @@ export interface searchFilter {
   features: Array<searchFeatures>;
 }
 
-export type parseTypes = "videoDetail" | "homePage" | "searchSuggestions";
+export type parseTypes =
+  | "videoDetail"
+  | "homePage"
+  | "searchSuggestions"
+  | "searchResult";
 
 export type userConfig = {
   hl?: string;

@@ -1,4 +1,4 @@
-import package_json from "~/../package.json";
+import package_json from "@package";
 
 /**
  * Base error class. Extend this class for custom errors.
@@ -19,6 +19,7 @@ abstract class VueTubeExtractorError extends Error {
 
   constructor(message: string, details?: unknown) {
     super(message);
+    // Object.setPrototypeOf(this, VueTubeExtractorError.prototype);
     this.timestamp = Date.now();
     this.process = process.title;
     this.version = package_json.version;
@@ -26,6 +27,6 @@ abstract class VueTubeExtractorError extends Error {
   }
 }
 
-class ExtractorNotReadyError extends VueTubeExtractorError {}
+class ExtractorNotReadyError extends VueTubeExtractorError { }
 
 export default { VueTubeExtractorError, ExtractorNotReadyError };

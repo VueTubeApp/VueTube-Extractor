@@ -7,7 +7,7 @@ import { ytErrors } from "../../utils";
  * const video = new ytVideo.parse(data);
  * ```
  */
-export default class ytVideo implements abstractParser {
+export default class ytVideo extends abstractParser {
   /**
    * Main parse function.
    * @param data The data to parse
@@ -50,7 +50,7 @@ export default class ytVideo implements abstractParser {
     return response;
   }
 
-  checkValidity(data: ytVideoData): void {
+  private checkValidity(data: ytVideoData): void {
     if (!data.player) {
       throw new ytErrors.ParserError("No player data found", {
         received: data,

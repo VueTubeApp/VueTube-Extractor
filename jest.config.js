@@ -9,7 +9,9 @@ module.exports = {
   },
   moduleFileExtensions: ["ts", "tsx", "js"],
   moduleNameMapper: {
-    "~/(.*)": "<rootDir>/src/$1",
+    "@utils": "<rootDir>/src/utils",
+    "@types": "<rootDir>/src/types",
+    "@package": "<rootDir>/package.json",
   },
   reporters: ["default", "jest-junit"],
   collectCoverageFrom: ["./src/**"],

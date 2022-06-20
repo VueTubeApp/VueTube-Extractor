@@ -1,4 +1,4 @@
-import { UtilsBase } from "~/utils";
+import { UtilsBase } from "@utils";
 
 export { default as ytConstants } from "./constants";
 
@@ -19,5 +19,20 @@ export class YtUtils extends UtilsBase {
 
   static randomCPN(): string {
     return super.randomString(16);
+  }
+
+  /**
+   * Get string from runs array
+   * @param {Array<any>} runs
+   * @returns {string | void}
+   */
+  static getStringFromRuns(runs: Array<{ text: string }>): string {
+    if (!runs) return "undefined";
+    return runs.reduce((acc, cur) => {
+      if (cur.hasOwnProperty("text")) {
+        return acc + cur.text;
+      }
+      return acc;
+    }, "");
   }
 }

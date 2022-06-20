@@ -1,5 +1,11 @@
 import initialization from "./core/initializer";
-import { userConfig, video, genericPage, searchSuggestion } from "./types";
+import {
+  userConfig,
+  video,
+  genericPage,
+  searchSuggestion,
+  searchResult,
+} from "./types";
 import { YouTubeHTTPOptions, ytErrors } from "./utils";
 import youtubeRequester from "./core/requester";
 import Parser from "./parsers";
@@ -100,7 +106,7 @@ export default class YouTube {
    * Retrieves home page data.
    * @returns {Promise<genericPage>}
    */
-  async getHomepage(): Promise<genericPage> {
+  async getHomePage(): Promise<genericPage> {
     this.checkReady();
     const homepage = (await this.requester.browse("FEwhat_to_watch", {
       isContinuation: false,
@@ -139,9 +145,40 @@ export default class YouTube {
    * @param {object} filters - The filters to apply to the search.
    * @returns {Promise<searchResult>}
    */
-  async search(query: string, filters: object) {
+  async getSearchPage(
+    query: string,
+    filters: object = []
+  ): Promise<searchResult> {
     this.checkReady();
-    const searchResponse = await this.requester.search(query, filters);
+    const searchResponse = await this.requester.search(query, {
+      filters,
+      isContinuation: false,
+    });
+    const parsedSearch = (toParse: { [key: string]: any }) => {
+      const parsed = new Parser(
+        "searchResult",
+        toParse
+      ).parse() as searchResult;
+      parsed.continue = async () => {
+        const continuation = (
+          toParse.continuationContents?.sectionListContinuation ||
+          toParse.contents?.sectionListRenderer?.continuations
+        ).continuations?.find(
+          (continuation: { [key: string]: any }) =>
+            continuation.nextContinuationData?.continuation
+        ).nextContinuationData?.continuation;
+        if (!continuation) {
+          throw new ytErrors.EndOfPageError("No more search results!");
+        }
+        const nextResponse = await this.requester.search(continuation, {
+          filters,
+          isContinuation: true,
+        });
+        return parsedSearch(nextResponse);
+      };
+      return parsed;
+    };
+    return parsedSearch(searchResponse);
   }
 
   /**
