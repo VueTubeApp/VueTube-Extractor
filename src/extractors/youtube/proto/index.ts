@@ -38,15 +38,18 @@ class Proto {
     }
     const data: searchProto = filters ? { filters: {} } : { noFilter: 0 };
     if (data.filters) {
-      filters.uploadDate &&
-        (data.filters.param_0 = uploadDate[filters.uploadDate]);
-      filters.type && (data.filters.param_1 = type[filters.type]);
-      filters.duration && (data.filters.param_2 = duration[filters.duration]);
-      filters.order && (data.sort = order[filters.order]);
-      filters.features?.forEach((feature) => {
-        data.filters &&
-          (data.filters[features[feature] as keyof protoFilters] = 1);
-      });
+      data.filters = {
+        ...data.filters,
+        ...filters.uploadDate && { param_0: uploadDate[filters.uploadDate] },
+        ...filters.type && { param_1: type[filters.type] },
+        ...filters.duration && { param_2: duration[filters.duration] },
+        ...filters.order && { sort: order[filters.order] },
+      }
+      if (filters.features) {
+        for (const feature of filters.features) {
+          data.filters[features[feature] as keyof protoFilters] = 1
+        }
+      }
     }
     const searchFilter: Type = this.protoRoot.lookupType(
       "youtube.SearchFilter"
