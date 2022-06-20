@@ -14,7 +14,7 @@ export default class PlaylistParser extends abstractParser {
           playlistId:
             innertubeCommand?.browseEndpoint?.browseId?.slice(2) ||
             innertubeCommand?.watchEndpoint?.playlistId,
-          videoId: innertubeCommand?.watchEndpoint.videoId || undefined,
+          videoId: innertubeCommand?.watchEndpoint?.videoId || undefined,
           thumbnails: new Thumbnail(videoWithContextData.videoData.thumbnail),
           type: "playlist",
         };
