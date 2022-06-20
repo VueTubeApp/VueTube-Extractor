@@ -9,7 +9,6 @@ import {
 import { YouTubeHTTPOptions, ytErrors } from "./utils";
 import youtubeRequester from "./core/requester";
 import Parser from "./parsers";
-import { searchPage } from "./parsers/strats";
 
 export default class YouTube {
   private config: userConfig;

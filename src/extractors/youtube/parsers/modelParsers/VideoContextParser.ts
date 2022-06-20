@@ -12,21 +12,21 @@ export default class privateVideoContextParser extends abstractParser {
     } = this.getAliases(data);
 
     const response: videoCard = {
-        title: metadata.title,
-        details: metadata.metadataDetails,
-        thumbnails: videoWithContextData.videoData.thumbnail.image.sources,
-        videoId:
-          videoWithContextData.onTap.innertubeCommand.watchEndpoint.videoId,
-        timestamp: {
-          text: videoWithContextData.videoData.thumbnail.timestampText,
-          style: videoWithContextData.videoData.thumbnail.timestampStyle,
-        },
-        channelData: {
-          channelId: channelId,
-          channelUrl: `/channel/${channelId}`,
-          channelThumbnails: channelAvatar.image.sources,
-        },
-        type: "video"
+      title: metadata.title,
+      details: metadata.metadataDetails,
+      thumbnails: videoWithContextData.videoData.thumbnail.image.sources,
+      videoId:
+        videoWithContextData.onTap.innertubeCommand.watchEndpoint.videoId,
+      timestamp: {
+        text: videoWithContextData.videoData.thumbnail.timestampText,
+        style: videoWithContextData.videoData.thumbnail.timestampStyle,
+      },
+      channelData: {
+        channelId: channelId,
+        channelUrl: `/channel/${channelId}`,
+        channelThumbnails: channelAvatar.image.sources,
+      },
+      type: "video"
     };
     return response;
   }
@@ -55,7 +55,7 @@ export default class privateVideoContextParser extends abstractParser {
 
     const channelId =
       videoWithContextData.videoData.channelId ||
-      channelAvatar.endpoint?.innertubeCommand.browseEndpoint?.browseId;
+      channelAvatar?.endpoint?.innertubeCommand.browseEndpoint?.browseId;
 
     return {
       videoWithContextData,
