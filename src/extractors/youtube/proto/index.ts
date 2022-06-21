@@ -43,11 +43,11 @@ class Proto {
         ...filters.uploadDate && { param_0: uploadDate[filters.uploadDate] },
         ...filters.type && { param_1: type[filters.type] },
         ...filters.duration && { param_2: duration[filters.duration] },
-        ...filters.order && { sort: order[filters.order] },
       }
+      if (filters.order) data.sort = order[filters.order];
       if (filters.features) {
         for (const feature of filters.features) {
-          data.filters[features[feature] as keyof protoFilters] = 1
+          data.filters[features[feature] as keyof protoFilters] = 1;
         }
       }
     }
