@@ -27,17 +27,21 @@ export default class Parser {
       const parsedData = parser.parse(this.data);
       return parsedData;
     } catch (error) {
-      if (error instanceof ytErrors.YoutubeError) {
-        throw error;
-      } else if (error instanceof Error) {
-        throw new ytErrors.ParserError(error.message, {
-          toParse: this.toParse,
-        });
-      } else {
-        throw new ytErrors.ParserError("Unknown error", {
-          toParse: this.toParse,
-        });
-      }
+      this.handleError(error)
+    }
+  }
+
+  private handleError(error: unknown): void {
+    if (error instanceof ytErrors.YoutubeError) {
+      throw error;
+    } else if (error instanceof Error) {
+      throw new ytErrors.ParserError(error.message, {
+        toParse: this.toParse,
+      });
+    } else {
+      throw new ytErrors.ParserError("Unknown error", {
+        toParse: this.toParse,
+      });
     }
   }
 
