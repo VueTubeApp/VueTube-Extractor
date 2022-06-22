@@ -1,5 +1,5 @@
 import UserAgent from "user-agents";
-import { MixinConstructor, MixinFunc } from '../types'
+import { MixinFunc } from '../types'
 
 export { default as utilityErrors } from "./errors";
 

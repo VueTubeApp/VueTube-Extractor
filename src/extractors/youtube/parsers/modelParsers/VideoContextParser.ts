@@ -1,7 +1,7 @@
 import abstractParser from "../abstractParser";
 import Thumbnail from "./Thumbnail";
 import { videoCard, playlist } from "../../types";
-import { ytErrors, applyMixins } from "../../utils";
+import { ytErrors } from "../../utils";
 
 export default class VideoContextParser extends abstractParser {
   protected data: { [key: string]: any };

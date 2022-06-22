@@ -8,4 +8,6 @@ async function getHomePage() {
     console.log(util.inspect(homePage, false, null, true));
 }
 
-getHomePage();
+getHomePage().catch((error) => {
+  console.error(error);
+});;
