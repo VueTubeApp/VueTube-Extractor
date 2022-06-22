@@ -2,7 +2,7 @@ import { thumbnail } from "../../types";
 
 export default class Thumbnail implements thumbnail {
   private data: { [key: string]: any };
-  protected ignoreKeys: Array<string> = [
+  private ignoreKeys: Array<string> = [
     "isAndroid",
     "isVideoWithContext",
     "maxOverlayWidth",

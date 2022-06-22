@@ -1,3 +1,7 @@
+export type MixinConstructor<T = {}> = new (...args: any[]) => T;
+// a function that returns a class that extends the base class
+export type MixinFunc = <T extends MixinConstructor>(base: T) => T;
+
 /**
  * Type for audio endpoints.
  */
@@ -140,7 +144,12 @@ export interface searchSuggestion {
 /**
  * Segment of a page.
  */
-export type pageSegmentTypes = "genericSegment" | "shortsShelf" | "post" | "divider" | "shelf";
+export type pageSegmentTypes =
+  | "genericSegment"
+  | "shortsShelf"
+  | "post"
+  | "divider"
+  | "shelf";
 export interface pageSegment {
   type: pageSegmentTypes;
   contents: Array<pageElements>;

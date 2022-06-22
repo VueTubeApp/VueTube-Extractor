@@ -1,4 +1,5 @@
 import UserAgent from "user-agents";
+import { MixinConstructor, MixinFunc } from '../types'
 
 export { default as utilityErrors } from "./errors";
 
@@ -33,4 +34,17 @@ export abstract class UtilsBase {
 
     return result;
   }
+}
+
+/**
+ * Takes typescript mixins as an array and returns a class with the mixins applied
+ * @param {any} base - the base class to mixin to
+ * @param {Array<MixinFunc<MixinConstructor>>} mixins - an array of mixins
+ * @returns {any} a class with the mixins applied
+ */
+export function applyMixins(base: any, ...mixins: Array<MixinFunc>) {
+  mixins.forEach((mixin) => {
+    base = mixin(base);
+  });
+  return base;
 }

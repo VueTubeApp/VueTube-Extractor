@@ -1,18 +1,18 @@
 import abstractParser from "../abstractParser";
-import PlaylistParser from "./PlaylistParser";
 import Thumbnail from "./Thumbnail";
 import { videoCard, playlist } from "../../types";
-import { ytErrors } from "../../utils";
+import { ytErrors, applyMixins } from "../../utils";
 
 export default class VideoContextParser extends abstractParser {
-  private data: {[key: string]: any}
-  private contextData: { [key: string]: any };
-  private metadata: { [key: string]: any };
-  private channelId: string;
-  private channelAvatar: { [key: string]: any };
-  
+  protected data: { [key: string]: any };
+  protected contextData: { [key: string]: any };
+  protected metadata: { [key: string]: any };
+  protected channelId: string;
+  protected channelAvatar: { [key: string]: any };
+  protected innertubeCommand: {[key: string]: any};
+
   parse(data: { [key: string]: any }): videoCard | playlist {
-    this.data = data
+    this.data = data;
     this.getAliases();
     if (this.isPlaylist()) {
       return this.parsePlaylist();
@@ -44,7 +44,7 @@ export default class VideoContextParser extends abstractParser {
     return this.metadata?.isPlaylistMix ? true : false;
   }
 
-  private getAliases() {
+  protected getAliases() {
     const componentType =
       this.data.elementRenderer.newElement.type.componentType.model;
     let videoWithContextModel;
@@ -68,5 +68,24 @@ export default class VideoContextParser extends abstractParser {
     this.channelId =
       this.contextData.videoData.channelId ||
       this.channelAvatar?.endpoint?.innertubeCommand.browseEndpoint?.browseId;
+
+    this.innertubeCommand = this.contextData.onTap.innertubeCommand;
+  }
+}
+class PlaylistParser extends VideoContextParser {
+  parse(data: { [key: string]: any }): playlist {
+    this.data = data;
+    this.getAliases();
+    return {
+      title: this.metadata.title,
+      byline: this.metadata.byline,
+      details: this.metadata.metadataDetails,
+      playlistId:
+        this.innertubeCommand?.browseEndpoint?.browseId?.slice(2) ||
+        this.innertubeCommand?.watchEndpoint?.playlistId,
+      videoId: this.innertubeCommand?.watchEndpoint?.videoId || undefined,
+      thumbnails: new Thumbnail(this.contextData.videoData.thumbnail),
+      type: "playlist",
+    };
   }
 }

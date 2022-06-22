@@ -13,7 +13,9 @@ export {
   searchResult,
   searchSuggestion,
   pageElements,
-  thumbnail
+  thumbnail,
+  MixinConstructor,
+  MixinFunc,
 } from "@types";
 
 export interface playerResponse {

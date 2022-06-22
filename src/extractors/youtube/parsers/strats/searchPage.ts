@@ -21,7 +21,7 @@ export default class homePage extends pageParser {
     };
 
     for (const itemSection of sectionContents) {
-      const nextSection = super.getSectionElements(itemSection);
+      const nextSection = super._getSectionElements(itemSection);
       if (nextSection) response.segments.push(nextSection);
     }
 

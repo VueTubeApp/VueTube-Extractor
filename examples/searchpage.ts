@@ -8,4 +8,4 @@ async function getSearch(query: string) {
   console.log(util.inspect(result, false, null, true));
 }
 
-getSearch("LTT");
+getSearch("LTT").catch(error => {console.error(error);});

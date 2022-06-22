@@ -1,5 +1,7 @@
 import { UtilsBase } from "@utils";
 
+export { applyMixins } from "@utils";
+
 export { default as ytConstants } from "./constants";
 
 export { default as YouTubeHTTPOptions } from "./youtubeHTTPOptions";
