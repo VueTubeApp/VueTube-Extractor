@@ -31,7 +31,7 @@ export class YtUtils extends UtilsBase {
   static getStringFromRuns(runs: Array<{ text: string }>): string {
     if (!runs) return "undefined";
     return runs.reduce((acc, cur) => {
-      if (cur.hasOwnProperty("text")) {
+      if (Object.prototype.hasOwnProperty.call(cur, 'text')) {
         return acc + cur.text;
       }
       return acc;
