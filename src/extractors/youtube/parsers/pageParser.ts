@@ -2,7 +2,7 @@ import modelParsers from "./modelParsers";
 import abstractParser from "./abstractParser";
 import { pageElements } from "../types";
 import { applyMixins } from "../utils";
-import sectionMixin from "./mixins/Section";
+import sectionMixin from "./mixins/section";
 
 const ytPageParserBase = applyMixins(abstractParser, sectionMixin);
 export default abstract class YoutubePageParsers extends ytPageParserBase {
