@@ -1,4 +1,4 @@
-import { imageData, audioFormat, videoFormat, genericPage } from "@types";
+import { imageData, audioFormat, videoFormat } from "@types";
 
 export {
   video,
@@ -13,7 +13,7 @@ export {
   searchResult,
   searchSuggestion,
   pageElements,
-  thumbnail
+  thumbnail,
 } from "@types";
 
 export interface playerResponse {

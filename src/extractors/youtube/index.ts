@@ -11,6 +11,7 @@ import youtubeRequester from "./core/requester";
 import Parser from "./parsers";
 import homePageController from "./controllers/homePageController";
 import searchPageController from "./controllers/searchController";
+import videoPageController from "./controllers/videoPageController";
 
 export default class YouTube {
   private config: userConfig;
@@ -78,30 +79,9 @@ export default class YouTube {
     includeRecommendations = true
   ): Promise<video> {
     this.checkReady();
-    const videoInfo = await this.requester.getVideoInfo(videoId);
-    if (videoInfo.player.playabilityStatus.status == "ERROR") {
-      throw new ytErrors.VideoNotFoundError(
-        videoId,
-        videoInfo.player.playabilityStatus.reason || "UNKNOWN",
-        videoInfo.player
-      );
-    } else if (videoInfo.player.playabilityStatus.status == "UNPLAYABLE") {
-      throw new ytErrors.VideoNotAvailableError(
-        videoId,
-        videoInfo.player.playabilityStatus.reason || "UNKNOWN",
-        videoInfo.player
-      );
-    } else if (videoInfo.player.playabilityStatus.status == "LOGIN_REQUIRED") {
-      throw new ytErrors.LoginRequiredError(
-        videoInfo.player.playabilityStatus.reason || "UNKNOWN",
-        videoInfo.player
-      );
-    }
-    const parsed = new Parser("videoDetail", {
-      player: videoInfo.player,
-      next: videoInfo.next,
-    }).parse();
-    return parsed as video;
+    const videoController = new videoPageController(videoId, this);
+    const videoPage = await videoController.getRequest();
+    return videoController.parseData(videoPage);
   }
 
   /**
@@ -110,7 +90,9 @@ export default class YouTube {
    */
   async getHomePage(): Promise<genericPage> {
     this.checkReady();
-    const homeController = new homePageController(undefined, this, {isContinuation: false});
+    const homeController = new homePageController(undefined, this, {
+      isContinuation: false,
+    });
     const homePage = await homeController.getRequest();
     return homeController.parseData(homePage);
   }
@@ -127,7 +109,9 @@ export default class YouTube {
     filters: object = []
   ): Promise<searchResult> {
     this.checkReady();
-    const searchController = new searchPageController(query, filters, this, {isContinuation: false});
+    const searchController = new searchPageController(query, filters, this, {
+      isContinuation: false,
+    });
     const searchPage = await searchController.getRequest();
     return searchController.parseData(searchPage);
   }

@@ -1,4 +1,6 @@
-export type MixinConstructor<T = {}> = new (...args: any[]) => T;
+export type MixinConstructor<T = Record<string, unknown>> = new (
+  ...args: any[]
+) => T;
 // a function that returns a class that extends the base class
 export type MixinFunc = <T extends MixinConstructor>(base: T) => T;
 
@@ -179,4 +181,3 @@ export interface searchResult extends genericPage {
   searchRefinements?: Array<string>;
   resultCount: number;
 }
-

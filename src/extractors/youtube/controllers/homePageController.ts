@@ -9,7 +9,7 @@ export default class homePageController extends basicController<genericPage> {
   id: string;
 
   constructor(
-    id: string = "FEwhat_to_watch",
+    id = "FEwhat_to_watch",
     session: YouTube,
     config: browseConfig = {}
   ) {
@@ -24,11 +24,9 @@ export default class homePageController extends basicController<genericPage> {
     const requestOptions = {
       data: {
         ...this.config.data,
-        ...(
-          this.config.isContinuation
+        ...(this.config.isContinuation
           ? { continuation: this.id }
-          : { browse_id: this.id }
-          ),
+          : { browse_id: this.id }),
       },
       params: { ...this.config.params },
     };
@@ -48,7 +46,6 @@ export default class homePageController extends basicController<genericPage> {
       data
     ).parse() as ytPageParseResults<genericPage>;
   }
-  
 
   protected postProcessResponse(
     data: ytPageParseResults<genericPage>
@@ -68,6 +65,6 @@ export default class homePageController extends basicController<genericPage> {
     return {
       ...data.page,
       continue: continueMethod,
-    }
+    };
   }
 }

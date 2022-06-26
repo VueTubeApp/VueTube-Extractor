@@ -27,29 +27,33 @@ export default abstract class basicController<V extends object = object> {
     HttpOptions | { [key: string]: HttpOptions }
   > {
     const options = this.buildRequestOptions();
-    let toReturn: { [key: string]: HttpOptions } = {};
+    const responseObject: { [key: string]: HttpOptions } = {};
     for (const { option, key } of options) {
       const response = await Http.post(option);
       if (response.status === 200) {
-        toReturn[key || option.url] = response.data;
+        responseObject[key || option.url] = response.data;
       }
     }
-    if (Object.keys(toReturn).length === 1) {
-      return toReturn[Object.keys(toReturn)[0]];
-    } else if (!toReturn) {
+    let toReturn;
+    if (Object.keys(responseObject).length === 1) {
+      toReturn = responseObject[Object.keys(responseObject)[0]];
+    } else if (!responseObject) {
       throw new ytErrors.ParserError("No data returned");
-    } 
-    else {
-      return toReturn;
+    } else {
+      toReturn = responseObject;
     }
+    this.throwErrors(toReturn);
+    return toReturn;
   }
 
   protected abstract parseRawResponse(data: { [key: string]: any }): object;
 
   protected abstract postProcessResponse(data: { [key: string]: any }): V;
 
+  protected throwErrors(data: { [key: string]: any }): void {}
+
   public async parseData(data: { [key: string]: any }): Promise<V> {
-    let parsedData = this.parseRawResponse(data);
+    const parsedData = this.parseRawResponse(data);
     const postProcessed = this.postProcessResponse(parsedData);
     return postProcessed;
   }
