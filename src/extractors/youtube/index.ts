@@ -9,6 +9,8 @@ import {
 import { YouTubeHTTPOptions, ytErrors } from "./utils";
 import youtubeRequester from "./core/requester";
 import Parser from "./parsers";
+import homePageController from "./controllers/homePageController";
+import searchPageController from "./controllers/searchController";
 
 export default class YouTube {
   private config: userConfig;
@@ -108,34 +110,9 @@ export default class YouTube {
    */
   async getHomePage(): Promise<genericPage> {
     this.checkReady();
-    const homepage = (await this.requester.browse("FEwhat_to_watch", {
-      isContinuation: false,
-    })) as { [key: string]: any };
-    const parseHome = (toParse: { [key: string]: any }) => {
-      const parsed = new Parser("homePage", toParse).parse() as genericPage;
-      parsed.continue = async () => {
-        const sectionContinuations = (
-          toParse.continuationContents?.sectionListContinuation ||
-          toParse.contents?.singleColumnBrowseResultsRenderer?.tabs[0]
-            ?.tabRenderer?.content.sectionListRenderer
-        ).continuations?.find(
-          (continuation: { [key: string]: any }) =>
-            continuation.nextContinuationData?.continuation
-        ).nextContinuationData?.continuation;
-        if (!sectionContinuations)
-          throw new ytErrors.EndOfPageError("No more recommendations!");
-        const continueResponse = await this.requester.browse(
-          sectionContinuations,
-          {
-            isContinuation: true,
-          }
-        );
-        return parseHome(continueResponse);
-      };
-      return parsed;
-    };
-
-    return parseHome(homepage);
+    const homeController = new homePageController(undefined, this, {isContinuation: false});
+    const homePage = await homeController.getRequest();
+    return homeController.parseData(homePage);
   }
 
   /**
@@ -150,35 +127,9 @@ export default class YouTube {
     filters: object = []
   ): Promise<searchResult> {
     this.checkReady();
-    const searchResponse = await this.requester.search(query, {
-      filters,
-      isContinuation: false,
-    });
-    const parsedSearch = (toParse: { [key: string]: any }) => {
-      const parsed = new Parser(
-        "searchResult",
-        toParse
-      ).parse() as searchResult;
-      parsed.continue = async () => {
-        const continuation = (
-          toParse.continuationContents?.sectionListContinuation ||
-          toParse.contents?.sectionListRenderer?.continuations
-        ).continuations?.find(
-          (continuation: { [key: string]: any }) =>
-            continuation.nextContinuationData?.continuation
-        ).nextContinuationData?.continuation;
-        if (!continuation) {
-          throw new ytErrors.EndOfPageError("No more search results!");
-        }
-        const nextResponse = await this.requester.search(continuation, {
-          filters,
-          isContinuation: true,
-        });
-        return parsedSearch(nextResponse);
-      };
-      return parsed;
-    };
-    return parsedSearch(searchResponse);
+    const searchController = new searchPageController(query, filters, this, {isContinuation: false});
+    const searchPage = await searchController.getRequest();
+    return searchController.parseData(searchPage);
   }
 
   /**

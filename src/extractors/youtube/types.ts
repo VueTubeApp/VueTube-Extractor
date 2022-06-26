@@ -1,4 +1,4 @@
-import { imageData, audioFormat, videoFormat } from "@types";
+import { imageData, audioFormat, videoFormat, genericPage } from "@types";
 
 export {
   video,
@@ -174,3 +174,13 @@ export type ytVideoData = {
   player: playerResponse;
   next: object;
 };
+
+export interface continuation {
+  nextContinuationData: string;
+  reloadContinuationData: string;
+}
+
+export interface ytPageParseResults<T> {
+  page: T;
+  Continuation?: continuation;
+}
