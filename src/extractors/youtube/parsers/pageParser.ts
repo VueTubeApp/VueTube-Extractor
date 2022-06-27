@@ -8,12 +8,11 @@ const ytPageParserBase = applyMixins(abstractParser, sectionMixin);
 export default abstract class YoutubePageParsers extends ytPageParserBase {
   protected _callParsers(
     identifier: string,
-    itemElement: unknown,
+    itemElement: unknown
   ): pageElements | false {
-    if (!modelParsers[identifier]) return false;
-    const parsedElement = modelParsers[identifier].parse(
-      itemElement
-    ) as pageElements;
+    const parser = modelParsers(identifier);
+    if (!parser) return false;
+    const parsedElement = parser.parse(itemElement) as pageElements;
     return parsedElement;
   }
 }

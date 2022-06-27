@@ -1,17 +1,28 @@
+import type abstractParser from "../abstractParser";
 import VideoContextParser from "./VideoContextParser";
-import privateChannelRendererParser from "./ChannelRendererParser";
-import privateCellDividerParser from "./CellDividerParser";
-import abstractParser from "../abstractParser";
-import Continuations from "./Continuations";
+import compactChannelRenderer from "./ChannelRendererParser";
+import cellDividerModel from "./CellDividerParser";
+import continuations from "./Continuations";
 
-const parserStrats: {
-  [key: string]: abstractParser;
-} = {
-  videoWithContextModel: new VideoContextParser(),
-  videoWithContextSlotsModel: new VideoContextParser(),
-  compactChannelRenderer: new privateChannelRendererParser(),
-  cellDividerModel: new privateCellDividerParser(),
-  continuations: new Continuations(),
+interface parsersList {
+  [key: string]: Pick<typeof abstractParser, keyof typeof abstractParser> &
+    (new () => abstractParser);
+}
+
+const parserStrats: parsersList = {
+  videoWithContextModel: VideoContextParser,
+  videoWithContextSlotsModel: VideoContextParser,
+  compactChannelRenderer,
+  cellDividerModel,
+  continuations,
 };
 
-export default parserStrats;
+const parserFactory = (model: string): abstractParser | void => {
+  const parser = parserStrats[model];
+  if (!parser) {
+    return undefined;
+  }
+  return new parser();
+};
+
+export default parserFactory;
