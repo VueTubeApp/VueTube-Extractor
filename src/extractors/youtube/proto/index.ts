@@ -1,7 +1,8 @@
 import { Root, Type, loadSync } from "protobufjs";
 import path from "path";
-import { searchFilter, searchFeatures } from "../types";
-import { duration, order, type, uploadDate } from "./conversion";
+import type { searchFilter } from "../types";
+import { duration, order, type, uploadDate, commentSortOptions, features } from "./conversion";
+import type { searchProto, protoFilters, commentOptions } from "./types";
 import { ytErrors } from "../utils";
 
 class Proto {
@@ -57,6 +58,30 @@ class Proto {
     const buf: Uint8Array = searchFilter.encode(data).finish();
     return encodeURIComponent(Buffer.from(buf).toString("base64"));
   }
+
+  /**
+   * encodes comment options to protobuf format
+   * @param {string} video_id - video id
+   * @returns {string} encoded comment options
+   */
+  encodeCommentOptions(video_id: string, options: commentOptions = {}): string {
+    const commentOptions: Type = this.protoRoot.lookupType(
+      "youtube.CommentsSection"
+    );
+    const data = {
+      ctx: { video_id },
+      unk_param: 6,
+      params: {
+        opts: {
+          video_id,
+          sort_by: commentSortOptions[options.sortBy || "topComments"],
+        },
+        target: "comments-section",
+      }
+    }
+    const buf: Uint8Array = commentOptions.encode(data).finish();
+    return encodeURIComponent(Buffer.from(buf).toString("base64"));
+  }
 }
 
 const singletonProto = new Proto();
@@ -64,39 +89,3 @@ const singletonProto = new Proto();
 Object.freeze(singletonProto);
 
 export default singletonProto;
-
-const features: { [key in searchFeatures]: string } = {
-  hd: "featuresHd",
-  video4k: "features4k",
-  vr180: "featuresVr180",
-  subtitles: "featuresSubtitles",
-  cc: "featuresCreativeCommons",
-  video360: "features360",
-  video3d: "features3d",
-  hdr: "featuresHdr",
-  location: "featuresLocation",
-  purchased: "featuresPurchased",
-  live: "featuresLive",
-};
-interface searchProto {
-  sort?: number | null;
-  noFilter?: number | null;
-  noCorrection?: number | null;
-  filters?: protoFilters;
-}
-interface protoFilters {
-  param_0?: number | null;
-  param_1?: number | null;
-  param_2?: number | null;
-  featuresHd?: number | null;
-  features4k?: number | null;
-  featuresVr180?: number | null;
-  featuresSubtitles?: number | null;
-  featuresCreativeCommons?: number | null;
-  features360?: number | null;
-  features3d?: number | null;
-  featuresHdr?: number | null;
-  featuresLocation?: number | null;
-  featuresPurchased?: number | null;
-  featuresLive?: number | null;
-}

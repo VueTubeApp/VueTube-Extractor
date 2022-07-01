@@ -31,3 +31,45 @@ message SearchFilter {
   
   optional Filters filters = 2;
 }
+
+message CommentsSection {
+  message Context {
+    string video_id = 2;
+  }
+  Context ctx = 2;
+  
+  int32 unk_param = 3;
+  
+  message Params {
+    optional string unk_token = 1;
+    
+    message Options {
+      string video_id = 4;
+      int32 sort_by = 6;
+      int32 type = 15;
+    }
+    
+    message RepliesOptions {
+      string comment_id = 2;
+    
+      message UnkOpts {
+        int32 unk_param = 1;
+      }
+      UnkOpts unkopts = 4;
+      
+      optional string channel_id = 5;
+      string video_id = 6;
+      
+      int32 unk_param_1 = 8;
+      int32 unk_param_2 = 9;
+    }
+    
+    optional Options opts = 4;
+    optional RepliesOptions replies_opts = 3;
+    
+    optional int32 page = 5;
+    string target = 8;
+  }
+  
+  Params params = 6;
+}

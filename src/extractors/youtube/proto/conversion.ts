@@ -1,4 +1,4 @@
-import { searchFilter } from "../types";
+import { searchFilter, searchFeatures } from "../types";
 
 const duration: { [key in searchFilter["duration"]]: number | null } = {
   all: null,
@@ -30,4 +30,20 @@ const uploadDate: { [key in searchFilter["uploadDate"]]: number | null } = {
   year: 5,
 };
 
-export { duration, order, type, uploadDate };
+const features: { [key in searchFeatures]: string } = {
+  hd: "featuresHd",
+  video4k: "features4k",
+  vr180: "featuresVr180",
+  subtitles: "featuresSubtitles",
+  cc: "featuresCreativeCommons",
+  video360: "features360",
+  video3d: "features3d",
+  hdr: "featuresHdr",
+  location: "featuresLocation",
+  purchased: "featuresPurchased",
+  live: "featuresLive",
+};
+
+const commentSortOptions = { topComments: 0, newestFirst: 1 };
+
+export { duration, order, type, uploadDate, commentSortOptions, features };
