@@ -1,5 +1,5 @@
 import abstractParser from "../abstractParser";
-import { ytVideoData, video } from "../../types";
+import { playerResponse, video } from "../../types";
 import { ytErrors } from "../../utils";
 /**
  * ```typescript
@@ -13,14 +13,14 @@ export default class ytVideo extends abstractParser {
    * @param data The data to parse
    * @returns {video}
    */
-  parse(data: ytVideoData): video {
+  parse(data: playerResponse): video {
     this.checkValidity(data);
     // Play endpoint data
-    const videoDetails = data.player.videoDetails;
-    const microformat = data.player.microformat.playerMicroformatRenderer;
+    const videoDetails = data.videoDetails;
+    const microformat = data.microformat.playerMicroformatRenderer;
     // const playbackTracking = data.player.playbackTracking;
     // const captions = data.player.captions?.playerCaptionsTracklistRenderer;
-    const streamingData = data.player.streamingData;
+    const streamingData = data.streamingData;
 
     // Next endpoint data
     // const engagementPanels = data.next.engagementPanels;
@@ -50,8 +50,8 @@ export default class ytVideo extends abstractParser {
     return response;
   }
 
-  private checkValidity(data: ytVideoData): void {
-    if (!data.player) {
+  private checkValidity(data: playerResponse): void {
+    if (Object.keys(data).length === 0) {
       throw new ytErrors.ParserError("No player data found", {
         received: data,
       });

@@ -6,11 +6,11 @@ import {
   searchPage,
 } from "./strats";
 import { ytErrors } from "../utils";
-import { ytVideoData, parseTypes } from "../types";
+import { playerResponse, parseTypes } from "../types";
 
 export default class Parser {
   private toParse: parseTypes;
-  private data: ytVideoData | object;
+  private data: playerResponse | object;
 
   constructor(toParse: parseTypes, data: object) {
     this.toParse = toParse;
@@ -27,7 +27,7 @@ export default class Parser {
       const parsedData = parser.parse(this.data);
       return parsedData;
     } catch (error) {
-      this.handleError(error)
+      this.handleError(error);
     }
   }
 

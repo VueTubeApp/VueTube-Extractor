@@ -1,32 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="jest tests" tests="8" failures="0" errors="0" time="2.476">
-  <testsuite name="src\extractors\youtube\proto\__tests__\protoTest.test.ts" errors="0" failures="0" skipped="0" timestamp="2022-06-21T05:18:50" time="2.209" tests="8">
-    <testcase classname="protobuf parsing tests › if encodeVisitorData works" name="abcd and 100 should be CgRhYmNkKGQ%3D" time="0.011">
+<testsuites name="jest tests" tests="4" failures="0" errors="0" time="2.456">
+  <testsuite name="src\extractors\youtube\parsers\__tests__\parserTest.test.ts" errors="0" failures="0" skipped="3" timestamp="2022-07-03T08:41:22" time="2.202" tests="4">
+    <testcase classname="parser error handling › videoDetail" name="if parser throws error on bad input" time="0.013">
     </testcase>
-    <testcase classname="protobuf parsing tests › if encodeVisitorData works" name="efgh and 200 should be CgRlZmdoKMgB" time="0.002">
+    <testcase classname="parser error handling › homePage" name="if parser throws error on bad input" time="0">
+      <skipped/>
     </testcase>
-    <testcase classname="protobuf parsing tests › if encodeVisitorData works" name="fgee-Eads1Q and 1640995200 should be CgtmZ2VlLUVhZHMxUSiAs76OBg%3D%3D" time="0.001">
+    <testcase classname="parser error handling › bad" name="if parser throws error on bad input" time="0">
+      <skipped/>
     </testcase>
-    <testcase classname="protobuf parsing tests › if encodeSearchFilter works" name="{
-  uploadDate: &apos;year&apos;,
-  order: &apos;rating&apos;,
-  type: &apos;video&apos;,
-  duration: &apos;medium&apos;
-} should be CAESBggFEAEYAw%3D%3D " time="0.008">
-    </testcase>
-    <testcase classname="protobuf parsing tests › if encodeSearchFilter works" name="{ type: &apos;channel&apos; } should be EgIQAg%3D%3D " time="0.002">
-    </testcase>
-    <testcase classname="protobuf parsing tests › if encodeSearchFilter works" name="{ features: [Array] } should be EgQgASgB " time="0.003">
-    </testcase>
-    <testcase classname="protobuf parsing tests › if encodeSearchFilter works" name="{ features: [Array] } should be EgVAAbgBAQ%3D%3D " time="0.001">
-    </testcase>
-    <testcase classname="protobuf parsing tests › if encodeSearchFilter works" name="{
-  uploadDate: &apos;week&apos;,
-  type: &apos;video&apos;,
-  duration: &apos;long&apos;,
-  features: [Array],
-  order: &apos;uploadDate&apos;
-} should be CAISCAgDEAEYAjgB " time="0.002">
+    <testcase classname="parser handling" name="searchSuggestions" time="0">
+      <skipped/>
     </testcase>
   </testsuite>
 </testsuites>

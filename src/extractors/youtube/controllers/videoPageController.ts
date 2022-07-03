@@ -31,10 +31,10 @@ export default class videoPageController extends basicController<video> {
         option: this.baseHttpOptions.getOptions(requestOptions, "/player"),
         key: "player",
       },
-      {
-        option: this.androidHttpOptions.getOptions(requestOptions, "/next"),
-        key: "next",
-      },
+      // {
+      //   option: this.androidHttpOptions.getOptions(requestOptions, "/next"),
+      //   key: "next",
+      // },
     ];
   }
 
@@ -49,22 +49,22 @@ export default class videoPageController extends basicController<video> {
   }
 
   protected throwErrors(videoInfo: { [key: string]: any }): void {
-    if (videoInfo.player.playabilityStatus.status == "ERROR") {
+    if (videoInfo.playabilityStatus.status == "ERROR") {
       throw new ytErrors.VideoNotFoundError(
         this.id,
-        videoInfo.player.playabilityStatus.reason || "UNKNOWN",
-        videoInfo.player
+        videoInfo.playabilityStatus.reason || "UNKNOWN",
+        videoInfo
       );
-    } else if (videoInfo.player.playabilityStatus.status == "UNPLAYABLE") {
+    } else if (videoInfo.playabilityStatus.status == "UNPLAYABLE") {
       throw new ytErrors.VideoNotAvailableError(
         this.id,
-        videoInfo.player.playabilityStatus.reason || "UNKNOWN",
-        videoInfo.player
+        videoInfo.playabilityStatus.reason || "UNKNOWN",
+        videoInfo
       );
-    } else if (videoInfo.player.playabilityStatus.status == "LOGIN_REQUIRED") {
+    } else if (videoInfo.playabilityStatus.status == "LOGIN_REQUIRED") {
       throw new ytErrors.LoginRequiredError(
-        videoInfo.player.playabilityStatus.reason || "UNKNOWN",
-        videoInfo.player
+        videoInfo.playabilityStatus.reason || "UNKNOWN",
+        videoInfo
       );
     }
   }
