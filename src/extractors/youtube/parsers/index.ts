@@ -1,6 +1,7 @@
 import {
   ytVideo,
   abstractParser,
+  parsersList,
   homePage,
   searchSuggestions,
   searchPage,
@@ -45,14 +46,17 @@ export default class Parser {
     }
   }
 
-  getParser(): abstractParser | void {
-    const parserLookup: { [key in parseTypes]: abstractParser } = {
-      homePage: new homePage(),
-      videoDetail: new ytVideo(),
-      searchSuggestions: new searchSuggestions(),
-      searchResult: new searchPage(),
+  getParser = (): abstractParser | void => {
+    const parserStrats: parsersList = {
+      homePage: homePage,
+      videoDetail: ytVideo,
+      searchSuggestions,
+      searchResult: searchPage,
     };
-    const parser = parserLookup[this.toParse];
-    return parser;
-  }
+    const parser = parserStrats[this.toParse];
+    if (!parser) {
+      return undefined;
+    }
+    return new parser();
+  };
 }
