@@ -1,15 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="jest tests" tests="4" failures="0" errors="0" time="2.456">
-  <testsuite name="src\extractors\youtube\parsers\__tests__\parserTest.test.ts" errors="0" failures="0" skipped="3" timestamp="2022-07-03T08:41:22" time="2.202" tests="4">
-    <testcase classname="parser error handling › videoDetail" name="if parser throws error on bad input" time="0.013">
-    </testcase>
-    <testcase classname="parser error handling › homePage" name="if parser throws error on bad input" time="0">
+<testsuites name="jest tests" tests="11" failures="1" errors="0" time="4.422">
+  <testsuite name="src\extractors\youtube\proto\__tests__\protoTest.test.ts" errors="0" failures="1" skipped="10" timestamp="2022-07-24T06:16:55" time="4.171" tests="11">
+    <testcase classname="protobuf parsing tests › if encodeVisitorData works" name="abcd and 100 should be CgRhYmNkKGQ%3D" time="0">
       <skipped/>
     </testcase>
-    <testcase classname="parser error handling › bad" name="if parser throws error on bad input" time="0">
+    <testcase classname="protobuf parsing tests › if encodeVisitorData works" name="efgh and 200 should be CgRlZmdoKMgB" time="0">
       <skipped/>
     </testcase>
-    <testcase classname="parser handling" name="searchSuggestions" time="0">
+    <testcase classname="protobuf parsing tests › if encodeVisitorData works" name="fgee-Eads1Q and 1640995200 should be CgtmZ2VlLUVhZHMxUSiAs76OBg%3D%3D" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname="protobuf parsing tests › if encodeSearchFilter works" name="{
+  uploadDate: &apos;year&apos;,
+  order: &apos;rating&apos;,
+  type: &apos;video&apos;,
+  duration: &apos;medium&apos;
+} should be CAESBggFEAEYAw%3D%3D " time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname="protobuf parsing tests › if encodeSearchFilter works" name="{ type: &apos;channel&apos; } should be EgIQAg%3D%3D " time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname="protobuf parsing tests › if encodeSearchFilter works" name="{ features: [Array] } should be EgQgASgB " time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname="protobuf parsing tests › if encodeSearchFilter works" name="{ features: [Array] } should be EgVAAbgBAQ%3D%3D " time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname="protobuf parsing tests › if encodeSearchFilter works" name="{
+  uploadDate: &apos;week&apos;,
+  type: &apos;video&apos;,
+  duration: &apos;long&apos;,
+  features: [Array],
+  order: &apos;uploadDate&apos;
+} should be CAISCAgDEAEYAjgB " time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname="protobuf parsing tests › if encodeCommentOptions works" name="video abcd with options { sortBy: &apos;newestFirst&apos; } should be EgYSBGFiY2QYBjIeIgoiBGFiY2QwAXgCQhBjb21tZW50cy1zZWN0aW9u" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname="protobuf parsing tests › if encodeCommentOptions works" name="video efgh with options { sortBy: &apos;topComments&apos; } should be EgYSBGVmZ2gYBjIeIgoiBGVmZ2gwAXgCQhBjb21tZW50cy1zZWN0aW9u" time="1.928">
+      <failure>Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: &quot;EgYSBGVmZ2gYBjIeIgoiBGVmZ2gwAXgCQhBjb21tZW50cy1zZWN0aW9u&quot;
+Received: &quot;EgYSBGVmZ2gYBjIeIgoiBGVmZ2gwAHgCQhBjb21tZW50cy1zZWN0aW9u&quot;
+    at C:\Programming\Github\VueTube-Extractor\src\extractors\youtube\proto\__tests__\protoTest.test.ts:35:32
+    at Object.&lt;anonymous&gt; (C:\Programming\Github\VueTube-Extractor\node_modules\jest-each\build\bind.js:81:13)
+    at Promise.then.completed (C:\Programming\Github\VueTube-Extractor\node_modules\jest-circus\build\utils.js:333:28)
+    at new Promise (&lt;anonymous&gt;)
+    at callAsyncCircusFn (C:\Programming\Github\VueTube-Extractor\node_modules\jest-circus\build\utils.js:259:10)
+    at _callCircusTest (C:\Programming\Github\VueTube-Extractor\node_modules\jest-circus\build\run.js:276:40)
+    at _runTest (C:\Programming\Github\VueTube-Extractor\node_modules\jest-circus\build\run.js:208:3)
+    at _runTestsForDescribeBlock (C:\Programming\Github\VueTube-Extractor\node_modules\jest-circus\build\run.js:96:9)
+    at _runTestsForDescribeBlock (C:\Programming\Github\VueTube-Extractor\node_modules\jest-circus\build\run.js:90:9)
+    at _runTestsForDescribeBlock (C:\Programming\Github\VueTube-Extractor\node_modules\jest-circus\build\run.js:90:9)</failure>
+    </testcase>
+    <testcase classname="protobuf parsing tests › if encodeCommentOptions works" name="video dQw4w9WgXcQ with options { sortBy: &apos;topComments&apos; } should be Eg0SC2RRdzR3OVdnWGNRGAYyJSIRIgtkUXc0dzlXZ1hjUTAAeAJCEGNvbW1lbnRzLXNlY3Rpb24%3D" time="0">
       <skipped/>
     </testcase>
   </testsuite>

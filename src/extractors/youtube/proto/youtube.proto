@@ -34,35 +34,31 @@ message SearchFilter {
 
 message CommentsSection {
   message Context {
-    string video_id = 2;
+    string videoId = 2;
   }
-  Context ctx = 2;
-  
-  int32 unk_param = 3;
-  
-  message Params {
-    optional string unk_token = 1;
-    
-    message Options {
-      string video_id = 4;
-      int32 sort_by = 6;
+
+  message Options {
+      string videoId = 4;
+      int32 sortBy = 6;
       int32 type = 15;
-    }
-    
-    message RepliesOptions {
-      string comment_id = 2;
-    
-      message UnkOpts {
-        int32 unk_param = 1;
-      }
-      UnkOpts unkopts = 4;
-      
-      optional string channel_id = 5;
-      string video_id = 6;
-      
-      int32 unk_param_1 = 8;
-      int32 unk_param_2 = 9;
-    }
+  }
+
+  message UnkOpts {
+      int32 unkParam = 1;
+  }
+
+  message RepliesOptions {
+    string comment_id = 2;
+    UnkOpts unkopts = 4;
+    optional string channel_id = 5;
+    string videoId = 6;
+    int32 unkParam1 = 8;
+    int32 unkParam2 = 9;
+  }
+
+  message Params {   
+
+    optional string unk_token = 1;
     
     optional Options opts = 4;
     optional RepliesOptions replies_opts = 3;
@@ -71,5 +67,7 @@ message CommentsSection {
     string target = 8;
   }
   
+  Context ctx = 2;
+  int32 unk_param = 3;
   Params params = 6;
 }

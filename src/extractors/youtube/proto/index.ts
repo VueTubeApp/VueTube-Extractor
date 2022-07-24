@@ -1,7 +1,14 @@
 import { Root, Type, loadSync } from "protobufjs";
 import path from "path";
 import type { searchFilter } from "../types";
-import { duration, order, type, uploadDate, commentSortOptions, features } from "./conversion";
+import {
+  duration,
+  order,
+  type,
+  uploadDate,
+  commentSortOptions,
+  features,
+} from "./conversion";
 import type { searchProto, protoFilters, commentOptions } from "./types";
 import { ytErrors } from "../utils";
 
@@ -41,10 +48,10 @@ class Proto {
     if (data.filters) {
       data.filters = {
         ...data.filters,
-        ...filters.uploadDate && { param_0: uploadDate[filters.uploadDate] },
-        ...filters.type && { param_1: type[filters.type] },
-        ...filters.duration && { param_2: duration[filters.duration] },
-      }
+        ...(filters.uploadDate && { param_0: uploadDate[filters.uploadDate] }),
+        ...(filters.type && { param_1: type[filters.type] }),
+        ...(filters.duration && { param_2: duration[filters.duration] }),
+      };
       if (filters.order) data.sort = order[filters.order];
       if (filters.features) {
         for (const feature of filters.features) {
@@ -61,24 +68,25 @@ class Proto {
 
   /**
    * encodes comment options to protobuf format
-   * @param {string} video_id - video id
+   * @param {string} videoId - video id
    * @returns {string} encoded comment options
    */
-  encodeCommentOptions(video_id: string, options: commentOptions = {}): string {
+  encodeCommentOptions(videoId: string, options: commentOptions = {}): string {
     const commentOptions: Type = this.protoRoot.lookupType(
       "youtube.CommentsSection"
     );
     const data = {
-      ctx: { video_id },
-      unk_param: 6,
+      ctx: { videoId },
+      unkParam: 6,
       params: {
         opts: {
-          video_id,
-          sort_by: commentSortOptions[options.sortBy || "topComments"],
+          videoId,
+          sortBy: commentSortOptions[options.sortBy || "topComments"],
+          type: options.type || 2,
         },
         target: "comments-section",
-      }
-    }
+      },
+    };
     const buf: Uint8Array = commentOptions.encode(data).finish();
     return encodeURIComponent(Buffer.from(buf).toString("base64"));
   }

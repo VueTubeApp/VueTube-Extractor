@@ -42,5 +42,22 @@
       },
       "CAISCAgDEAEYAjgB"
     ]
+  ],
+  "encodeCommentOptions": [
+    [
+      "abcd",
+      { "sortBy": "newestFirst" },
+      "EgYSBGFiY2QYBjIeIgoiBGFiY2QwAXgCQhBjb21tZW50cy1zZWN0aW9u"
+    ],
+    [
+      "efgh",
+      { "sortBy": "topComments" },
+      "EgYSBGVmZ2gYBjIeIgoiBGVmZ2gwAHgCQhBjb21tZW50cy1zZWN0aW9u"
+    ],
+    [
+      "dQw4w9WgXcQ",
+      { "sortBy": "topComments" },
+      "Eg0SC2RRdzR3OVdnWGNRGAYyJSIRIgtkUXc0dzlXZ1hjUTAAeAJCEGNvbW1lbnRzLXNlY3Rpb24%3D"
+    ]
   ]
 }

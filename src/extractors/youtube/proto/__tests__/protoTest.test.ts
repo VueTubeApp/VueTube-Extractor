@@ -1,6 +1,7 @@
 import proto from "../index";
 import * as cases from "./testCases.json";
 import { searchFilter } from "../../types";
+import { commentOptions } from "../types";
 
 describe("protobuf parsing tests", () => {
   describe("if encodeVisitorData works", () => {
@@ -22,5 +23,17 @@ describe("protobuf parsing tests", () => {
       const searchFilter = proto.encodeSearchFilter(input1 as searchFilter);
       expect(searchFilter).toBe(expectResult);
     });
+  });
+  describe("if encodeCommentOptions works", () => {
+    test.each(cases.encodeCommentOptions)(
+      "video %s with options %s should be %s",
+      (video_id, options, expectResult) => {
+        const commentOptions = proto.encodeCommentOptions(
+          video_id as string,
+          (options as commentOptions) || undefined
+        );
+        expect(commentOptions).toBe(expectResult);
+      }
+    );
   });
 });
