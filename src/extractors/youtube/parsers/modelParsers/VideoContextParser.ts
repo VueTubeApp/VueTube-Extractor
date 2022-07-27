@@ -61,7 +61,7 @@ export default class VideoContextParser extends abstractParser {
     try {
       this.metadata = this.contextData.videoData.metadata;
     } catch (err) {
-      console.log(videoWithContextModel);
+      console.log(this.data);
       throw new ytErrors.ParserError("No metadata found");
     }
 
