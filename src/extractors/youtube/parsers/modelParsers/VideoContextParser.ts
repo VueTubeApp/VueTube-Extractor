@@ -9,7 +9,7 @@ export default class VideoContextParser extends abstractParser {
   protected metadata: { [key: string]: any };
   protected channelId: string;
   protected channelAvatar: { [key: string]: any };
-  protected innertubeCommand: {[key: string]: any};
+  protected innertubeCommand: { [key: string]: any };
 
   parse(data: { [key: string]: any }): videoCard | playlist {
     this.data = data;
@@ -58,8 +58,12 @@ export default class VideoContextParser extends abstractParser {
     }
 
     this.contextData = videoWithContextModel.videoWithContextData;
-
-    this.metadata = this.contextData.videoData.metadata;
+    try {
+      this.metadata = this.contextData.videoData.metadata;
+    } catch (err) {
+      console.log(this.contextData);
+      throw new ytErrors.ParserError("No metadata found");
+    }
 
     this.channelAvatar = (
       this.contextData.videoData.decoratedAvatar || this.contextData.videoData
