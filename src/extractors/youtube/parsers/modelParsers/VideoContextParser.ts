@@ -11,9 +11,10 @@ export default class VideoContextParser extends abstractParser {
   protected channelAvatar: { [key: string]: any };
   protected innertubeCommand: {[key: string]: any};
 
-  parse(data: { [key: string]: any }): videoCard | playlist {
+  parse(data: { [key: string]: any }): videoCard | playlist | undefined {
     this.data = data;
     this.getAliases();
+    if (this.checkIfAd()) return undefined;
     if (this.isPlaylist()) {
       return this.parsePlaylist();
     } else {
@@ -70,6 +71,10 @@ export default class VideoContextParser extends abstractParser {
       this.channelAvatar?.endpoint?.innertubeCommand.browseEndpoint?.browseId;
 
     this.innertubeCommand = this.contextData.onTap.innertubeCommand;
+  }
+
+  protected checkIfAd(): boolean {
+    return this.metadata?.adBadge;
   }
 }
 class PlaylistParser extends VideoContextParser {
