@@ -6,10 +6,12 @@ async function getHomePage() {
     const youtube = await new YouTube().init();
     const homePage = await youtube.getHomePage();
     console.log(util.inspect(homePage, false, null, true));
-    const homePageContinued = await homePage.continue();
-    console.log(util.inspect(homePageContinued, false, null, true));
+    if (homePage?.continue) {
+        const homePageContinued = await homePage.continue();
+        console.log(util.inspect(homePageContinued, false, null, true));
+    }
 }
 
 getHomePage().catch((error) => {
   console.error(error);
-});;
+});

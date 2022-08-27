@@ -1,6 +1,6 @@
 import abstractParser from "../abstractParser";
 import Thumbnail from "./Thumbnail";
-import { videoCard, playlist } from "../../types";
+import { videoCard, playlist } from "@types";
 import { ytErrors } from "../../utils";
 
 export default class VideoContextParser extends abstractParser {
@@ -42,7 +42,7 @@ export default class VideoContextParser extends abstractParser {
   }
 
   private isPlaylist(): boolean {
-    return this.metadata?.isPlaylistMix ? true : false;
+    return !!this.metadata?.isPlaylistMix;
   }
 
   protected getAliases() {
@@ -60,8 +60,13 @@ export default class VideoContextParser extends abstractParser {
 
     this.contextData = videoWithContextModel.videoWithContextData;
 
-    this.metadata = this.contextData.videoData.metadata;
-
+    if (this.contextData?.videoData) {
+      try {
+        this.metadata = this.contextData?.videoData?.metadata
+      } catch (err) {
+        console.log(this.data.elementRenderer.newElement.type);
+        throw new ytErrors.ParserError("No metadata found");
+      }
     this.channelAvatar = (
       this.contextData.videoData.decoratedAvatar || this.contextData.videoData
     ).avatar;
@@ -71,6 +76,9 @@ export default class VideoContextParser extends abstractParser {
       this.channelAvatar?.endpoint?.innertubeCommand.browseEndpoint?.browseId;
 
     this.innertubeCommand = this.contextData.onTap.innertubeCommand;
+    } else {
+      this.metadata = videoWithContextModel.videoDisplayAd;
+    }
   }
 
   protected checkIfAd(): boolean {
