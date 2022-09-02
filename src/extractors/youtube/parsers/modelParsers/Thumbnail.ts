@@ -1,4 +1,4 @@
-import { thumbnail } from "../../types";
+import { thumbnail } from "@types";
 
 export default class Thumbnail implements thumbnail {
   private data: { [key: string]: any };

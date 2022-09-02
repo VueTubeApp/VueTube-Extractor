@@ -69,6 +69,7 @@ class Proto {
   /**
    * encodes comment options to protobuf format
    * @param {string} videoId - video id
+   * @param options
    * @returns {string} encoded comment options
    */
   encodeCommentOptions(videoId: string, options: commentOptions = {}): string {

@@ -1,13 +1,3 @@
-// import { getAPI } from "../src/main";
-
-// test("the data is peanut butter", () => {
-//   expect(1).toBe(1);
-// });
-
-// test("getAPI", () => {
-//   expect(getAPI("https://postman-echo.com/get?test=123")).toBe({});
-// });
-
 const fetch = require("isomorphic-fetch"); // So that fetch is available in the test environment. This will not be needed if using node 18.
 import { YouTube } from "../src";
 import { getYoutubeVideoInfoTest, YoutubeVideoInfoErrorTest } from "./cases";

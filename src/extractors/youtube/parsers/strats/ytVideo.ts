@@ -1,6 +1,7 @@
 import abstractParser from "../abstractParser";
-import { playerResponse, video } from "../../types";
-import { ytErrors } from "../../utils";
+import {playerResponse, video} from "../../types";
+import {ytErrors} from "../../utils";
+
 /**
  * ```typescript
  * import {ytVideo} from './parsers';
@@ -25,7 +26,7 @@ export default class ytVideo extends abstractParser {
     // Next endpoint data
     // const engagementPanels = data.next.engagementPanels;
 
-    const response: video = {
+    return {
       id: videoDetails.videoId,
       title: videoDetails.title,
       descriptionText: videoDetails.shortDescription,
@@ -42,12 +43,10 @@ export default class ytVideo extends abstractParser {
         uploadedAt: microformat.uploadDate,
         tags: videoDetails.keywords,
         playbackEndpoints: streamingData.adaptiveFormats.concat(
-          streamingData.formats
+            streamingData.formats
         ),
       },
     };
-
-    return response;
   }
 
   private checkValidity(data: playerResponse): void {

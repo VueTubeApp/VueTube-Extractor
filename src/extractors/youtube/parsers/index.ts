@@ -1,17 +1,10 @@
-import {
-  ytVideo,
-  abstractParser,
-  parsersList,
-  homePage,
-  searchSuggestions,
-  searchPage,
-} from "./strats";
-import { ytErrors } from "../utils";
-import { playerResponse, parseTypes } from "../types";
+import {abstractParser, homePage, parsersList, searchPage, searchSuggestions, ytVideo,} from "./strats";
+import {ytErrors} from "../utils";
+import {parseTypes, playerResponse} from "../types";
 
 export default class Parser {
-  private toParse: parseTypes;
-  private data: playerResponse | object;
+  private readonly toParse: parseTypes;
+  private readonly data: playerResponse | object;
 
   constructor(toParse: parseTypes, data: object) {
     this.toParse = toParse;
@@ -25,8 +18,7 @@ export default class Parser {
         throw new ytErrors.ParserError("Parser not found", {
           toParse: this.toParse,
         });
-      const parsedData = parser.parse(this.data);
-      return parsedData;
+      return parser.parse(this.data);
     } catch (error) {
       this.handleError(error);
     }

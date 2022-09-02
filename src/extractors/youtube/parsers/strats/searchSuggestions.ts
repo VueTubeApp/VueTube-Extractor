@@ -1,5 +1,5 @@
 import abstractParser from "../abstractParser";
-import { searchSuggestion } from "../../types";
+import { searchSuggestion } from "@types";
 
 export default class searchSuggestions extends abstractParser {
   parse(data: [string, Array<[any]>]): searchSuggestion {

@@ -8,7 +8,7 @@ import path from "path";
  */
 
 export default class YouTubeHTTPOptions {
-  private baseOptions: HttpOptions;
+  private readonly baseOptions: HttpOptions;
   private metadata: httpMetadata;
 
   constructor(metadata: httpMetadata) {

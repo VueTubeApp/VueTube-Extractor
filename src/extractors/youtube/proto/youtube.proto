@@ -1,16 +1,15 @@
 package youtube;
-syntax = "proto3";
 
 message VisitorData {
-  string id = 1;
-  int32 timestamp = 5;
+  required string id = 1;
+  required int32 timestamp = 5;
 }
 
 message SearchFilter {
   optional int32 sort = 1; // sort by
   optional int32 noCorrection = 8;
   optional int32 noFilter = 19;
-  
+
   message Filters {
     optional int32 param_0 = 1; // upload date
     optional int32 param_1 = 2; // type
@@ -24,50 +23,50 @@ message SearchFilter {
     optional int32 featuresPurchased = 9; // purchased filter
     optional int32 features4k = 14; // 4k filter
     optional int32 features360 = 15; // 360 view filter
-    optional int32 featuresLocation  = 23; // location filter
+    optional int32 featuresLocation = 23; // location filter
     optional int32 featuresHdr = 25; // hdr filter
     optional int32 featuresVr180 = 26; // vr180 filter
   }
-  
+
   optional Filters filters = 2;
 }
 
 message CommentsSection {
   message Context {
-    string videoId = 2;
+    required string videoId = 2;
   }
 
   message Options {
-      string videoId = 4;
-      int32 sortBy = 6;
-      int32 type = 15;
+    required string videoId = 4;
+    required int32 sortBy = 6;
+    required int32 type = 15;
   }
 
   message UnkOpts {
-      int32 unkParam = 1;
+    required int32 unkParam = 1;
   }
 
   message RepliesOptions {
-    string comment_id = 2;
-    UnkOpts unkopts = 4;
+    required string comment_id = 2;
+    required UnkOpts unkopts = 4;
     optional string channel_id = 5;
-    string videoId = 6;
-    int32 unkParam1 = 8;
-    int32 unkParam2 = 9;
+    required string videoId = 6;
+    required int32 unkParam1 = 8;
+    required int32 unkParam2 = 9;
   }
 
-  message Params {   
+  message Params {
 
     optional string unk_token = 1;
-    
+
     optional Options opts = 4;
     optional RepliesOptions replies_opts = 3;
-    
+
     optional int32 page = 5;
-    string target = 8;
+    required string target = 8;
   }
-  
-  Context ctx = 2;
-  int32 unk_param = 3;
-  Params params = 6;
+
+  required Context ctx = 2;
+  required int32 unk_param = 3;
+  required Params params = 6;
 }

@@ -1,5 +1,5 @@
 import { MixinConstructor } from "@types";
-import { pageSegment, pageElements } from "../../types";
+import { pageSegment, pageElements } from "@types";
 import {
   toplevelIdentifierFinder,
   elementRendererIdentifierFinder,

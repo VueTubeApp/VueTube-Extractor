@@ -40,7 +40,7 @@ export default class youtubeRequester {
 
   /**
    *
-   * Calls the Youtube browse endpoint.
+   * Calls the YouTube browse endpoint.
    * This is most commonly used for getting
    * the home page.
    *
@@ -60,7 +60,7 @@ export default class youtubeRequester {
   }
 
   /**
-   * Calls Youtube's next endpoint. This is mostly used for pagination, however it can also be used to get page data
+   * Calls YouTube's next endpoint. This is mostly used for pagination, however it can also be used to get page data
    *
    * @param {Record<string, unknown>} args The arguments to pass to the next endpoint
    *
@@ -77,9 +77,10 @@ export default class youtubeRequester {
   }
 
   /**
-   * Calls the Youtube search endpoint.
+   * Calls the YouTube search endpoint.
    * @param {string} query - The query to search for
-   * @param {Partial<searchFilter>} filters - The filters to pass to the search endpoint
+   * @param options
+   * @param continuation
    *
    * @returns {Promise<HttpResponse>} The response from the search endpoint
    */
@@ -99,7 +100,7 @@ export default class youtubeRequester {
   }
 
   /**
-   * Gets youtube suggestions for a query
+   * Gets YouTube suggestions for a query
    * @param {string} query - The query to get suggestions for
    * @returns {Promise<HttpResponse>} The response from the suggestions endpoint
    */

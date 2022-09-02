@@ -1,11 +1,11 @@
 import abstractParser from "../abstractParser";
-import { channelCard } from "../../types";
-import { YtUtils } from "../../utils";
+import {channelCard} from "@types";
+import {YtUtils} from "../../utils";
 
 export default class VideoContextParser extends abstractParser {
     parse(data: { [key: string]: any }): channelCard {
         data = data.compactChannelRenderer
-        const response: channelCard = {
+        return {
             channelId: data.channelId,
             channelName: YtUtils.getStringFromRuns(data.displayName?.runs),
             videoCountText: YtUtils.getStringFromRuns(data.videoCountText?.runs),
@@ -18,6 +18,5 @@ export default class VideoContextParser extends abstractParser {
             subscriberCountText: YtUtils.getStringFromRuns(data.subscriberCountText.runs),
             type: "channel"
         };
-        return response;
     }
 }

@@ -1,6 +1,6 @@
-import { Http, HttpResponse } from "@vuetubeapp/http";
-import { YouTubeHTTPOptions, YtUtils, ytConstants, ytErrors } from "../utils";
-import { ytContext, userConfig, clientName } from "../types";
+import {Http, HttpResponse} from "@vuetubeapp/http";
+import {YouTubeHTTPOptions, ytConstants, ytErrors, YtUtils} from "../utils";
+import {clientName, userConfig, ytContext} from "../types";
 
 export default class initialization {
   private config: userConfig;
@@ -55,7 +55,7 @@ export default class initialization {
    */
   private buildContext(): ytContext {
     const userAgent = YtUtils.randomMobileUserAgent();
-    const context: ytContext = {
+    return {
       client: {
         ...{
           gl: "US",
@@ -70,11 +70,9 @@ export default class initialization {
         },
         ...this.INNERTUBE_CONTEXT,
       },
-      user: { lockedSafetyMode: false },
-      request: { useSsl: true },
+      user: {lockedSafetyMode: false},
+      request: {useSsl: true},
     };
-
-    return context;
   }
 
   private buildAndroidContext(): ytContext {

@@ -1,4 +1,4 @@
-import { pageSegment, shelfSegment, pageElements } from "../types";
+import { pageSegment, shelfSegment, pageElements } from "@types";
 import { YtUtils } from "../utils";
 
 interface sectionListFinder {
