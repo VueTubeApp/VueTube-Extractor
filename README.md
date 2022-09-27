@@ -84,6 +84,8 @@ yarn build
 
 ## Contributing
 
+Please refer to the [VueTube Contribution Guides](https://vuetube.app/contributing/) for more detailed information
+
 Before you make a pull request, please ensure that all tests pass, and that your code is linted.
 
 Please state clearly what you are trying to do in the pull request title, and describe more in the body. It is also recommended that you add a test for your pull request if you are adding new features.
