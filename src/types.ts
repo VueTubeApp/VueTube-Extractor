@@ -181,3 +181,4 @@ export interface searchResult extends genericPage {
   searchRefinements?: Array<string>;
   resultCount: number;
 }
+

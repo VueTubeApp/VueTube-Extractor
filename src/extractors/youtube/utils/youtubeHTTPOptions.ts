@@ -53,7 +53,7 @@ export default class YouTubeHTTPOptions {
    * @param {Partial<HttpOptions>} options - the options to merge with the base options
    * @param {string} url - the endpoint url
    *
-   * @returns {HttpOptions}
+   * @returns {HttpOptions} the merged options
    */
   public getOptions(options: Partial<HttpOptions>, url: string): HttpOptions {
     const mergedOptions: HttpOptions = { ...this.baseOptions };
