@@ -1,0 +1,63 @@
+{
+  "encodeVisitorData": [
+    ["abcd", 100, "CgRhYmNkKGQ%3D"],
+    ["efgh", 200, "CgRlZmdoKMgB"],
+    ["fgee-Eads1Q", 1640995200, "CgtmZ2VlLUVhZHMxUSiAs76OBg%3D%3D"]
+  ],
+  "encodeSearchFilter": [
+    [
+      {
+        "uploadDate": "year",
+        "order": "rating",
+        "type": "video",
+        "duration": "medium"
+      },
+      "CAESBggFEAEYAw%3D%3D"
+    ],
+    [
+      {
+        "type": "channel"
+      },
+      "EgIQAg%3D%3D"
+    ],
+    [
+      {
+        "features": ["hd", "subtitles"]
+      },
+      "EgQgASgB"
+    ],
+    [
+      {
+        "features": ["live", "location"]
+      },
+      "EgVAAbgBAQ%3D%3D"
+    ],
+    [
+      {
+        "uploadDate": "week",
+        "type": "video",
+        "duration": "long",
+        "features": ["video3d"],
+        "order": "uploadDate"
+      },
+      "CAISCAgDEAEYAjgB"
+    ]
+  ],
+  "encodeCommentOptions": [
+    [
+      "abcd",
+      { "sortBy": "newestFirst" },
+      "EgYSBGFiY2QYBjIeIgoiBGFiY2QwAXgCQhBjb21tZW50cy1zZWN0aW9u"
+    ],
+    [
+      "efgh",
+      { "sortBy": "topComments" },
+      "EgYSBGVmZ2gYBjIeIgoiBGVmZ2gwAHgCQhBjb21tZW50cy1zZWN0aW9u"
+    ],
+    [
+      "dQw4w9WgXcQ",
+      { "sortBy": "topComments" },
+      "Eg0SC2RRdzR3OVdnWGNRGAYyJSIRIgtkUXc0dzlXZ1hjUTAAeAJCEGNvbW1lbnRzLXNlY3Rpb24%3D"
+    ]
+  ]
+}
