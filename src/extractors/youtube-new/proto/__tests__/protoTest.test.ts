@@ -1,6 +1,6 @@
 import proto from "../index";
 import * as cases from "./testCases.json";
-import { searchFilter } from "../../types";
+import { searchFilter } from "../types";
 import { commentOptions } from "../types";
 
 describe("protobuf parsing tests", () => {
