@@ -1,4 +1,4 @@
-type searchFeatures =
+export type searchFeatures =
     | "live"
     | "video4k"
     | "hd"

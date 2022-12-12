@@ -1,4 +1,4 @@
-import { searchFilter, searchFeatures } from "../types";
+import { searchFilter, searchFeatures } from "./types";
 
 const duration: { [key in searchFilter["duration"]]: number | null } = {
   all: null,
