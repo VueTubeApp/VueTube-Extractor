@@ -11,22 +11,23 @@ import package_json from "@package";
  * @property {string} version - The version of the package
  * @property {string} details - The details of the error/additional information
  */
-abstract class VueTubeExtractorError extends Error {
-  timestamp: number;
-  process: string;
-  version: string;
-  details?: unknown;
+class VueTubeExtractorError extends Error {
+    timestamp: number;
+    process: string;
+    version: string;
+    details?: unknown;
 
-  constructor(message: string, details?: unknown) {
-    super(message);
-    // Object.setPrototypeOf(this, VueTubeExtractorError.prototype);
-    this.timestamp = Date.now();
-    this.process = process.title;
-    this.version = package_json.version;
-    this.details = details;
-  }
+    constructor(message: string, details?: unknown) {
+        super(message);
+        // Object.setPrototypeOf(this, VueTubeExtractorError.prototype);
+        this.timestamp = Date.now();
+        this.process = process.title;
+        this.version = package_json.version;
+        this.details = details;
+    }
 }
 
-class ExtractorNotReadyError extends VueTubeExtractorError { }
+class ExtractorNotReadyError extends VueTubeExtractorError {
+}
 
-export default { VueTubeExtractorError, ExtractorNotReadyError };
+export default {VueTubeExtractorError, ExtractorNotReadyError};

@@ -1,4 +1,5 @@
-type supportedTypes = 'object' | 'array'
+type supportedTypes = 'object' | 'array' | 'rule'
+type propertyType = 'string' | 'number' | 'boolean' | 'object' | 'array' | 'rule' | 'any'
 
 type baseRule = {
     type: supportedTypes;
@@ -8,20 +9,21 @@ type baseRule = {
     condition?: (item: any) => boolean | { [key: string]: conditionalRule };
 }
 
-interface propertyRule {
-    type: supportedTypes
+export interface propertyRule {
+    type: propertyType
     required?: boolean;
+    rule?: Rule;
 }
 
-interface conditionalRule extends propertyRule {
+export interface conditionalRule extends propertyRule {
     expected: any;
 }
 
-interface objectRule extends baseRule {
+export interface objectRule extends baseRule {
     type: "object";
 
-    properties?: {
-        [key: string]: Rule | propertyRule
+    properties: {
+        [key: string]: propertyRule
     };
 
     keymap?: {
@@ -30,17 +32,17 @@ interface objectRule extends baseRule {
 
 }
 
-interface arrayRule extends baseRule {
+export interface arrayRule extends baseRule {
     type: "array";
     limit?: number;
-    items?: Rule;
+    items: Rule;
 }
 
 export type Rule = objectRule | arrayRule;
 
 export type groupedRules = {
     properties: {
-        [key: string]: Rule | propertyRule
+        [key: string]: propertyRule
     }
 }
 
