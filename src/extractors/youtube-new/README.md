@@ -68,9 +68,8 @@ may or may not be present in the JSON object.
 
 ## Type Checking
 
-To prevent unnecessary runtime errors, it is advised to use the `type` property to ensure type safety. type supports all
-type guards provided by `typeof` and `instanceof`. You can see a list of supported
-types [here](https://www.typescriptlang.org/docs/handbook/2/narrowing.html#typeof-type-guards)
+To prevent unnecessary runtime errors, it is advised to use the `type` property to ensure type safety. Supports the
+following types: 'string', 'number', 'boolean', 'object', 'array' and 'any' (not recommend)
 
 Although not the property is not strictly necessary, the rest of this documentation will use the `type` property to
 ensure type safety.
