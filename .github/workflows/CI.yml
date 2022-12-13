@@ -17,7 +17,7 @@ jobs:
       - uses: actions/checkout@v3 # checkout the repo
       - run: yarn # install packages
       - run: yarn ci # run tests (configured to use jest-junit reporter)
-      - uses: actions/upload-artifact@v2 # upload test results
+      - uses: actions/upload-artifact@v3 # upload test results
         if: success() || failure() # run this step even if previous step failed
         with:
           name: test-results
