@@ -14,7 +14,7 @@ jobs:
   build-test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2 # checkout the repo
+      - uses: actions/checkout@v3 # checkout the repo
       - run: yarn # install packages
       - run: yarn ci # run tests (configured to use jest-junit reporter)
       - uses: actions/upload-artifact@v2 # upload test results
