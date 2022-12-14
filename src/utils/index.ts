@@ -1,7 +1,7 @@
 import UserAgent from "user-agents";
 import { MixinFunc } from '@types'
 
-export { default as utilityErrors } from "./errors";
+export { default as utilityErrors, ErrorMessages } from "./errors";
 
 /**
  * @abstract - Main helper class, should be extended by other helpers
