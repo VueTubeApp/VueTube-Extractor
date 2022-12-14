@@ -9,6 +9,7 @@
 * [Overview](#overview)
 * [Documentation](#documentation)
   * [Optional Properties](#optional-properties)
+    * [Default Values](#default-values)
   * [Type Checking](#type-checking)
     * [Strict Mode](#strict-mode)
   * [Sub-Rules](#sub-rules)
@@ -65,6 +66,35 @@ const continuationRule: Rule = {
 
 Properties can be marked as optional by setting the `required` property to `false`. This is useful for when a property
 may or may not be present in the JSON object.
+```typescript
+const optionalPropertyExample: Rule = {
+    type: 'object',
+    properties: {
+        optionalProperty: {
+            type: 'string',
+            required: false,
+        },
+    },
+};
+```
+
+### Default Values
+
+Optional properties can also have a default value by setting the `default` property. This is redundant if the property
+is not set to `required: false` as in that case, the property will always be present. However, it can be useful for
+better readability.
+```typescript
+const defaultExample: Rule = {
+    type: 'object',
+    properties: {
+        optionalPropertyWithDefault: {
+            type: 'string',
+            required: false,
+            default: 'default value',
+        },
+    },
+};
+```
 
 ## Type Checking
 
@@ -132,36 +162,38 @@ To avoid a single monolithic rule, sub-rules can be defined and referenced by th
 can
 also be automatically applied where applicable (on by default).
 
-In order to reference a sub-rule automatically, the name property must be defined. This will be used to identify an
-applicable sub-rule based on the key names of a given object.
+By default, all rules will be discoverable as sub-rules. If the name property is not set, the variable's name will be
+assumed to be the name of the sub-rule. In the event of a name collision, an error will be thrown.
+
+To disable automatic sub-rule discovery, set the `isDiscoverable` property to `false`.
 
 ```typescript
-export const continuationRule: Rule = {
-    name: 'continuations',
+export const subRuleExample: Rule = {
     type: 'object',
+    name: 'exampleSubRule',
     properties: {
-        continuation: {
+        property1: {
             type: 'string',
-            required: true, // By default, all properties are required
+            required: true,
         },
-        reloadContinuationData: {
-            type: 'string',
-            required: false,
+        property2: {
+            type: 'number',
+            required: true,
         },
     },
 };
 
-const exampleAutoRule: Rule = {
+const autoRuleExample: Rule = {
     type: 'object',
     autoApply: true, // optional, defaults to true
 }
 
-const exampleDefinedRule: Rule = {
+const definedRuleExample: Rule = {
     type: 'object',
     properties: {
         continuations: {
             type: 'rule',
-            rule: continuationRule,
+            rule: subRuleExample,
         },
     },
 }
@@ -172,7 +204,7 @@ const exampleDefinedRule: Rule = {
 In cases where the same sub-rule can be applied to multiple keys, aliases can be defined to avoid repetition.
 
 ```typescript
-export const exampleAliasedRule: Rule = {
+export const aliasedRuleExample: Rule = {
     name: 'mainName',
     aliases: ['secondaryName', "tertiaryName"],
     type: 'object',
@@ -189,14 +221,23 @@ changed by defining a `keyMap` in the rule. This is useful for when the key name
 (Keymaps present in a sub-rule will take precedence over the parent rule.)
 
 ```typescript
-const exampleRule: Rule = {
-    name: 'example',
+const keyMappedRuleExample: Rule = {
     type: 'object',
     keyMap: {
-        continuation: 'continuationToken',
-        reloadContinuationData: 'reloadToken',
+        property1: 'renamedProperty1',
+        property2: 'renamedProperty2',
     },
-}
+    properties: {
+        property1: {
+            type: 'string',
+            required: true,
+        },
+        property2: {
+            type: 'number',
+            required: true,
+        },
+    },
+};
 ```
 
 ## Result Grouping
@@ -205,7 +246,7 @@ In cases where a given object have multiple properties, it may be desirable to g
 by defining a `group` rule type. This can take the form of a sub-object, or a sub-array.
 
 ```typescript
-const exampleGroup: groupedRule = {
+export const groupExample: groupedRule = {
     properties: {
         continuation: {
             type: 'string',
@@ -222,12 +263,12 @@ const exampleGroup: groupedRule = {
 The group can then be referenced by the parent rule.
 
 ```typescript
-const exampleRule: Rule = {
+const ruleWithGroupExample: Rule = {
     type: 'object',
     properties: {
         continuations: {
             type: 'group',
-            group: exampleGroup,
+            group: groupExample,
         },
     },
 };
@@ -239,24 +280,24 @@ The extractor will also be able to handle arrays of objects, and will automatica
 in the array.
 
 ```typescript
-const exampleRule: Rule = {
+const arrayRuleExample: Rule = {
     type: 'array',
     items: {
         type: 'object',
         properties: {
-            continuation: {
+            property1: {
                 type: 'string',
                 required: true,
             },
-            reloadContinuationData: {
-                type: 'string',
-                required: false,
+            property2: {
+                type: 'number',
+                required: true,
             },
         },
     },
 }
 
-const example_data = [
+const EXAMPLE_DATA = [
     {
         continuation: "token1",
         reloadContinuationData: "token2",
@@ -268,7 +309,7 @@ const example_data = [
     // and so on...
 ]
 
-applyRule(example_data, exampleRule)
+applyRule(EXAMPLE_DATA, arrayRuleExample)
 // [
 //    {
 //        continuation: "token1",
@@ -283,19 +324,19 @@ applyRule(example_data, exampleRule)
 You can also define a limit on the number of items to be processed.
 
 ```typescript
-const exampleRule: Rule = {
+const limitedArrayRuleExample: Rule = {
     type: 'array',
     limit: 5, // optional, defaults to 0 (no limit)
     items: {
         type: 'object',
         properties: {
-            continuation: {
+            property1: {
                 type: 'string',
                 required: true,
             },
-            reloadContinuationData: {
-                type: 'string',
-                required: false,
+            property2: {
+                type: 'number',
+                required: true,
             },
         },
     },
@@ -310,7 +351,7 @@ add a `condition` to the rule, which will be evaluated for each item in the arra
 then the rule will be applied to that item.
 
 ```typescript
-const exampleRule: Rule = {
+const conditionalRuleExample: Rule = {
     type: 'array',
     items: {
         type: 'object',
@@ -333,7 +374,7 @@ Conditions can also be applied to objects. In this case, if the condition evalua
 an empty object. All sub-rules will also be ignored.
 
 ```typescript
-const exampleRule: Rule = {
+const objectConditionalRuleExample: Rule = {
     type: 'object',
     properties: {
         realData: {
@@ -355,7 +396,7 @@ In cases where conditions are too complex to be defined as a single conditional 
 function to be used for evaluating the condition.
 
 ```typescript
-const exampleRule: Rule = {
+const functionalConditionalRuleExample: Rule = {
     type: 'array',
     items: {
         type: 'object',
@@ -387,7 +428,7 @@ const exampleRule: Rule = {
 Alternatively, a special `condition` rule can be used to define a condition for the parent rule.
 
 ```typescript
-const exampleRule: Rule = {
+const ruleConditionConditionalRuleExample: Rule = {
     type: 'array',
     condition: {
         type: 'object',
