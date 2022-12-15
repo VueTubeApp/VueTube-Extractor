@@ -1,5 +1,4 @@
 import {UtilsBase} from "../index";
-import UserAgent from "user-agents";
 
 describe("UtilsBase", () => {
     describe("randomMobileUserAgent", () => {

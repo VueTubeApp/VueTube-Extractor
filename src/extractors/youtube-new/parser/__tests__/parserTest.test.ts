@@ -1,6 +1,6 @@
 // TODO: add tests for the new parser
 import {ObjectRuleParser} from "../index";
-import {objectRule, arrayRule, Rule} from "../types";
+import {Rule} from "../types";
 import {utilityErrors} from "../../../../utils";
 
 describe("Parser Tests", () => {
