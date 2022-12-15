@@ -1,4 +1,4 @@
-<p style="text-align: center;">
+<p align="center">
   <a href="https://vuetube.app/">
     <img src="https://cdn.discordapp.com/attachments/751596360108605500/983689395834089512/Part_of_VueTube.svg" alt="VueTube icon" width="500"/>
   </a>
@@ -11,7 +11,7 @@
 This is the library for VueTube. The main repository is <a href="https://github.com/Frontesque/VueTube"> here.</a>
 </p>
 
-<p style="text-align: center;">
+<p align="center">
   <a href="https://github.com/VueTubeApp/VueTube-Extractor/commits/master">
     <img src="https://img.shields.io/github/commit-activity/m/VueTubeApp/VueTube-Extractor?label=Commits" alt="Commits">
   </a>
