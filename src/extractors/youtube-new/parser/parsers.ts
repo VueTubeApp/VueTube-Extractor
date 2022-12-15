@@ -66,8 +66,7 @@ export class ObjectRuleParser {
         }
         let SUB_RULE_RESULT
         try {
-            const SubRuleParser = new ObjectRuleParser(this.TO_PARSE[key], rule.rule as objectRule); //TODO: use general rule parser when implemented
-            SUB_RULE_RESULT = SubRuleParser.parse(); //Something like this. Placeholder for now
+            SUB_RULE_RESULT = parseRule(this.TO_PARSE[key], rule.rule);
         } catch (error) {
             // TODO: Catch errors from sub-rules and add additional information from the parent rule
             // For now, just rethrow the error and note that it was from a sub-rule
