@@ -1,6 +1,7 @@
-import {conditionalFunction, conditionalRule, objectRule, propertyRule} from "./types";
+import {conditionalFunction, conditionalRule, objectRule, propertyRule, Rule} from "./types";
 import {ErrorMessages, utilityErrors} from "@utils";
-import {ObjectRuleHelper} from "./index";
+import {ObjectRuleHelper} from "./parserHelpers";
+export {ObjectRuleHelper, ArrayRuleHelper} from "./parserHelpers";
 
 /**
  * Class to parse object rules
@@ -129,5 +130,22 @@ export class ObjectRuleParser {
             if (parsedProperty) this.PROCESSED_OBJECT[this.Helper.followKeymap(key)] = parsedProperty;
         }
         return Object.keys(this.PROCESSED_OBJECT).length > 0 ? this.PROCESSED_OBJECT : undefined;
+    }
+}
+
+/**
+ * Function that selects the appropriate parser for the given rule type
+ * @param {any} toParse - The object to parse
+ * @param {Rule} rule - The rule to parse the object with
+ * @returns {any | undefined} - The parsed object. If for whatever reason the result is an empty object, returns undefined
+ */
+export function parseRule(toParse: any, rule: Rule): any | undefined {
+    if (rule.type === 'object') {
+        const Parser = new ObjectRuleParser(toParse, rule);
+        return Parser.parse();
+    } else if (rule.type === 'array') {
+        throw new utilityErrors.VueTubeExtractorError(ErrorMessages.notImplemented('parseGroups'));
+    } else {
+        throw new utilityErrors.VueTubeExtractorError(ErrorMessages.invalidRuleType('object or group', (rule as Rule).type || 'undefined'));
     }
 }

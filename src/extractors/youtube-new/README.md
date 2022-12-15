@@ -33,10 +33,10 @@ considered deprecated, and will not be updated.**
 
 # Overview
 
-Whereas the original extractor was a monolithic class, the rewrite will focus on a modular approach. A single
+Whereas the original extractor was a monolithic mess, the rewrite will focus on a modular approach. A single
 generic function would handle traversing a given JSON object following "rules" defined in a separate files.
 
-The aim is to identify the most common patterns in the YouTube API, and create a set of rules that can be applied to
+The aim is to identify the most common patterns in the YouTube API and create a set of rules that can be applied to
 each given pattern. In doing so, it will allow for easier maintenance and expansion of the codebase as well as an
 overall more robust and testable extractor.
 

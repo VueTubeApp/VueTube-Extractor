@@ -1,5 +1,5 @@
 import {arrayRule, Rule} from "../types";
-import {ArrayRuleHelper, ObjectRuleHelper} from "../index";
+import {ArrayRuleHelper, ObjectRuleHelper} from "../parserHelpers";
 
 describe("Helper Tests", () => {
     describe("ObjectRuleHelper Tests", () => {
