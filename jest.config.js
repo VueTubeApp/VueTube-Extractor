@@ -3,6 +3,7 @@ module.exports = {
   testMatch: [
     "**/__tests__/**/*.+(ts|tsx|js)",
     "**/?(*.)+(spec|test).+(ts|tsx|js)",
+    "!**/youtube/**",
   ],
   transform: {
     "^.+\\.(ts|tsx)$": "ts-jest",
@@ -24,5 +25,6 @@ module.exports = {
     ".mock.ts",
     ".json",
     "__tests__",
+    "./src/extractors/youtube/"
   ],
 };
