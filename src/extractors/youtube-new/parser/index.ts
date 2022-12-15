@@ -21,19 +21,21 @@ export class ObjectRuleParser {
     private readonly condition: conditionalFunction | { [key: string]: conditionalRule };
     private readonly RULE_NAME: string;
     private readonly RULE_TYPE: string;
-    private readonly PROPERTIES: { [key: string]: propertyRule };
+    private PROPERTIES: { [key: string]: propertyRule };
     private readonly PROCESSED_OBJECT: { [key: string]: any };
     private Helper: ObjectRuleHelper
 
     constructor(toParse: { [key: string]: any }, rule: objectRule) {
         this.TO_PARSE = toParse;
+        this.RULE_TYPE = rule.type;
+        this.RULE_NAME = rule.name || '';
+        this.PROPERTIES = rule.properties;
+        this.guardClauses();
         this.Helper = new ObjectRuleHelper(rule);
         const filledRule = this.Helper.fillRule();
-        this.RULE_TYPE = filledRule.type;
         this.KEYMAP = filledRule.keymap as { [key: string]: string };
         this.isStrict = filledRule.strict as boolean;
         this.condition = filledRule.condition as conditionalFunction | { [key: string]: conditionalRule };
-        this.RULE_NAME = filledRule.name || '';
         this.PROPERTIES = filledRule.properties;
         this.PROCESSED_OBJECT = {};
     }
@@ -126,7 +128,6 @@ export class ObjectRuleParser {
      * @returns {any | undefined} - The parsed object. If for whatever reason the result is an empty object, returns undefined
      */
     public parse(): any | undefined {
-        this.guardClauses();
         if (this.condition && !this.Helper.evaluateCondition(this.TO_PARSE, this.condition)) {
             return undefined;
         }
@@ -249,7 +250,7 @@ export class ObjectRuleHelper extends ParserHelper {
         this.rule.keymap ??= {};
         this.rule.strict ??= true;
         this.rule.condition ??= () => true;
-        for (const KEY in this.rule.properties) {
+        for (const KEY of Object.keys(this.rule.properties)) {
             this.rule.properties[KEY].required ??= true;
         }
         return this.rule;

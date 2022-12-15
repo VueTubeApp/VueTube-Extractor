@@ -94,25 +94,29 @@ describe("Parser Tests", () => {
                 const notObjectRule: Rule = {
                     type: "array",
                 } as unknown as objectRule;
-                const testParser = new ObjectRuleParser({}, notObjectRule);
-                expect(() => testParser.parse()).toThrow(utilityErrors.VueTubeExtractorError);
+                expect(() => {
+                    new ObjectRuleParser({}, notObjectRule);
+                }).toThrow(utilityErrors.VueTubeExtractorError);
             });
             test("if applyObjectRule throws an error if the given rule is missing a properties key", () => {
                 const missingPropertiesRule: Rule = {
                     type: "object",
                 } as objectRule;
-                const testParser = new ObjectRuleParser({}, missingPropertiesRule);
-                expect(() => testParser.parse()).toThrow(utilityErrors.VueTubeExtractorError);
+                expect(() => {
+                    new ObjectRuleParser({}, missingPropertiesRule);
+                }).toThrow(utilityErrors.VueTubeExtractorError);
             });
             test("if applyObjectRule throws an error if the given object is not an object", () => {
                 const notObjRule: Rule = {
                     type: "object",
                     properties: {},
                 };
-                const testParser = new ObjectRuleParser([], notObjRule);
-                const testParser2 = new ObjectRuleParser("test" as unknown as object, notObjRule);
-                expect(() => testParser.parse()).toThrow(utilityErrors.VueTubeExtractorError);
-                expect(() => testParser2.parse()).toThrow(utilityErrors.VueTubeExtractorError);
+                expect(() => {
+                    new ObjectRuleParser([], notObjRule);
+                }).toThrow(utilityErrors.VueTubeExtractorError);
+                expect(() => {
+                    new ObjectRuleParser("test" as unknown as object, notObjRule);
+                }).toThrow(utilityErrors.VueTubeExtractorError);
             });
         });
         describe("applyObjectRule functionality", () => {
@@ -215,7 +219,7 @@ describe("Parser Tests", () => {
                                 default: "test2",
                             },
                             test3: {
-                                type: "rule",
+                                type: "object",
                                 required: false,
                                 default: {
                                     test: "test"
