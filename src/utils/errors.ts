@@ -44,7 +44,7 @@ export class ErrorMessages {
     static readonly missingValuesInRule = (ruleType: string, ...missingValues: string[]) => `${ruleType} rule is missing the following values: ${missingValues.join(', ')}.`;
     static readonly reportBug = (baseMessage: string) => ErrorMessages.appendAdditionalInfoIfPresent(baseMessage, `This is a bug. Please report it on GitHub using the following link: https://github.com/VueTubeApp/VueTube-Extractor/issues/new?assignees=&labels=bug&template=bug-report.yml}.`)
     static readonly missingRequired = (requiredType: string, requiredName: string, functionName?: string) => ErrorMessages.appendAdditionalInfoIfPresent(`${requiredType} ${requiredName} is required but is missing`, functionName ? ` when calling ${functionName}` : "", ".")
-
+    static readonly notImplemented = (functionName: string) => `Function ${functionName} is not implemented. Please avoid using this function until it is implemented.`;
     static appendAdditionalInfoIfPresent(message: string, ...additionalInfo: string[]): string {
         if (additionalInfo.length > 0) {
             return message + " " + additionalInfo.join(" ");

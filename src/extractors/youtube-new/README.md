@@ -137,7 +137,7 @@ const exampleObject = {
 
 By default, strict mode is enabled. This means that any properties that are not defined in the rule will cause a
 TypeError. In the example above, `property2` would cause a TypeError to be thrown. To disable strict mode, set
-the `strict` property to `false`. In this case, property2 would be undefined.
+the `strict` property to `false`. In this case, property2 would be undefined and property3 will be empty.
 
 ```typescript
 const strictExample: Rule = {
@@ -152,9 +152,19 @@ const strictExample: Rule = {
             type: 'number',
             required: true,
         },
+        property3: {
+            type: 'object',
+            required: true,
+        }
     },
 };
-````
+
+const exampleObject = {
+    property1: 'string', // Will be 'string'
+    property2: 'not a number', // Will result in an undefined value
+    property3: 'not an object', // Will be an empty object
+};
+```
 
 ## Sub-Rules
 

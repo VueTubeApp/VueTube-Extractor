@@ -1,12 +1,12 @@
 // TODO: add tests for the new parser
 import {ObjectRuleHelper, ArrayRuleHelper, ObjectRuleParser} from "../index";
-import {objectRule, arrayRule} from "../types";
+import {objectRule, arrayRule, Rule} from "../types";
 import {utilityErrors} from "../../../../utils";
 
 describe("Helper Tests", () => {
     describe("ObjectRuleHelper Tests", () => {
         test("if fillRule correctly defaults a given rule", () => {
-            const rule: objectRule = {
+            const rule: Rule = {
                 type: "object",
                 properties: {
                     test: {
@@ -62,7 +62,7 @@ describe("Helper Tests", () => {
     describe("General Helper Tests", () => {
         let Helper: ObjectRuleHelper;
         beforeAll(() => {
-            const rule: objectRule = {
+            const rule: Rule = {
                 type: "object",
                 properties: {
                     test: {
@@ -91,21 +91,21 @@ describe("Parser Tests", () => {
     describe("ObjectRule Tests", () => {
         describe("applyObjectRule error handling", () => {
             test("if applyObjectRule throws an error if the given rule is not an object rule", () => {
-                const notObjectRule: objectRule = {
+                const notObjectRule: Rule = {
                     type: "array",
                 } as unknown as objectRule;
                 const testParser = new ObjectRuleParser({}, notObjectRule);
                 expect(() => testParser.parse()).toThrow(utilityErrors.VueTubeExtractorError);
             });
             test("if applyObjectRule throws an error if the given rule is missing a properties key", () => {
-                const missingPropertiesRule: objectRule = {
+                const missingPropertiesRule: Rule = {
                     type: "object",
                 } as objectRule;
                 const testParser = new ObjectRuleParser({}, missingPropertiesRule);
                 expect(() => testParser.parse()).toThrow(utilityErrors.VueTubeExtractorError);
             });
             test("if applyObjectRule throws an error if the given object is not an object", () => {
-                const notObjRule: objectRule = {
+                const notObjRule: Rule = {
                     type: "object",
                     properties: {},
                 };
@@ -117,7 +117,7 @@ describe("Parser Tests", () => {
         });
         describe("applyObjectRule functionality", () => {
             test("if applyObjectRule correctly applies a bare minimum rule", () => {
-                const basicRule: objectRule = {
+                const basicRule: Rule = {
                     type: "object",
                     properties: {
                         test: {
@@ -129,7 +129,7 @@ describe("Parser Tests", () => {
                 expect(testParser.parse()).toEqual({test: "test"});
             });
             test("if applyObjectRule correctly applies a rule with a keymap", () => {
-                const keyMappedRule: objectRule = {
+                const keyMappedRule: Rule = {
                     type: "object",
                     properties: {
                         test: {
@@ -144,7 +144,7 @@ describe("Parser Tests", () => {
                 expect(testParser.parse()).toEqual({test2: "test"});
             });
             test("if applyObjectRule correctly applies a rule with a condition", () => {
-                const conditionRule: objectRule = {
+                const conditionRule: Rule = {
                     type: "object",
                     properties: {
                         test: {
@@ -158,7 +158,7 @@ describe("Parser Tests", () => {
             });
             describe('applyObjectRule properties tests', function () {
                 test("if applyObjectRule correctly applies a rule with a required property (strict mode)", () => {
-                    const missingRequiredRule: objectRule = {
+                    const missingRequiredRule: Rule = {
                         type: "object",
                         strict: true,
                         properties: {
@@ -172,7 +172,7 @@ describe("Parser Tests", () => {
                     expect(() => testParser.parse()).toThrow(utilityErrors.VueTubeExtractorError);
                 });
                 test("if applyObjectRule correctly applies a rule with a required property (non-strict mode)", () => {
-                    const missingOptionalRule: objectRule = {
+                    const missingOptionalRule: Rule = {
                         type: "object",
                         strict: false,
                         properties: {
@@ -186,7 +186,7 @@ describe("Parser Tests", () => {
                     expect(testParser.parse()).toEqual(undefined);
                 });
                 test("if applyObjectRule correctly drops a non-required property", () => {
-                    const extraPropertyRule: objectRule = {
+                    const extraPropertyRule: Rule = {
                         type: "object",
                         strict: true,
                         properties: {
@@ -200,7 +200,7 @@ describe("Parser Tests", () => {
                     expect(testParser.parse()).toEqual(undefined);
                 });
                 test("if applyObjectRule correctly applies a rule with a default property", () => {
-                    const propertyWithDefaultRule: objectRule = {
+                    const propertyWithDefaultRule: Rule = {
                         type: "object",
                         strict: true,
                         properties: {
@@ -225,6 +225,37 @@ describe("Parser Tests", () => {
                     };
                     const testParser = new ObjectRuleParser({}, propertyWithDefaultRule);
                     expect(testParser.parse()).toEqual({test: "test", test2: "test2", test3: {test: "test"}});
+                });
+                test("if applyObjectRule correctly applies a rule with a sub-rule", () => {
+                    const subRule: Rule = {
+                        type: "object",
+                        strict: true,
+                        properties: {
+                            test: {
+                                type: "string",
+                                required: true,
+                            },
+                        },
+                    };
+                    const propertyWithSubRule: Rule = {
+                        type: "object",
+                        strict: true,
+                        properties: {
+                            test: {
+                                type: "rule",
+                                required: true,
+                                rule: subRule,
+                            },
+                        },
+                    };
+                    const testParser = new ObjectRuleParser({
+                        test: {
+                            test: "test",
+                            ignoredValue: "test"
+                        },
+                        ignoredValue: "test"
+                    }, propertyWithSubRule);
+                    expect(testParser.parse()).toEqual({test: {test: "test"}});
                 });
             });
         });

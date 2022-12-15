@@ -8,6 +8,7 @@ type baseRule = {
     name?: string;
     aliases?: string[];
     strict?: boolean;
+    isDiscoverable?: boolean;
     condition?: conditionalFunction | { [key: string]: conditionalRule };
 }
 
