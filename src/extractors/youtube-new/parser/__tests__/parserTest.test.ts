@@ -7,18 +7,22 @@ describe("Parser Tests", () => {
     describe("ObjectRule Tests", () => {
         describe("applyObjectRule error handling", () => {
             test("if applyObjectRule throws an error if the given rule is not an object rule", () => {
+                // @ts-expect-error incomplete rule
                 const notObjectRule: Rule = {
                     type: "array",
-                } as unknown as objectRule;
+                };
                 expect(() => {
+                    // @ts-expect-error incorrect rule type
                     new ObjectRuleParser({}, notObjectRule);
                 }).toThrow(utilityErrors.VueTubeExtractorError);
             });
             test("if applyObjectRule throws an error if the given rule is missing a properties key", () => {
+                // @ts-expect-error missing properties key
                 const missingPropertiesRule: Rule = {
                     type: "object",
-                } as objectRule;
+                };
                 expect(() => {
+                    // @ts-expect-error missing properties key
                     new ObjectRuleParser({}, missingPropertiesRule);
                 }).toThrow(utilityErrors.VueTubeExtractorError);
             });
@@ -31,8 +35,44 @@ describe("Parser Tests", () => {
                     new ObjectRuleParser([], notObjRule);
                 }).toThrow(utilityErrors.VueTubeExtractorError);
                 expect(() => {
-                    new ObjectRuleParser("test" as unknown as object, notObjRule);
+                    // @ts-expect-error not an actual object
+                    new ObjectRuleParser("test", notObjRule);
                 }).toThrow(utilityErrors.VueTubeExtractorError);
+            });
+            test("if applyObjectRule throws an error if the type of a property is not supported", () => {
+                const notSupportedTypeRule: Rule = {
+                    type: "object",
+                    properties: {
+                        test: {
+                            // @ts-expect-error bad type
+                            type: "test",
+                        },
+                    },
+                };
+                // @ts-expect-error bad type
+                const testParser = new ObjectRuleParser({test: "test"}, notSupportedTypeRule)
+                expect(() => testParser.parse()).toThrow(utilityErrors.VueTubeExtractorError);
+            });
+            test("if sub-rule errors are handled correctly", () => {
+                const badSubRule: Rule = {
+                    type: "object",
+                    properties: {
+                        test: {
+                            type: "string",
+                        }
+                    }
+                }
+                const badMapRule: Rule = {
+                    type: "object",
+                    properties: {
+                        test: {
+                            type: 'rule',
+                            rule: badSubRule
+                        }
+                    }
+                }
+                const testParser = new ObjectRuleParser({test: {test:12345}}, badMapRule);
+                expect(() => testParser.parse()).toThrow(utilityErrors.VueTubeExtractorError);
             });
         });
         describe("applyObjectRule functionality", () => {
