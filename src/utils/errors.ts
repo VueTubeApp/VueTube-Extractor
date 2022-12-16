@@ -19,6 +19,7 @@ class VueTubeExtractorError extends Error {
     details?: unknown;
 
     constructor(message: string, details?: unknown) {
+        message = ErrorMessages.reportBug(message);
         super(message);
         this.timestamp = Date.now();
         this.nodeJSVersion = process.version;
@@ -45,6 +46,8 @@ export class ErrorMessages {
     static readonly reportBug = (baseMessage: string) => ErrorMessages.appendAdditionalInfoIfPresent(baseMessage, `This is a bug. Please report it on GitHub using the following link: https://github.com/VueTubeApp/VueTube-Extractor/issues/new?assignees=&labels=bug&template=bug-report.yml}.`)
     static readonly missingRequired = (requiredType: string, requiredName: string, functionName?: string) => ErrorMessages.appendAdditionalInfoIfPresent(`${requiredType} ${requiredName} is required but is missing`, functionName ? ` when calling ${functionName}` : "", ".")
     static readonly notImplemented = (functionName: string) => `Function ${functionName} is not implemented. Please avoid using this function until it is implemented.`;
+    static readonly subRuleError = (ruleName: string, error?: string) => ErrorMessages.appendAdditionalInfoIfPresent(`An was detected from when parsing a sub-rule of ${ruleName}`, error ? `:\n ${error}` : ".");
+
     static appendAdditionalInfoIfPresent(message: string, ...additionalInfo: string[]): string {
         if (additionalInfo.length > 0) {
             return message + " " + additionalInfo.join(" ");

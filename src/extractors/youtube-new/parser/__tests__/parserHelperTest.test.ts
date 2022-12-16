@@ -74,9 +74,11 @@ describe("Helper Tests", () => {
             Helper = new ObjectRuleHelper(rule);
         });
         test("if checkTypeGuard correctly checks a type guard", () => {
-
             expect(Helper.checkTypeGuard("test", "string")).toBe(true);
             expect(Helper.checkTypeGuard(1, "string")).toBe(false);
+            expect(Helper.checkTypeGuard(1, "any")).toBe(true);
+            expect(Helper.checkTypeGuard([], "object")).toBe(false);
+            expect(Helper.checkTypeGuard([], "array")).toBe(true);
         });
         test("if followKeymap correctly follows a keymap", () => {
             expect(Helper.followKeymap("test")).toBe("test2");

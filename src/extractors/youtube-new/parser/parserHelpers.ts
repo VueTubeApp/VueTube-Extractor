@@ -26,8 +26,8 @@ abstract class ParserHelper {
             return true;
         }
         if (['string', 'number', 'boolean', 'object', 'array'].includes(typeGuard)) {
-            if (Array.isArray(toCheck) && typeGuard == 'array') {
-                return true;
+            if (Array.isArray(toCheck)) {
+                return typeGuard == 'array';
             } else {
                 return typeof toCheck == typeGuard;
             }
