@@ -1,6 +1,16 @@
 <p align="center">
   <a href="https://vuetube.app/">
-    <img src="https://cdn.discordapp.com/attachments/751596360108605500/983689395834089512/Part_of_VueTube.svg" alt="VueTube icon" width="500"/>
+    <picture>
+      <source 
+        srcset="https://raw.githubusercontent.com/VueTubeApp/.github/main/readme_assets/dark/Extractor.svg"
+        media="(prefers-color-scheme: dark)"
+      />
+      <img 
+        src="https://raw.githubusercontent.com/VueTubeApp/.github/main/readme_assets/light/Extractor.svg" 
+        alt="VueTube Extractor is a core component of VueTube"
+        width="500"
+       />
+    </picture>
   </a>
   <br>
   <sub>Logo by <a href="https://github.com/afnzmn">@afnzmn</a></sub>
