@@ -44,6 +44,6 @@
   "dependencies": {
     "@vuetubeapp/http": "^1.4.2",
     "protobufjs": "^7.1.2",
-    "user-agents": "^1.0.1228"
+    "user-agents": "^1.0.1234"
   }
 }
