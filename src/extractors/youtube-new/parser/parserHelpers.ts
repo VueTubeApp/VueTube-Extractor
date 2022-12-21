@@ -109,10 +109,66 @@ export class ObjectRuleHelper extends ParserHelper {
         this.rule.keymap ??= {};
         this.rule.strict ??= true;
         this.rule.condition ??= () => true;
+        this.rule.flatten ??= false;
         for (const KEY of Object.keys(this.rule.properties)) {
             this.rule.properties[KEY].required ??= true;
         }
         return this.rule;
+    }
+
+    /**
+     * Flattens & converts a given object via keymap
+     * @param {[key: string]: any} obj - The object to convert
+     * @returns {[key: string]: any} The converted object
+     */
+    public flattenConvertObject(obj: { [key: string]: any }): { [key: string]: any } {
+        const flattened = this.flattenObject(obj);
+        const converted: { [key: string]: any } = {};
+        for (const key of Object.keys(flattened)) {
+            converted[this.followKeymap(key)] = flattened[key];
+        }
+        return converted;
+    }
+
+    /**
+     * Flattens a given object
+     * @param obj - The object to flatten
+     * @param path - Optional. The path to the object. For naming conflicts
+     */
+    private flattenObject(obj: { [key: string]: any }, path = ''): { [key: string]: any } {
+        const result: { [key: string]: any } = {};
+        for (const key of Object.keys(obj)) {
+            const value = obj[key];
+            const newPath = path ? `${path}-${key}` : key;
+            if (typeof value === 'object' && value !== null) {
+                Object.assign(result, this.flattenObject(value, newPath));
+            } else {
+                result[newPath] = value;
+            }
+        }
+        return result;
+    }
+
+    /**
+     * JSONPath to object. Returns undefined if the path does not exist
+     * @param {string} path - The path to the object
+     * @param {any} obj - The object to search
+     * @returns {any|undefined} The object at the given path
+     */
+    public jsonPathToObject(path: string, obj: any): any | undefined {
+        const pathArray = path.split('.');
+        let current = obj;
+        for (const key of pathArray) {
+            if (current === undefined) {
+                return undefined;
+            } else if (key.includes('[')) {
+                const index = parseInt(key.split('[')[1].split(']')[0]);
+                current = current[key.split('[')[0]][index];
+            } else {
+                current = current[key];
+            }
+        }
+        return current;
     }
 }
 

@@ -1,4 +1,4 @@
-import {arrayRule, conditionalFunction, conditionalRule, objectRule, propertyRule, Rule} from "./types";
+import {arrayRule, conditionalFunction, conditionalRule, groupedRule, objectRule, propertyRule, Rule} from "./types";
 import {ErrorMessages, utilityErrors} from "@utils";
 import {ArrayRuleHelper, ObjectRuleHelper} from "./parserHelpers";
 
@@ -20,7 +20,8 @@ export class ObjectRuleParser implements GenericRuleParser {
     private readonly condition: conditionalFunction | { [key: string]: conditionalRule };
     private readonly RULE_NAME: string;
     private readonly RULE_TYPE: string;
-    private PROPERTIES: { [key: string]: propertyRule };
+    private readonly flatten: boolean;
+    private readonly PROPERTIES: { [key: string]: propertyRule };
     private readonly PROCESSED_OBJECT: { [key: string]: any };
     private Helper: ObjectRuleHelper
 
@@ -36,6 +37,7 @@ export class ObjectRuleParser implements GenericRuleParser {
         this.isStrict = filledRule.strict as boolean;
         this.condition = filledRule.condition as conditionalFunction | { [key: string]: conditionalRule };
         this.PROPERTIES = filledRule.properties;
+        this.flatten = filledRule.flatten as boolean;
         this.PROCESSED_OBJECT = {};
     }
 
@@ -51,11 +53,12 @@ export class ObjectRuleParser implements GenericRuleParser {
             const errorMessage = ErrorMessages.missingRequired("key", key, "applyObjectRule");
             return this.Helper.checkStrictlyRequired(isStrictlyRequired, new utilityErrors.VueTubeExtractorError(errorMessage), rule.default);
         }
-        if (!this.Helper.checkTypeGuard(this.TO_PARSE[key], rule.type)) {
-            const errorMessage = ErrorMessages.typeGuardMismatch(rule.type, typeof this.TO_PARSE[key], key)
+        const result = this.Helper.jsonPathToObject(key, this.TO_PARSE);
+        if (!this.Helper.checkTypeGuard(result, rule.type)) {
+            const errorMessage = ErrorMessages.typeGuardMismatch(rule.type, typeof result, key)
             return this.Helper.checkStrictlyRequired(isStrictlyRequired, new TypeError(errorMessage), rule.default);
         }
-        return this.TO_PARSE[key];
+        return result
     }
 
     /**
@@ -66,19 +69,11 @@ export class ObjectRuleParser implements GenericRuleParser {
      * @returns {any | undefined} - The parsed result. If the key is not present and the rule is strict, returns undefined
      */
     private parseRecursiveProperty(key: string, rule: propertyRule, isStrictlyRequired: boolean): any | undefined {
-        if (!rule.rule) {
+        if (!rule.rule || rule.type !== 'rule') {
             throw new utilityErrors.VueTubeExtractorError(ErrorMessages.missingValuesInRule(key, 'rule'));
         }
-        let SUB_RULE_RESULT
-        try {
-            SUB_RULE_RESULT = parseRule(this.TO_PARSE[key], rule.rule);
-        } catch (error) {
-            // TODO: Catch errors from sub-rules and add additional information from the parent rule
-            // For now, just rethrow the error and note that it was from a sub-rule
-            let message = `error from sub-rule ${key}`;
-            if (error instanceof Error) message += `: ${error.message}`;
-            throw new utilityErrors.VueTubeExtractorError(message);
-        }
+        const result = this.Helper.jsonPathToObject(key, this.TO_PARSE);
+        let SUB_RULE_RESULT = this.wrapFunction(parseRule, key, undefined, result, rule.rule);
         const errorMessage = ErrorMessages.missingRequired("key", key, "applyObjectRule");
         SUB_RULE_RESULT ??= this.Helper.checkStrictlyRequired(isStrictlyRequired, new utilityErrors.VueTubeExtractorError(errorMessage), rule.default);
         return SUB_RULE_RESULT
@@ -91,8 +86,8 @@ export class ObjectRuleParser implements GenericRuleParser {
      * @returns {any | undefined} - The parsed result. If the key is not present and the rule is strict, returns undefined
      */
     private parseProperty(key: string, rule: propertyRule): any | undefined {
-        const isStrictlyRequired = rule.required as boolean && this.isStrict && !rule.default;
-        if (rule.type === 'group' || rule.type === 'rule') {
+        const isStrictlyRequired = this.isRuleStrictlyRequired(rule);
+        if (rule.type === 'rule') {
             return this.parseRecursiveProperty(key, rule, isStrictlyRequired);
         }
         return this.parseBasicProperty(key, rule, isStrictlyRequired);
@@ -118,19 +113,45 @@ export class ObjectRuleParser implements GenericRuleParser {
         }
     }
 
+    private isRuleStrictlyRequired(rule: propertyRule | groupedRule): boolean {
+        return (rule.required ?? true) && (this.isStrict ?? true) && !rule.default;
+    }
+
     /**
      * Public method to parse the object. Returns the parsed object
-     * @returns {any | undefined} - The parsed object. If for whatever reason the result is an empty object, returns undefined
+     * @returns {[key: string]: any} - The parsed object. If for whatever reason the result is an empty object, returns empty object
      */
-    public parse(): any {
+    public parse(): { [key: string]: any } {
         if (this.condition && !this.Helper.evaluateCondition(this.TO_PARSE, this.condition)) {
             return {};
         }
         for (const [key, value] of Object.entries(this.PROPERTIES)) {
             const parsedProperty = this.parseProperty(key, value);
-            if (parsedProperty) this.PROCESSED_OBJECT[this.Helper.followKeymap(key)] = parsedProperty;
+            if (parsedProperty) {
+                this.PROCESSED_OBJECT[this.Helper.followKeymap(key)] = parsedProperty;
+            }
         }
+        if (this.flatten) return this.Helper.flattenConvertObject(this.PROCESSED_OBJECT);
         return this.PROCESSED_OBJECT;
+    }
+
+    /**
+     * Returns a function wrapped in a try-catch block. Used for sub-rules
+     * @returns The result of the function
+     * @param {function} runCode - The function to run
+     * @param {string} key - The key to use for the error message.
+     * @param thisArg - Pass the context to the function
+     * @param args - The arguments to pass to the function
+     */
+    private wrapFunction<T extends any[], R>(runCode: (...args: T) => R, key: string, thisArg: any, ...args: T): R | undefined {
+        try {
+            return runCode.bind(thisArg)(...args);
+        } catch (error) {
+            let message = `error from sub-rule`;
+            message = ErrorMessages.appendAdditionalInfoIfPresent(message, key);
+            if (error instanceof Error) message += `: ${error.message}`;
+            throw new utilityErrors.VueTubeExtractorError(message);
+        }
     }
 }
 
@@ -225,7 +246,7 @@ export function parseRule(toParse: any, rule: Rule): any | undefined {
     } else if (rule.type === 'array') {
         Parser = new ArrayRuleParser(toParse, rule);
     } else {
-        throw new utilityErrors.VueTubeExtractorError(ErrorMessages.invalidRuleType('object or group', (rule as Rule).type || 'undefined'));
+        throw new utilityErrors.VueTubeExtractorError(ErrorMessages.invalidRuleType('object or array', (rule as Rule).type || 'invalid rule'));
     }
     return Parser.parse();
 }
