@@ -15,7 +15,8 @@
   * [Sub-Rules](#sub-rules)
     * [Aliases](#aliases)
   * [Key Mapping](#key-mapping)
-  * [Result Grouping](#result-grouping)
+  * [Result flattening](#result-flattening)
+  * [JSONPath Dot Notation](#jsonpath-dot-notation)
   * [Arrays](#arrays)
   * [Conditional Rule Application](#conditional-rule-application)
     * [Functional Conditions](#functional-conditions)
@@ -66,6 +67,7 @@ const continuationRule: Rule = {
 
 Properties can be marked as optional by setting the `required` property to `false`. This is useful for when a property
 may or may not be present in the JSON object.
+
 ```typescript
 const optionalPropertyExample: Rule = {
     type: 'object',
@@ -83,6 +85,7 @@ const optionalPropertyExample: Rule = {
 Optional properties can also have a default value by setting the `default` property. This is redundant if the property
 is not set to `required: false` as in that case, the property will always be present. However, it can be useful for
 better readability.
+
 ```typescript
 const defaultExample: Rule = {
     type: 'object',
@@ -250,35 +253,50 @@ const keyMappedRuleExample: Rule = {
 };
 ```
 
-## Result Grouping
+## Result flattening
 
-In cases where a given object have multiple properties, it may be desirable to group them together. This can be achieved
-by defining a `group` rule type. This can take the form of a sub-object, or a sub-array.
+In cases where it may be useful to flatten the result, the `flatten` property can be used. Any keys of sub-properties
+will follow the format `parentKey-childKey`. Sub-rules will be flattened as well. Keymaps will be applied to the
+flattened keys.
 
 ```typescript
-export const groupExample: groupedRule = {
+const flattenedRuleExample: Rule = {
+    type: 'object',
+    flatten: true,
     properties: {
-        continuation: {
+        property1: {
             type: 'string',
             required: true,
         },
-        reloadContinuationData: {
-            type: 'string',
-            required: false,
+        property2: {
+            type: 'object',
+            properties: {
+                property3: {
+                    type: 'string',
+                    required: true,
+                },
+            },
         },
     },
 };
+// Result: { property1: 'string', 'property2-property3': 'string' }
 ```
 
-The group can then be referenced by the parent rule.
+## JSONPath Dot Notation
+
+If a rule involves a lot of nesting, it can be tedious to define the path to the property. To make this more concise,
+you can use JSONPath dot notation to define the path to the property.
+
+It is however considered bad practice to use this feature repeatedly. If you find yourself using this feature a lot,
+consider refactoring your rule to use [sub-rules](#sub-rules) instead.
 
 ```typescript
-const ruleWithGroupExample: Rule = {
+const jsonPathExample: Rule = {
     type: 'object',
     properties: {
-        continuations: {
-            type: 'group',
-            group: groupExample,
+        'exampleParent[0].exampleChild': {
+            type: 'string',
+            required: false,
         },
     },
 };
@@ -465,3 +483,5 @@ const ruleConditionConditionalRuleExample: Rule = {
     },
 }
 ```
+
+[Back to top](#youtube-new)
