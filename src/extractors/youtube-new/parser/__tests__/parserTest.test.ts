@@ -247,6 +247,34 @@ describe("Parser Tests", () => {
                     }
                     expect(parseRule(testCase, propertyWithSubRule)).toEqual({test: {test: "test"}});
                 });
+                test("if applyObjectRule flattens a rule correctly", () => {
+                    const subRule: Rule = {
+                        type: "object",
+                        strict: true,
+                        properties: {
+                            test: {
+                                type: "string",
+                            }
+                        }
+                    }
+                    const flattenPropertyWithSubRule: Rule = {
+                        type: "object",
+                        strict: true,
+                        flatten: true,
+                        properties: {
+                            test: {
+                                type: "rule",
+                                rule: subRule,
+                            }
+                        }
+                    }
+                    const testCase = {
+                        test: {
+                            test: "test",
+                        }
+                    }
+                    expect(parseRule(testCase, flattenPropertyWithSubRule)).toEqual({"test-test": "test"});
+                });
             });
         });
     })

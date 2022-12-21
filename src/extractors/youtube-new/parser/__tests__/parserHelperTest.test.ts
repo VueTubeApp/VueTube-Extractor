@@ -15,6 +15,7 @@ describe("Helper Tests", () => {
             const Helper = new ObjectRuleHelper(rule);
             expect(Helper.fillRule()).toEqual({
                 type: "object",
+                flatten: false,
                 properties: {
                     test: {
                         type: "string",
@@ -25,6 +26,62 @@ describe("Helper Tests", () => {
                 keymap: {},
                 condition: expect.any(Function),
             });
+        })
+        test("if flattenObject correctly flattens a given object", () => {
+            const Helper = new ObjectRuleHelper({
+                type: "object",
+                properties: {
+                    test: {
+                        type: "string",
+                    },
+                },
+            });
+            expect(Helper.flattenConvertObject({
+                test: {
+                    test: "test",
+                },
+            })).toEqual({
+                "test-test": "test",
+            });
+        });
+        test("if flattenObject correctly flattens a given object with a keymap", () => {
+            const Helper = new ObjectRuleHelper({
+                type: "object",
+                properties: {
+                    test: {
+                        type: "string",
+                    },
+                },
+                keymap: {
+                    "test-test": "test2",
+                },
+            });
+            expect(Helper.flattenConvertObject({
+                test: {
+                    test: "test",
+                },
+            })).toEqual({
+                "test2": "test",
+            });
+        });
+        test("if jsonPathToObject functions as expected", () => {
+            const Helper = new ObjectRuleHelper({
+                type: "object",
+                properties: {
+                    test: {
+                        type: "string",
+                    }
+                }
+            })
+            const jsonPath = "test.test[0]"
+            const invalidJsonPath = "test.test[0].test"
+            const testObject = {
+                test: {
+                    test: ["test"]
+                }
+            }
+            expect(Helper.jsonPathToObject(jsonPath, testObject)).toEqual("test")
+            expect(Helper.jsonPathToObject(invalidJsonPath, testObject)).toEqual(undefined)
         });
     });
     describe("ArrayRuleHelper Tests", () => {
