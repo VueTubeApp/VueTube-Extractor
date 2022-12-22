@@ -1,5 +1,5 @@
 name: ❓ Question
-description: Ask a quesion related to VueTube
+description: Ask a question related to the extractor
 labels: [question]
 body:
 
@@ -10,7 +10,7 @@ body:
       description: What do you want to know?
       placeholder: |
         Example:
-          "How do I add a plugin?"
+          "How do I search through videos in a channel?"
     validations:
       required: true
 
@@ -32,6 +32,4 @@ body:
         - label: I have written a short but informative title.
           required: true
         - label: I will fill out all of the requested information in this form.
-          required: true
-        - label: My question isn't asked in FAQ (Frequently Asked Questions).
           required: true

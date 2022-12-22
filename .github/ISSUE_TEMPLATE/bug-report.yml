@@ -1,5 +1,5 @@
 name: 🐞 Issue Report
-description: Report a issue in VueTube
+description: Report a issue in VueTube Extractor
 labels: [bug]
 body:
 
@@ -37,37 +37,37 @@ body:
       required: true
 
   - type: input
-    id: vuetube-version
+    id: extractor-version
     attributes:
-      label: VueTube version
+      label: Extractor version
       description: |
-        You can find your VueTube version in **Settings/About** within the app.
+        You can find the version within any error report or within package.json.
       placeholder: |
-        Example: "619c416"
+        Example: "0.1.0"
     validations:
       required: true
 
   - type: input
-    id: android-version
+    id: node-version
     attributes:
-      label: Android version
+      label: Node version
       description: |
-        You can find this somewhere in your Android settings.
+        run node --version from your terminal to check your version.
       placeholder: |
-        Example: "Android 12"
+        Example: "v16.14.0"
     validations:
       required: true
-      
+
   - type: input
-    id: device-type
+    id: locality
     attributes:
-      label: Device
+      label: Nation or locality
       description: |
-        The make and model of your device.
+        Where are you from? Some API responses may vary depending on your location. Optional.
       placeholder: |
-        Example: "Google Pixel 6 Pro"
+        Example: "Australia"
     validations:
-      required: true
+      required: false
 
   - type: textarea
     id: other-details
@@ -86,7 +86,7 @@ body:
           required: true
         - label: I have written a short but informative title.
           required: true
-        - label: I have updated the app to unstable version **[Latest](https://vuetube.app/install/)**.
+        - label: I have updated to the latest version of the extractor and confirmed this issue still exists.
           required: true
         - label: I will fill out all of the requested information in this form.
           required: true
