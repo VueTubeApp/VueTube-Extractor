@@ -72,6 +72,25 @@ abstract class ParserHelper {
             return defaultValue;
         }
     }
+
+    /**
+     * Returns a function wrapped in a try-catch block. Used for sub-rules
+     * @returns The result of the function
+     * @param {function} runCode - The function to run
+     * @param {string} key - The key to use for the error message.
+     * @param thisArg - Pass the context to the function
+     * @param args - The arguments to pass to the function
+     */
+    public wrapFunction<T extends any[], R>(runCode: (...args: T) => R, key: string, thisArg: any, ...args: T): R | undefined {
+        try {
+            return runCode.bind(thisArg)(...args);
+        } catch (error) {
+            let message = `error from sub-rule`;
+            message = ErrorMessages.appendAdditionalInfoIfPresent(message, key);
+            if (error instanceof Error) message += `: ${error.message}`;
+            throw new utilityErrors.VueTubeExtractorError(message);
+        }
+    }
 }
 
 

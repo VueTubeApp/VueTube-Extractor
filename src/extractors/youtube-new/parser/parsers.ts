@@ -73,7 +73,7 @@ export class ObjectRuleParser implements GenericRuleParser {
             throw new utilityErrors.VueTubeExtractorError(ErrorMessages.missingValuesInRule(key, 'rule'));
         }
         const result = this.Helper.jsonPathToObject(key, this.TO_PARSE);
-        let SUB_RULE_RESULT = this.wrapFunction(parseRule, key, undefined, result, rule.rule);
+        let SUB_RULE_RESULT = this.Helper.wrapFunction(parseRule, key, undefined, result, rule.rule);
         const errorMessage = ErrorMessages.missingRequired("key", key, "applyObjectRule");
         SUB_RULE_RESULT ??= this.Helper.checkStrictlyRequired(isStrictlyRequired, new utilityErrors.VueTubeExtractorError(errorMessage), rule.default);
         return SUB_RULE_RESULT
@@ -127,31 +127,10 @@ export class ObjectRuleParser implements GenericRuleParser {
         }
         for (const [key, value] of Object.entries(this.PROPERTIES)) {
             const parsedProperty = this.parseProperty(key, value);
-            if (parsedProperty) {
-                this.PROCESSED_OBJECT[this.Helper.followKeymap(key)] = parsedProperty;
-            }
+            if (parsedProperty) this.PROCESSED_OBJECT[this.Helper.followKeymap(key)] = parsedProperty;
         }
         if (this.flatten) return this.Helper.flattenConvertObject(this.PROCESSED_OBJECT);
         return this.PROCESSED_OBJECT;
-    }
-
-    /**
-     * Returns a function wrapped in a try-catch block. Used for sub-rules
-     * @returns The result of the function
-     * @param {function} runCode - The function to run
-     * @param {string} key - The key to use for the error message.
-     * @param thisArg - Pass the context to the function
-     * @param args - The arguments to pass to the function
-     */
-    private wrapFunction<T extends any[], R>(runCode: (...args: T) => R, key: string, thisArg: any, ...args: T): R | undefined {
-        try {
-            return runCode.bind(thisArg)(...args);
-        } catch (error) {
-            let message = `error from sub-rule`;
-            message = ErrorMessages.appendAdditionalInfoIfPresent(message, key);
-            if (error instanceof Error) message += `: ${error.message}`;
-            throw new utilityErrors.VueTubeExtractorError(message);
-        }
     }
 }
 
@@ -166,7 +145,7 @@ export class ArrayRuleParser implements GenericRuleParser {
     private PROCESSED_ARRAY: Array<any> = [];
     private readonly RULE_TYPE: string;
     private readonly RULE_NAME: string;
-    private isStrict: boolean;
+    private readonly isStrict: boolean;
     private readonly condition: conditionalFunction | { [p: string]: conditionalRule };
     private Helper: ArrayRuleHelper;
 
@@ -215,18 +194,8 @@ export class ArrayRuleParser implements GenericRuleParser {
             if (this.condition && !this.Helper.evaluateCondition(item, this.condition)) {
                 continue;
             }
-            try {
-                const parsedItem = parseRule(item, this.ITEMS);
-                if (parsedItem) this.PROCESSED_ARRAY.push(parsedItem);
-            } catch (e) {
-                let errMsg: string | undefined;
-                if (!(e instanceof Error)) {
-                    errMsg = ErrorMessages.subRuleError(this.RULE_NAME, e ? e.toString() : ErrorMessages.unknownError);
-                } else {
-                    errMsg = ErrorMessages.subRuleError(this.RULE_NAME, e.message);
-                }
-                throw new utilityErrors.VueTubeExtractorError(errMsg);
-            }
+            const parsedItem = this.Helper.wrapFunction(parseRule, this.RULE_NAME, undefined, item, this.ITEMS)
+            if (parsedItem) this.PROCESSED_ARRAY.push(parsedItem);
         }
         return this.PROCESSED_ARRAY.length > 0 ? this.PROCESSED_ARRAY : undefined;
     }
