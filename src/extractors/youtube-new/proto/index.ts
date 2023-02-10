@@ -28,7 +28,7 @@ class Proto {
   encodeVisitorData(id: string, timestamp: number): string {
     const visitorData: Type = this.protoRoot.lookupType("youtube.VisitorData");
     const buf: Uint8Array = visitorData.encode({ id, timestamp }).finish();
-    return encodeURIComponent(Buffer.from(buf).toString("base64"));
+    return encodeURIComponent(Buffer.from(buf).toString("base64").replace(/\+/g, '-').replace(/\//g, '_'));
   }
 
   /**
