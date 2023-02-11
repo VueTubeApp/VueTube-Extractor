@@ -48,7 +48,7 @@ completely replace the current API wrapper employed by VueTube upon completion.
 
 ## Getting Started & Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for more information.
+See [the wiki](https://github.com/VueTubeApp/VueTube-Extractor/wiki) as well as [CONTRIBUTING.md](CONTRIBUTING.md) for more information.
 
 ## Contributors
 
