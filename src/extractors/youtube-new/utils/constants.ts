@@ -9,7 +9,7 @@ export default {
   YTAPIVAL: {
     VERSION: "17.20",
     CLIENTNAME: "ANDROID",
-    VERSION_WEB: "2.20220411.09.00",
+    VERSION_WEB: "2.20230206.06.00",
     CLIENT_WEB_Mobile: "MWEB",
     CLIENT_WEB_Desktop: "WEB",
   },
