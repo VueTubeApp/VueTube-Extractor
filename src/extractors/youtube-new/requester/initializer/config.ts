@@ -1,7 +1,7 @@
 import { Http, HttpResponse } from "@vuetubeapp/http";
 import { ClientName, YTClient } from "extractors/youtube-new/utils/types";
 import YT_CONSTANTS from "../../utils/constants";
-import { InitializationError } from "../../utils/errors";
+import Errors from "../../../../utils/errors";
 // import { YouTubeHTTPOptions, ytErrors, YtUtils } from "../../utils";
 
 export default class Config {
@@ -40,13 +40,13 @@ export default class Config {
       responseType: "text",
     }).catch((err) => {
       if (typeof err === "string") {
-        throw new InitializationError(err.toUpperCase());
+        throw new Errors.VueTubeExtractorError(err.toUpperCase());
       } else if (err instanceof Error) {
-        throw new InitializationError(err.message);
+        throw new Errors.VueTubeExtractorError(err.message);
       }
     });
     if (!response || !response.data) {
-      throw new InitializationError("No response from YouTube API");
+      throw new Errors.VueTubeExtractorError("No response from YouTube API");
     }
     this.parseResponse(response);
     return this;
