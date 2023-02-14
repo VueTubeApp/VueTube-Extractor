@@ -1,88 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="jest tests" tests="45" failures="0" errors="0" time="8.172">
-  <testsuite name="src\utils\__tests__\helpers.test.ts" errors="0" failures="0" skipped="0" timestamp="2022-12-21T23:48:13" time="5.313" tests="2">
-    <testcase classname="UtilsBase › randomMobileUserAgent" name="if a random mobile UserAgent is generated" time="0.026">
+<testsuites name="jest tests" tests="46" failures="0" errors="0" time="6.633">
+  <testsuite name="src/extractors/youtube-new/parser/__tests__/parserTest.test.ts" errors="0" failures="0" skipped="0" timestamp="2023-02-13T06:02:13" time="4.943" tests="24">
+    <testcase classname="Parser Tests › parseRule Tests" name="Should throw an error if the rule is not a valid type" time="0.041">
     </testcase>
-    <testcase classname="UtilsBase › randomString" name="if a random string is generated" time="0.007">
-    </testcase>
-  </testsuite>
-  <testsuite name="src\extractors\youtube-new\proto\__tests__\protoTest.test.ts" errors="0" failures="0" skipped="0" timestamp="2022-12-21T23:48:13" time="5.353" tests="11">
-    <testcase classname="protobuf parsing tests › if encodeVisitorData works" name="abcd and 100 should be CgRhYmNkKGQ%3D" time="0.029">
-    </testcase>
-    <testcase classname="protobuf parsing tests › if encodeVisitorData works" name="efgh and 200 should be CgRlZmdoKMgB" time="0.001">
-    </testcase>
-    <testcase classname="protobuf parsing tests › if encodeVisitorData works" name="fgee-Eads1Q and 1640995200 should be CgtmZ2VlLUVhZHMxUSiAs76OBg%3D%3D" time="0.001">
-    </testcase>
-    <testcase classname="protobuf parsing tests › if encodeSearchFilter works" name="{
-  uploadDate: &apos;year&apos;,
-  order: &apos;rating&apos;,
-  type: &apos;video&apos;,
-  duration: &apos;medium&apos;
-} should be CAESBggFEAEYAw%3D%3D " time="0.011">
-    </testcase>
-    <testcase classname="protobuf parsing tests › if encodeSearchFilter works" name="{ type: &apos;channel&apos; } should be EgIQAg%3D%3D " time="0.001">
-    </testcase>
-    <testcase classname="protobuf parsing tests › if encodeSearchFilter works" name="{ features: [Array] } should be EgQgASgB " time="0">
-    </testcase>
-    <testcase classname="protobuf parsing tests › if encodeSearchFilter works" name="{ features: [Array] } should be EgVAAbgBAQ%3D%3D " time="0.001">
-    </testcase>
-    <testcase classname="protobuf parsing tests › if encodeSearchFilter works" name="{
-  uploadDate: &apos;week&apos;,
-  type: &apos;video&apos;,
-  duration: &apos;long&apos;,
-  features: [Array],
-  order: &apos;uploadDate&apos;
-} should be CAISCAgDEAEYAjgB " time="0.002">
-    </testcase>
-    <testcase classname="protobuf parsing tests › if encodeCommentOptions works" name="video abcd with options { sortBy: &apos;newestFirst&apos; } should be EgYSBGFiY2QYBjIeIgoiBGFiY2QwAXgCQhBjb21tZW50cy1zZWN0aW9u" time="0.005">
-    </testcase>
-    <testcase classname="protobuf parsing tests › if encodeCommentOptions works" name="video efgh with options { sortBy: &apos;topComments&apos; } should be EgYSBGVmZ2gYBjIeIgoiBGVmZ2gwAHgCQhBjb21tZW50cy1zZWN0aW9u" time="0.001">
-    </testcase>
-    <testcase classname="protobuf parsing tests › if encodeCommentOptions works" name="video dQw4w9WgXcQ with options { sortBy: &apos;topComments&apos; } should be Eg0SC2RRdzR3OVdnWGNRGAYyJSIRIgtkUXc0dzlXZ1hjUTAAeAJCEGNvbW1lbnRzLXNlY3Rpb24%3D" time="0">
-    </testcase>
-  </testsuite>
-  <testsuite name="tests\main.test.ts" errors="0" failures="0" skipped="0" timestamp="2022-12-21T23:48:13" time="5.807" tests="1">
-    <testcase classname="" name="tests on the old youtube extractor is now disabled as it is no longer maintained" time="0.019">
-    </testcase>
-  </testsuite>
-  <testsuite name="src\extractors\youtube-new\parser\__tests__\parserHelperTest.test.ts" errors="0" failures="0" skipped="0" timestamp="2022-12-21T23:48:13" time="6.791" tests="7">
-    <testcase classname="Helper Tests › ObjectRuleHelper Tests" name="if fillRule correctly defaults a given rule" time="0.005">
-    </testcase>
-    <testcase classname="Helper Tests › ObjectRuleHelper Tests" name="if flattenObject correctly flattens a given object" time="0.001">
-    </testcase>
-    <testcase classname="Helper Tests › ObjectRuleHelper Tests" name="if flattenObject correctly flattens a given object with a keymap" time="0">
-    </testcase>
-    <testcase classname="Helper Tests › ObjectRuleHelper Tests" name="if jsonPathToObject functions as expected" time="0.001">
-    </testcase>
-    <testcase classname="Helper Tests › ArrayRuleHelper Tests" name="if fillRule correctly defaults a given rule" time="0.001">
-    </testcase>
-    <testcase classname="Helper Tests › General Helper Tests" name="if checkTypeGuard correctly checks a type guard" time="0.002">
-    </testcase>
-    <testcase classname="Helper Tests › General Helper Tests" name="if followKeymap correctly follows a keymap" time="0">
-    </testcase>
-  </testsuite>
-  <testsuite name="src\extractors\youtube-new\parser\__tests__\parserTest.test.ts" errors="0" failures="0" skipped="0" timestamp="2022-12-21T23:48:13" time="7.021" tests="24">
-    <testcase classname="Parser Tests › parseRule Tests" name="Should throw an error if the rule is not a valid type" time="0.036">
-    </testcase>
-    <testcase classname="Parser Tests › ObjectRuleParser Tests › applyObjectRule error handling" name="if applyObjectRule throws an error if the given rule is not an object rule" time="0.004">
+    <testcase classname="Parser Tests › ObjectRuleParser Tests › applyObjectRule error handling" name="if applyObjectRule throws an error if the given rule is not an object rule" time="0.001">
     </testcase>
     <testcase classname="Parser Tests › ObjectRuleParser Tests › applyObjectRule error handling" name="if applyObjectRule throws an error if the given rule is missing a properties key" time="0.001">
     </testcase>
-    <testcase classname="Parser Tests › ObjectRuleParser Tests › applyObjectRule error handling" name="if applyObjectRule throws an error if the given object is not an object" time="0.003">
+    <testcase classname="Parser Tests › ObjectRuleParser Tests › applyObjectRule error handling" name="if applyObjectRule throws an error if the given object is not an object" time="0.001">
     </testcase>
-    <testcase classname="Parser Tests › ObjectRuleParser Tests › applyObjectRule error handling" name="if applyObjectRule throws an error if the type of a property is not supported" time="0.028">
+    <testcase classname="Parser Tests › ObjectRuleParser Tests › applyObjectRule error handling" name="if applyObjectRule throws an error if the type of a property is not supported" time="0.007">
     </testcase>
-    <testcase classname="Parser Tests › ObjectRuleParser Tests › applyObjectRule error handling" name="if sub-rule errors are handled correctly" time="0.003">
+    <testcase classname="Parser Tests › ObjectRuleParser Tests › applyObjectRule error handling" name="if sub-rule errors are handled correctly" time="0.002">
     </testcase>
-    <testcase classname="Parser Tests › ObjectRuleParser Tests › applyObjectRule error handling" name="if sub-rule missing `rule` property" time="0.002">
+    <testcase classname="Parser Tests › ObjectRuleParser Tests › applyObjectRule error handling" name="if sub-rule missing `rule` property" time="0.003">
     </testcase>
-    <testcase classname="Parser Tests › ObjectRuleParser Tests › applyObjectRule error handling" name="if applyObjectRule throws an error if the given object has type mismatches" time="0.001">
+    <testcase classname="Parser Tests › ObjectRuleParser Tests › applyObjectRule error handling" name="if applyObjectRule throws an error if the given object has type mismatches" time="0.002">
     </testcase>
-    <testcase classname="Parser Tests › ObjectRuleParser Tests › applyObjectRule functionality" name="if applyObjectRule correctly applies a bare minimum rule" time="0.002">
+    <testcase classname="Parser Tests › ObjectRuleParser Tests › applyObjectRule functionality" name="if applyObjectRule correctly applies a bare minimum rule" time="0.011">
     </testcase>
-    <testcase classname="Parser Tests › ObjectRuleParser Tests › applyObjectRule functionality" name="if applyObjectRule correctly applies a rule with a keymap" time="0.001">
+    <testcase classname="Parser Tests › ObjectRuleParser Tests › applyObjectRule functionality" name="if applyObjectRule correctly applies a rule with a keymap" time="0">
     </testcase>
-    <testcase classname="Parser Tests › ObjectRuleParser Tests › applyObjectRule functionality" name="if applyObjectRule correctly applies a rule with a condition" time="0.001">
+    <testcase classname="Parser Tests › ObjectRuleParser Tests › applyObjectRule functionality" name="if applyObjectRule correctly applies a rule with a condition" time="0">
     </testcase>
     <testcase classname="Parser Tests › ObjectRuleParser Tests › applyObjectRule functionality › applyObjectRule properties tests" name="if applyObjectRule correctly applies a rule with a required property (strict mode)" time="0.001">
     </testcase>
@@ -96,7 +35,7 @@
     </testcase>
     <testcase classname="Parser Tests › ObjectRuleParser Tests › applyObjectRule functionality › applyObjectRule properties tests" name="if applyObjectRule flattens a rule correctly" time="0.001">
     </testcase>
-    <testcase classname="Parser Tests › ArrayRuleParser Tests › ArrayRuleParser Error Handling" name="if ArrayRuleParser throws an error if rule is not type &apos;array&apos;" time="0.002">
+    <testcase classname="Parser Tests › ArrayRuleParser Tests › ArrayRuleParser Error Handling" name="if ArrayRuleParser throws an error if rule is not type &apos;array&apos;" time="0">
     </testcase>
     <testcase classname="Parser Tests › ArrayRuleParser Tests › ArrayRuleParser Error Handling" name="if ArrayRuleParser throws an error if rule is missing &apos;items&apos; property" time="0.001">
     </testcase>
@@ -104,11 +43,76 @@
     </testcase>
     <testcase classname="Parser Tests › ArrayRuleParser Tests › ArrayRuleParser Error Handling" name="if ArrayRuleParser throws an error if passed an array with an invalid item" time="0.001">
     </testcase>
-    <testcase classname="Parser Tests › ArrayRuleParser Tests › ArrayRuleParser Error Handling" name="if ArrayRuleParser throws an error with a bad item rule" time="0.002">
+    <testcase classname="Parser Tests › ArrayRuleParser Tests › ArrayRuleParser Error Handling" name="if ArrayRuleParser throws an error with a bad item rule" time="0.001">
     </testcase>
-    <testcase classname="Parser Tests › ArrayRuleParser Tests › ArrayRuleParser functionality" name="if ArrayRuleParser correctly applies a bare minimum rule" time="0.001">
+    <testcase classname="Parser Tests › ArrayRuleParser Tests › ArrayRuleParser functionality" name="if ArrayRuleParser correctly applies a bare minimum rule" time="0.006">
     </testcase>
-    <testcase classname="Parser Tests › ArrayRuleParser Tests › ArrayRuleParser functionality" name="if ArrayRuleParser correctly applies condition" time="0.001">
+    <testcase classname="Parser Tests › ArrayRuleParser Tests › ArrayRuleParser functionality" name="if ArrayRuleParser correctly applies condition" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="src/extractors/youtube-new/requester/__tests__/initializerTest.test.ts" errors="0" failures="0" skipped="0" timestamp="2023-02-13T06:02:13" time="5.054" tests="1">
+    <testcase classname="Initializer Tests › getDefaultConfig Tests" name="test" time="0.26">
+    </testcase>
+  </testsuite>
+  <testsuite name="src/extractors/youtube-new/proto/__tests__/protoTest.test.ts" errors="0" failures="0" skipped="0" timestamp="2023-02-13T06:02:13" time="5.191" tests="11">
+    <testcase classname="protobuf parsing tests › if encodeVisitorData works" name="abcd and 100 should be CgRhYmNkKGQ%3D" time="0.041">
+    </testcase>
+    <testcase classname="protobuf parsing tests › if encodeVisitorData works" name="efgh and 200 should be CgRlZmdoKMgB" time="0">
+    </testcase>
+    <testcase classname="protobuf parsing tests › if encodeVisitorData works" name="fgee-Eads1Q and 1640995200 should be CgtmZ2VlLUVhZHMxUSiAs76OBg%3D%3D" time="0.001">
+    </testcase>
+    <testcase classname="protobuf parsing tests › if encodeSearchFilter works" name="{
+  uploadDate: &apos;year&apos;,
+  order: &apos;rating&apos;,
+  type: &apos;video&apos;,
+  duration: &apos;medium&apos;
+} should be CAESBggFEAEYAw%3D%3D " time="0.003">
+    </testcase>
+    <testcase classname="protobuf parsing tests › if encodeSearchFilter works" name="{ type: &apos;channel&apos; } should be EgIQAg%3D%3D " time="0">
+    </testcase>
+    <testcase classname="protobuf parsing tests › if encodeSearchFilter works" name="{ features: [Array] } should be EgQgASgB " time="0.001">
+    </testcase>
+    <testcase classname="protobuf parsing tests › if encodeSearchFilter works" name="{ features: [Array] } should be EgVAAbgBAQ%3D%3D " time="0">
+    </testcase>
+    <testcase classname="protobuf parsing tests › if encodeSearchFilter works" name="{
+  uploadDate: &apos;week&apos;,
+  type: &apos;video&apos;,
+  duration: &apos;long&apos;,
+  features: [Array],
+  order: &apos;uploadDate&apos;
+} should be CAISCAgDEAEYAjgB " time="0.001">
+    </testcase>
+    <testcase classname="protobuf parsing tests › if encodeCommentOptions works" name="video abcd with options { sortBy: &apos;newestFirst&apos; } should be EgYSBGFiY2QYBjIeIgoiBGFiY2QwAXgCQhBjb21tZW50cy1zZWN0aW9u" time="0.004">
+    </testcase>
+    <testcase classname="protobuf parsing tests › if encodeCommentOptions works" name="video efgh with options { sortBy: &apos;topComments&apos; } should be EgYSBGVmZ2gYBjIeIgoiBGVmZ2gwAHgCQhBjb21tZW50cy1zZWN0aW9u" time="0">
+    </testcase>
+    <testcase classname="protobuf parsing tests › if encodeCommentOptions works" name="video dQw4w9WgXcQ with options { sortBy: &apos;topComments&apos; } should be Eg0SC2RRdzR3OVdnWGNRGAYyJSIRIgtkUXc0dzlXZ1hjUTAAeAJCEGNvbW1lbnRzLXNlY3Rpb24%3D" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="src/extractors/youtube-new/parser/__tests__/parserHelperTest.test.ts" errors="0" failures="0" skipped="0" timestamp="2023-02-13T06:02:18" time="0.357" tests="7">
+    <testcase classname="Helper Tests › ObjectRuleHelper Tests" name="if fillRule correctly defaults a given rule" time="0.002">
+    </testcase>
+    <testcase classname="Helper Tests › ObjectRuleHelper Tests" name="if flattenObject correctly flattens a given object" time="0">
+    </testcase>
+    <testcase classname="Helper Tests › ObjectRuleHelper Tests" name="if flattenObject correctly flattens a given object with a keymap" time="0.001">
+    </testcase>
+    <testcase classname="Helper Tests › ObjectRuleHelper Tests" name="if jsonPathToObject functions as expected" time="0.001">
+    </testcase>
+    <testcase classname="Helper Tests › ArrayRuleHelper Tests" name="if fillRule correctly defaults a given rule" time="0">
+    </testcase>
+    <testcase classname="Helper Tests › General Helper Tests" name="if checkTypeGuard correctly checks a type guard" time="0">
+    </testcase>
+    <testcase classname="Helper Tests › General Helper Tests" name="if followKeymap correctly follows a keymap" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="src/utils/__tests__/helpers.test.ts" errors="0" failures="0" skipped="0" timestamp="2023-02-13T06:02:18" time="0.542" tests="2">
+    <testcase classname="UtilsBase › randomMobileUserAgent" name="if a random mobile UserAgent is generated" time="0.02">
+    </testcase>
+    <testcase classname="UtilsBase › randomString" name="if a random string is generated" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="tests/main.test.ts" errors="0" failures="0" skipped="0" timestamp="2023-02-13T06:02:18" time="0.422" tests="1">
+    <testcase classname="" name="tests on the old youtube extractor is now disabled as it is no longer maintained" time="0.003">
     </testcase>
   </testsuite>
 </testsuites>

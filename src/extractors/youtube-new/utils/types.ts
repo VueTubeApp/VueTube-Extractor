@@ -157,11 +157,11 @@ export type YTClient = {
   visitorData?: string;
 };
 
-// export type YTContext = {
-//   client: YTClient;
-//   user: { lockedSafetyMode: boolean };
-//   request: { useSsl: boolean };
-// };
+export type YTContext = {
+  client: YTClient;
+  user: { lockedSafetyMode: boolean };
+  request: { useSsl: boolean };
+};
 
 // export type HTTPMetadata = {
 //   apiKey: string;
