@@ -1,6 +1,7 @@
 import { ClientName, YTClient, YTContext } from "extractors/youtube-new/utils/types";
 import YT_CONSTANTS from "../../utils/constants";
 import UserAgent from "user-agents";
+import Errors from "../../../../utils/errors";
 
 export type DeviceType = "DESKTOP_WEB" | "MOBILE_WEB" | "MOBILE_APP";
 export type Device = {
@@ -42,6 +43,11 @@ export default class Context {
   private device: Device;
 
   constructor(deviceType: DeviceType) {
+    if (!deviceType || Object.keys(this.devices).indexOf(deviceType) === -1) {
+      throw new Errors.VueTubeExtractorError(
+        "Invalid device type used when generating context"
+      );
+    }
     this.device = this.devices[deviceType];
   }
 
@@ -57,6 +63,7 @@ export default class Context {
         clientName: this.device.clientName,
         osName: this.device.osName,
         platform: this.device.platform,
+        clientFormFactor: this.device.clientFormFactor,
         ...configClient,
       } as YTClient,
       user: { lockedSafetyMode: false },

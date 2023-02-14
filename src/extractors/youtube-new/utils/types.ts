@@ -149,7 +149,7 @@ export type YTClient = {
   userAgent: string;
   clientName: ClientName;
   clientVersion: string;
-  osName: "Android" | "iOS" | "Windows" | "MacOS" | "Linux" | "MWeb";
+  osName: "Android" | "iOS" | "Windows" | "Macintosh" | "Linux" | "MWeb";
   osVersion?: number;
   platform: "MOBILE" | "DESKTOP";
   remoteHost?: string;
