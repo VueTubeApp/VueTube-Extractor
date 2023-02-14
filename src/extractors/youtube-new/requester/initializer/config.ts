@@ -1,5 +1,5 @@
 import { Http, HttpResponse } from "@vuetubeapp/http";
-import { ClientName, YTClient } from "extractors/youtube-new/utils/types";
+import { YTClient } from "extractors/youtube-new/utils/types";
 import YT_CONSTANTS from "../../utils/constants";
 import Errors from "../../../../utils/errors";
 
@@ -16,16 +16,20 @@ export default class Config {
   }
 
   parseJSDataResponse(response: HttpResponse) {
-    const rawData: Array<any> = JSON.parse(response.data.replace(")]}'", ""));
-    const data = rawData[0][2];
-    this.apiKey_ = data[1];
-    this.client_ = {
-      gl: data[0][0][1],
-      hl: data[0][0][0],
-      clientVersion: data[0][0][16],
-      remoteHost: data[0][0][3],
-      visitorData: data[6],
-    };
+    try {
+      const rawData: Array<any> = JSON.parse(response.data.replace(")]}'", ""));
+      const data = rawData[0][2];
+      this.apiKey_ = data[1];
+      this.client_ = {
+        gl: data[0][0][1],
+        hl: data[0][0][0],
+        clientVersion: data[0][0][16],
+        remoteHost: data[0][0][3],
+        visitorData: data[6],
+      };
+    } catch (e) {
+      throw new Errors.VueTubeExtractorError("Invalid data structure returned by YouTube API");
+    }
   }
 
   /**
