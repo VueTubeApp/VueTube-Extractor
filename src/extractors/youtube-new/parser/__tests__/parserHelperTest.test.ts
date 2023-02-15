@@ -1,10 +1,11 @@
-import {arrayRule, Rule} from "../types";
+import {arrayRule, objectRule} from "../types";
 import {ArrayRuleHelper, ObjectRuleHelper} from "../parserHelpers";
 
 describe("Helper Tests", () => {
     describe("ObjectRuleHelper Tests", () => {
         test("if fillRule correctly defaults a given rule", () => {
-            const rule: Rule = {
+            // @ts-expect-error no name
+            const rule: objectRule = {
                 type: "object",
                 properties: {
                     test: {
@@ -28,6 +29,7 @@ describe("Helper Tests", () => {
             });
         })
         test("if flattenObject correctly flattens a given object", () => {
+            // @ts-expect-error no name
             const Helper = new ObjectRuleHelper({
                 type: "object",
                 properties: {
@@ -45,6 +47,7 @@ describe("Helper Tests", () => {
             });
         });
         test("if flattenObject correctly flattens a given object with a keymap", () => {
+            // @ts-expect-error no name
             const Helper = new ObjectRuleHelper({
                 type: "object",
                 properties: {
@@ -65,6 +68,7 @@ describe("Helper Tests", () => {
             });
         });
         test("if jsonPathToObject functions as expected", () => {
+            // @ts-expect-error no name
             const Helper = new ObjectRuleHelper({
                 type: "object",
                 properties: {
@@ -88,6 +92,7 @@ describe("Helper Tests", () => {
         test("if fillRule correctly defaults a given rule", () => {
             const rule: arrayRule = {
                 type: "array",
+                // @ts-expect-error no name
                 items: {
                     type: "object",
                     properties: {
@@ -117,7 +122,8 @@ describe("Helper Tests", () => {
     describe("General Helper Tests", () => {
         let Helper: ObjectRuleHelper;
         beforeAll(() => {
-            const rule: Rule = {
+            // @ts-expect-error no name
+            const rule: objectRule = {
                 type: "object",
                 properties: {
                     test: {

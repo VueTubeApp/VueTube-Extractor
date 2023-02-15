@@ -1,6 +1,6 @@
 // TODO: add tests for the new parser
 import {ArrayRuleParser, ObjectRuleParser, parseRule} from "../parsers";
-import {Rule} from "../types";
+import {arrayRule, objectRule, Rule} from "../types";
 import {utilityErrors} from "../../../../utils";
 
 describe("Parser Tests", () => {
@@ -36,7 +36,8 @@ describe("Parser Tests", () => {
                 }).toThrow(utilityErrors.VueTubeExtractorError);
             });
             test("if applyObjectRule throws an error if the given object is not an object", () => {
-                const notObjRule: Rule = {
+                // @ts-expect-error no name
+                const notObjRule: objectRule = {
                     type: "object",
                     properties: {},
                 };
@@ -63,6 +64,7 @@ describe("Parser Tests", () => {
                 expect(() => testParser.parse()).toThrow(utilityErrors.VueTubeExtractorError);
             });
             test("if sub-rule errors are handled correctly", () => {
+                // @ts-expect-error no name
                 const badSubRule: Rule = {
                     type: "object",
                     properties: {
@@ -71,7 +73,8 @@ describe("Parser Tests", () => {
                         }
                     }
                 }
-                const badMapRule: Rule = {
+                // @ts-expect-error no name
+                const badMapRule: objectRule = {
                     type: "object",
                     properties: {
                         test: {
@@ -84,7 +87,8 @@ describe("Parser Tests", () => {
                 expect(() => testParser.parse()).toThrow(utilityErrors.VueTubeExtractorError);
             });
             test("if sub-rule missing `rule` property", () => {
-                const badParentRule: Rule = {
+                // @ts-expect-error no name
+                const badParentRule: objectRule = {
                     type: "object",
                     properties: {
                         test: {
@@ -96,7 +100,8 @@ describe("Parser Tests", () => {
                 expect(() => testParser.parse()).toThrow(utilityErrors.VueTubeExtractorError);
             })
             test("if applyObjectRule throws an error if the given object has type mismatches", () => {
-                const typeMismatchRule: Rule = {
+                // @ts-expect-error no name
+                const typeMismatchRule: objectRule = {
                     type: "object",
                     properties: {
                         test: {
@@ -110,6 +115,7 @@ describe("Parser Tests", () => {
         });
         describe("applyObjectRule functionality", () => {
             test("if applyObjectRule correctly applies a bare minimum rule", () => {
+                // @ts-expect-error no name
                 const basicRule: Rule = {
                     type: "object",
                     properties: {
@@ -121,6 +127,7 @@ describe("Parser Tests", () => {
                 expect(parseRule({test: "test"}, basicRule)).toEqual({test: "test"});
             });
             test("if applyObjectRule correctly applies a rule with a keymap", () => {
+                // @ts-expect-error no name
                 const keyMappedRule: Rule = {
                     type: "object",
                     properties: {
@@ -135,6 +142,7 @@ describe("Parser Tests", () => {
                 expect(parseRule({test: "test"}, keyMappedRule)).toEqual({test2: "test"});
             });
             test("if applyObjectRule correctly applies a rule with a condition", () => {
+                // @ts-expect-error no name
                 const conditionRule: Rule = {
                     type: "object",
                     properties: {
@@ -148,6 +156,7 @@ describe("Parser Tests", () => {
             });
             describe('applyObjectRule properties tests', function () {
                 test("if applyObjectRule correctly applies a rule with a required property (strict mode)", () => {
+                    // @ts-expect-error no name
                     const missingRequiredRule: Rule = {
                         type: "object",
                         strict: true,
@@ -161,6 +170,7 @@ describe("Parser Tests", () => {
                     expect(() => parseRule({}, missingRequiredRule)).toThrow(utilityErrors.VueTubeExtractorError);
                 });
                 test("if applyObjectRule correctly applies a rule with a required property (non-strict mode)", () => {
+                    // @ts-expect-error no name
                     const missingOptionalRule: Rule = {
                         type: "object",
                         strict: false,
@@ -174,6 +184,7 @@ describe("Parser Tests", () => {
                     expect(parseRule({}, missingOptionalRule)).toEqual({});
                 });
                 test("if applyObjectRule correctly drops a non-required property", () => {
+                    // @ts-expect-error no name
                     const extraPropertyRule: Rule = {
                         type: "object",
                         strict: true,
@@ -187,6 +198,7 @@ describe("Parser Tests", () => {
                     expect(parseRule({test: 1}, extraPropertyRule)).toEqual({});
                 });
                 test("if applyObjectRule correctly applies a rule with a default property", () => {
+                    // @ts-expect-error no name
                     const propertyWithDefaultRule: Rule = {
                         type: "object",
                         strict: true,
@@ -217,6 +229,7 @@ describe("Parser Tests", () => {
                     });
                 });
                 test("if applyObjectRule correctly applies a rule with a sub-rule", () => {
+                    // @ts-expect-error no name
                     const subRule: Rule = {
                         type: "object",
                         strict: true,
@@ -227,6 +240,7 @@ describe("Parser Tests", () => {
                             },
                         },
                     };
+                    // @ts-expect-error no name
                     const propertyWithSubRule: Rule = {
                         type: "object",
                         strict: true,
@@ -248,6 +262,7 @@ describe("Parser Tests", () => {
                     expect(parseRule(testCase, propertyWithSubRule)).toEqual({test: {test: "test"}});
                 });
                 test("if applyObjectRule flattens a rule correctly", () => {
+                    // @ts-expect-error no name
                     const subRule: Rule = {
                         type: "object",
                         strict: true,
@@ -257,6 +272,7 @@ describe("Parser Tests", () => {
                             }
                         }
                     }
+                    // @ts-expect-error no name
                     const flattenPropertyWithSubRule: Rule = {
                         type: "object",
                         strict: true,
@@ -281,6 +297,7 @@ describe("Parser Tests", () => {
     describe("ArrayRuleParser Tests", () => {
         describe("ArrayRuleParser Error Handling", () => {
             test("if ArrayRuleParser throws an error if rule is not type 'array'", () => {
+                // @ts-expect-error no name
                 const notArrayRule: Rule = {
                     type: "object",
                     properties: {}
@@ -303,6 +320,7 @@ describe("Parser Tests", () => {
             test("if ArrayRuleParser throws an error if passed a non-array", () => {
                 const arrayRule: Rule = {
                     type: "array",
+                    // @ts-expect-error no name
                     items: {
                         type: "object",
                         properties: {}
@@ -314,8 +332,9 @@ describe("Parser Tests", () => {
                 }).toThrow(utilityErrors.VueTubeExtractorError);
             });
             test("if ArrayRuleParser throws an error if passed an array with an invalid item", () => {
-                const arrayRule: Rule = {
+                const arrayRule: arrayRule = {
                     type: "array",
+                    // @ts-expect-error no name
                     items: {
                         type: "object",
                         properties: {}
@@ -348,6 +367,7 @@ describe("Parser Tests", () => {
             test("if ArrayRuleParser correctly applies a bare minimum rule", () => {
                 const basicRule: Rule = {
                     type: "array",
+                    // @ts-expect-error no name
                     items: {
                         type: "object",
                         properties: {
@@ -362,6 +382,7 @@ describe("Parser Tests", () => {
             test("if ArrayRuleParser correctly applies condition", () => {
                 const conditionRule: Rule = {
                     type: "array",
+                    // @ts-expect-error no name
                     items: {
                         type: "object",
                         properties: {

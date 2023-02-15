@@ -56,7 +56,7 @@ export class ErrorMessages {
     static readonly missingRequired = (requiredType: string, requiredName: string, functionName?: string) => ErrorMessages.appendAdditionalInfoIfPresent(`${requiredType} ${requiredName} is required but is missing`, functionName ? `when calling ${functionName}` : "", ".")
     static readonly notImplemented = (functionName: string) => `Function ${functionName} is not implemented. Please avoid using this function until it is implemented.`;
     static readonly subRuleError = (ruleName: string, error?: string) => ErrorMessages.appendAdditionalInfoIfPresent(`An was detected from when parsing a sub-rule of ${ruleName}`, error ? `:\n ${error}` : ".");
-
+    static readonly nameConflict = (name: string) => `A rule with the name ${name} already exists.`;
     static appendAdditionalInfoIfPresent(message: string, ...additionalInfo: (string | undefined)[]): string {
         if (additionalInfo.length > 0) {
             message += " " + additionalInfo.filter((info) => info !== undefined).join(" ");

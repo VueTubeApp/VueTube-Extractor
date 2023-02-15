@@ -5,7 +5,7 @@ export type conditionalFunction = (item: any) => boolean;
 
 type baseRule = {
     type: supportedTypes;
-    name?: string;
+    name: string;
     aliases?: string[];
     strict?: boolean;
     isDiscoverable?: boolean;
