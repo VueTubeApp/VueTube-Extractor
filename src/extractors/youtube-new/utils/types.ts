@@ -149,7 +149,7 @@ export type YTClient = {
   userAgent: string;
   clientName: ClientName;
   clientVersion: string;
-  osName: "Android" | "iOS" | "Windows" | "MacOS" | "Linux" | "MWeb";
+  osName: "Android" | "iOS" | "Windows" | "Macintosh" | "Linux" | "MWeb";
   osVersion?: number;
   platform: "MOBILE" | "DESKTOP";
   remoteHost?: string;
@@ -157,11 +157,11 @@ export type YTClient = {
   visitorData?: string;
 };
 
-// export type YTContext = {
-//   client: YTClient;
-//   user: { lockedSafetyMode: boolean };
-//   request: { useSsl: boolean };
-// };
+export type YTContext = {
+  client: YTClient;
+  user: { lockedSafetyMode: boolean };
+  request: { useSsl: boolean };
+};
 
 // export type HTTPMetadata = {
 //   apiKey: string;
