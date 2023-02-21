@@ -29,7 +29,6 @@ export default class ruleFactory {
     createRule(rule: Rule) {
         // find the name of the rule
         const name: string = rule.name;
-        this.rules[name] = rule;
         const names = [name, ...rule.aliases || []];
         names.forEach(alias => {
             this.namespaceCheck(alias);
