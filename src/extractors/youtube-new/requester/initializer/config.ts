@@ -37,7 +37,7 @@ export default class Config {
    * @returns {Promise<Config>} Class containing API key and initial client object
    */
   async getInnertubeConfig(
-    baseURL: string = YT_CONSTANTS.URL.YT_URL
+    baseURL: string = YT_CONSTANTS.URL.YT_MOBILE
   ): Promise<Config> {
     const response: void | HttpResponse = await Http.get({
       url: `${baseURL}/sw.js_data`,
