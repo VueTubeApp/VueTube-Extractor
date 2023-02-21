@@ -11,16 +11,16 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-test:
+  build:
     runs-on: ubuntu-latest
 
-     strategy:
+    strategy:
       matrix:
         node-version: [16.x]
 
     steps:
       - name: Checkout repository
-      - uses: actions/checkout@v3 # checkout the repo
+        uses: actions/checkout@v3 # checkout the repo
 
       - name: Set up Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
@@ -28,13 +28,13 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Install dependencies
-      - run: yarn # install packages
+        run: yarn # install packages
 
       - name: Run the tests
-      - run: yarn ci # run tests (configured to use jest-junit reporter)
+        run: yarn ci # run tests (configured to use jest-junit reporter)
 
       - name: Upload results
-      - uses: actions/upload-artifact@v3 # upload test results
+        uses: actions/upload-artifact@v3 # upload test results
         if: success() || failure() # run this step even if previous step failed
         with:
           name: test-results
