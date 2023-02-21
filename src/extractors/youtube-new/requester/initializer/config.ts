@@ -49,7 +49,7 @@ export default class Config {
         throw new Errors.VueTubeExtractorError(err.message);
       }
     });
-    console.log(response)
+    console.log(`url: ${baseURL}/sw.js_data`, response)
     if (!response || !response.data) {
       throw new Errors.VueTubeExtractorError("No response from YouTube API");
     }
