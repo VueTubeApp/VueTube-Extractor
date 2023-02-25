@@ -1,5 +1,5 @@
 //imports here
-import { Rule } from "../parser/types";
+import {objectRule, Rule} from "../parser/types";
 import { utilityErrors, ErrorMessages } from "@utils";
 import { default as continuations } from "./continuations";
 //Put all imports into this array
@@ -15,7 +15,7 @@ export default class ruleFactory {
      * Create a new rule factory
      * @param importDefault If true, the default rules will be imported. Only recommended for testing.
      */
-    constructor(importDefault: boolean = true) {
+    constructor(importDefault = true) {
         this.rules = {};
         if (importDefault) rulesImport.forEach(rule => this.createRule(rule));
     }
@@ -27,6 +27,8 @@ export default class ruleFactory {
      * @param rule The rule to add
      */
     createRule(rule: Rule) {
+        // check if the rule should be added
+        if (rule.isDiscoverable === false) return;
         // find the name of the rule
         const name: string = rule.name;
         const names = [name, ...rule.aliases || []];
@@ -47,11 +49,26 @@ export default class ruleFactory {
     }
 
     /**
-     * Retrieves a rule from the factory if it exists.
+     * Retrieves a rule if it exists.
      * @param name The name of the rule to get
      * @returns The rule with the given name
      */
     getRule(name: string) {
         return this.rules[name];
+    }
+
+    /**
+     * Loops through a given object and adds valid sub-rules to a given rule.
+     * @param rule The rule to add sub-rules to
+     * @param response The object to loop through
+     */
+    getSubRules(rule: objectRule, response: { [key: string]: any }) {
+        const result = rule;
+        for (const key in response) {
+            const subRule = this.getRule(key)
+            if (!(subRule && !rule.properties[key])) continue;
+            result.properties[key] = subRule;
+        }
+        return result;
     }
 }

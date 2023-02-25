@@ -198,7 +198,7 @@ export const subRuleExample: Rule = {
 
 const autoRuleExample: Rule = {
     type: 'object',
-    autoApply: true, // optional, defaults to true
+    isDiscoverable: true, // optional, defaults to true
 }
 
 const definedRuleExample: Rule = {
