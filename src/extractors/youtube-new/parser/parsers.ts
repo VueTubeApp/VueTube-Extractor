@@ -1,8 +1,8 @@
-import {arrayRule, conditionalFunction, conditionalRule, groupedRule, objectRule, propertyRule, Rule} from "./types";
-import {ErrorMessages, utilityErrors} from "@utils";
-import {ArrayRuleHelper, ObjectRuleHelper} from "./parserHelpers";
-
-export {ObjectRuleHelper, ArrayRuleHelper} from "./parserHelpers";
+import { arrayRule, conditionalFunction, conditionalRule, groupedRule, objectRule, propertyRule, Rule } from "./types";
+import { ErrorMessages, utilityErrors } from "@utils";
+import { ArrayRuleHelper, ObjectRuleHelper } from "./parserHelpers";
+import ruleFactory from "../rules";
+export { ObjectRuleHelper, ArrayRuleHelper } from "./parserHelpers";
 
 interface GenericRuleParser {
     parse(): any;
@@ -32,7 +32,7 @@ export class ObjectRuleParser implements GenericRuleParser {
         this.PROPERTIES = rule.properties;
         this.guardClauses();
         this.Helper = new ObjectRuleHelper(rule);
-        const filledRule = this.Helper.fillRule();
+        const filledRule = new ruleFactory().getSubRules(this.Helper.fillRule(), this.TO_PARSE);
         this.KEYMAP = filledRule.keymap as { [key: string]: string };
         this.isStrict = filledRule.strict as boolean;
         this.condition = filledRule.condition as conditionalFunction | { [key: string]: conditionalRule };
