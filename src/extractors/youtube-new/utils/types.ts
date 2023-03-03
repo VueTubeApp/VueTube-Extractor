@@ -1,5 +1,17 @@
 // import { imageData as ImageData, audioFormat as AudioFormat, videoFormat as VideoFormat } from "@types";
 
+import {
+  CLIENT_NAME,
+  OS_NAME,
+  PARSE_TYPE,
+  PLATFORM,
+  SEARCH_DURATION,
+  SEARCH_FEATURE,
+  SEARCH_ORDER,
+  SEARCH_TYPE,
+  SEARCH_UPLOAD_DATE,
+} from './constants';
+
 // export {
 //   video as Video,
 //   videoCard as VideoCard,
@@ -107,31 +119,13 @@
 //   isContinuation?: boolean;
 // }
 
-// export type SearchFeatures =
-//   | "live"
-//   | "video4k"
-//   | "hd"
-//   | "subtitles"
-//   | "cc"
-//   | "video360"
-//   | "vr180"
-//   | "video3d"
-//   | "hdr"
-//   | "location"
-//   | "purchased";
-// export interface SearchFilter {
-//   uploadDate: "hour" | "day" | "week" | "month" | "year" | "all";
-//   order: "relevance" | "viewCount" | "rating" | "uploadDate";
-//   type: "video" | "playlist" | "channel" | "all";
-//   duration: "short" | "medium" | "long" | "all";
-//   features: Array<SearchFeatures>;
-// }
-
-// export type ParseTypes =
-//   | "videoDetail"
-//   | "homePage"
-//   | "searchSuggestions"
-//   | "searchResult";
+export interface SearchFilter {
+  uploadDate: SearchUploadDate;
+  order: SearchOrder;
+  type: SearchType;
+  duration: SearchDuration;
+  features: SearchFeatures[];
+}
 
 // export type UserConfig = {
 //   hl?: string;
@@ -139,7 +133,18 @@
 //   maxRetryCount?: number;
 // };
 
-export type ClientName = "ANDROID" | "IOS" | "WEB" | "MWEB";
+export type ParseTypes = typeof PARSE_TYPE[keyof typeof PARSE_TYPE];
+export type ClientName = typeof CLIENT_NAME[keyof typeof CLIENT_NAME];
+export type OsName = typeof OS_NAME[keyof typeof OS_NAME];
+export type Platform = typeof PLATFORM[keyof typeof PLATFORM];
+export type SearchFeatures = typeof SEARCH_FEATURE[keyof typeof SEARCH_FEATURE];
+
+export type SearchUploadDate =
+  typeof SEARCH_UPLOAD_DATE[keyof typeof SEARCH_UPLOAD_DATE];
+export type SearchOrder = typeof SEARCH_ORDER[keyof typeof SEARCH_ORDER];
+export type SearchType = typeof SEARCH_TYPE[keyof typeof SEARCH_TYPE];
+export type SearchDuration =
+  typeof SEARCH_DURATION[keyof typeof SEARCH_DURATION];
 
 export type YTClient = {
   gl: string;
@@ -149,9 +154,9 @@ export type YTClient = {
   userAgent: string;
   clientName: ClientName;
   clientVersion: string;
-  osName: "Android" | "iOS" | "Windows" | "Macintosh" | "Linux" | "MWeb";
+  osName: OsName;
   osVersion?: number;
-  platform: "MOBILE" | "DESKTOP";
+  platform: Platform;
   remoteHost?: string;
   clientFormFactor?: string;
   visitorData?: string;
