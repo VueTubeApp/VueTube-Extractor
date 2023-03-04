@@ -1,0 +1,13 @@
+{
+  "singleQuote": true,
+  "arrowParens": "avoid",
+  "endOfLine": "auto",
+  "overrides": [
+    {
+      "files": "*.ts",
+      "options": {
+        "printWidth": 140
+      }
+    }
+  ]
+}
