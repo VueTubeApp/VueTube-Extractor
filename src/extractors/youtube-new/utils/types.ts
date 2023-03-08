@@ -133,18 +133,16 @@ export interface SearchFilter {
 //   maxRetryCount?: number;
 // };
 
-export type ParseTypes = typeof PARSE_TYPE[keyof typeof PARSE_TYPE];
-export type ClientName = typeof CLIENT_NAME[keyof typeof CLIENT_NAME];
-export type OsName = typeof OS_NAME[keyof typeof OS_NAME];
-export type Platform = typeof PLATFORM[keyof typeof PLATFORM];
-export type SearchFeatures = typeof SEARCH_FEATURE[keyof typeof SEARCH_FEATURE];
+export type ParseTypes = (typeof PARSE_TYPE)[keyof typeof PARSE_TYPE];
+export type ClientName = (typeof CLIENT_NAME)[keyof typeof CLIENT_NAME];
+export type OsName = (typeof OS_NAME)[keyof typeof OS_NAME];
+export type Platform = (typeof PLATFORM)[keyof typeof PLATFORM];
+export type SearchFeatures = (typeof SEARCH_FEATURE)[keyof typeof SEARCH_FEATURE];
 
-export type SearchUploadDate =
-  typeof SEARCH_UPLOAD_DATE[keyof typeof SEARCH_UPLOAD_DATE];
-export type SearchOrder = typeof SEARCH_ORDER[keyof typeof SEARCH_ORDER];
-export type SearchType = typeof SEARCH_TYPE[keyof typeof SEARCH_TYPE];
-export type SearchDuration =
-  typeof SEARCH_DURATION[keyof typeof SEARCH_DURATION];
+export type SearchUploadDate = (typeof SEARCH_UPLOAD_DATE)[keyof typeof SEARCH_UPLOAD_DATE];
+export type SearchOrder = (typeof SEARCH_ORDER)[keyof typeof SEARCH_ORDER];
+export type SearchType = (typeof SEARCH_TYPE)[keyof typeof SEARCH_TYPE];
+export type SearchDuration = (typeof SEARCH_DURATION)[keyof typeof SEARCH_DURATION];
 
 export type YTClient = {
   gl: string;
