@@ -57,6 +57,20 @@ export const SEARCH_FEATURE = {
   PURCHASED: 'purchased',
 } as const;
 
+export const FEATURE = {
+  LIVE: 'featuresLive',
+  VIDEO4K: 'features4k',
+  HD: 'featuresHd',
+  SUBTITLES: 'featuresSubtitles',
+  CC: 'featuresCreativeCommons',
+  VIDEO360: 'features360',
+  VR180: 'featuresVr180',
+  VIDEO3D: 'features3d',
+  HDR: 'featuresHdr',
+  LOCATION: 'featuresLocation',
+  PURCHASED: 'featuresPurchased',
+} as const;
+
 export const SEARCH_UPLOAD_DATE = {
   HOUR: 'hour',
   DAY: 'day',

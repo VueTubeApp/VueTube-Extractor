@@ -1,21 +1,25 @@
+/**
+ * Use `SearchFeatures` in src\extractors\youtube-new\utils\types.ts
+ * @deprecated
+ */
 export type searchFeatures =
-    | "live"
-    | "video4k"
-    | "hd"
-    | "subtitles"
-    | "cc"
-    | "video360"
-    | "vr180"
-    | "video3d"
-    | "hdr"
-    | "location"
-    | "purchased";
+  | 'live'
+  | 'video4k'
+  | 'hd'
+  | 'subtitles'
+  | 'cc'
+  | 'video360'
+  | 'vr180'
+  | 'video3d'
+  | 'hdr'
+  | 'location'
+  | 'purchased';
 
 interface searchFilter {
-  uploadDate: "hour" | "day" | "week" | "month" | "year" | "all";
-  order: "relevance" | "viewCount" | "rating" | "uploadDate";
-  type: "video" | "playlist" | "channel" | "all";
-  duration: "short" | "medium" | "long" | "all";
+  uploadDate: 'hour' | 'day' | 'week' | 'month' | 'year' | 'all';
+  order: 'relevance' | 'viewCount' | 'rating' | 'uploadDate';
+  type: 'video' | 'playlist' | 'channel' | 'all';
+  duration: 'short' | 'medium' | 'long' | 'all';
   features: Array<searchFeatures>;
 }
 
@@ -44,7 +48,7 @@ interface protoFilters {
 }
 
 interface commentOptions {
-  sortBy?: "topComments" | "newestFirst";
+  sortBy?: 'topComments' | 'newestFirst';
   type?: number;
 }
 

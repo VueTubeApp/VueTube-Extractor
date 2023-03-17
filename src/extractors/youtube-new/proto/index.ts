@@ -1,20 +1,13 @@
-import { Root, Type, loadSync } from "protobufjs";
-import path from "path";
-import {
-  duration,
-  order,
-  type,
-  uploadDate,
-  commentSortOptions,
-  features,
-} from "./conversion";
-import type { searchProto, protoFilters, commentOptions } from "./types";
-import {searchFilter} from "./types";
+import { Root, Type, loadSync } from 'protobufjs';
+import path from 'path';
+import { duration, order, type, uploadDate, commentSortOptions, FEATURE_BY_SEARCH_FEATURE } from './conversion';
+import type { searchProto, protoFilters, commentOptions } from './types';
+import { searchFilter } from './types';
 
 class Proto {
   private protoRoot: Root;
   constructor() {
-    this.protoRoot = loadSync(path.join(__dirname, "youtube.proto"));
+    this.protoRoot = loadSync(path.join(__dirname, 'youtube.proto'));
   }
 
   /**
@@ -26,9 +19,9 @@ class Proto {
    * @returns {string} encoded visitor data
    */
   encodeVisitorData(id: string, timestamp: number): string {
-    const visitorData: Type = this.protoRoot.lookupType("youtube.VisitorData");
+    const visitorData: Type = this.protoRoot.lookupType('youtube.VisitorData');
     const buf: Uint8Array = visitorData.encode({ id, timestamp }).finish();
-    return encodeURIComponent(Buffer.from(buf).toString("base64").replace(/\+/g, '-').replace(/\//g, '_'));
+    return encodeURIComponent(Buffer.from(buf).toString('base64').replace(/\+/g, '-').replace(/\//g, '_'));
   }
 
   /**
@@ -37,10 +30,8 @@ class Proto {
    * @returns {string} encoded search filter
    */
   encodeSearchFilter(filters: Partial<searchFilter>): string {
-    if (filters?.uploadDate && filters?.type !== "video") {
-      throw new Error(
-        JSON.stringify(filters) + "\n" + "Search filter type must be video"
-      );
+    if (filters?.uploadDate && filters?.type !== 'video') {
+      throw new Error(JSON.stringify(filters) + '\n' + 'Search filter type must be video');
     }
     const data: searchProto = filters ? { filters: {} } : { noFilter: 0 };
     if (data.filters) {
@@ -53,15 +44,13 @@ class Proto {
       if (filters.order) data.sort = order[filters.order];
       if (filters.features) {
         for (const feature of filters.features) {
-          data.filters[features[feature] as keyof protoFilters] = 1;
+          data.filters[FEATURE_BY_SEARCH_FEATURE[feature] as keyof protoFilters] = 1;
         }
       }
     }
-    const searchFilter: Type = this.protoRoot.lookupType(
-      "youtube.SearchFilter"
-    );
+    const searchFilter: Type = this.protoRoot.lookupType('youtube.SearchFilter');
     const buf: Uint8Array = searchFilter.encode(data).finish();
-    return encodeURIComponent(Buffer.from(buf).toString("base64"));
+    return encodeURIComponent(Buffer.from(buf).toString('base64'));
   }
 
   /**
@@ -71,23 +60,21 @@ class Proto {
    * @returns {string} encoded comment options
    */
   encodeCommentOptions(videoId: string, options: commentOptions = {}): string {
-    const commentOptions: Type = this.protoRoot.lookupType(
-      "youtube.CommentsSection"
-    );
+    const commentOptions: Type = this.protoRoot.lookupType('youtube.CommentsSection');
     const data = {
       ctx: { videoId },
       unkParam: 6,
       params: {
         opts: {
           videoId,
-          sortBy: commentSortOptions[options.sortBy || "topComments"],
+          sortBy: commentSortOptions[options.sortBy || 'topComments'],
           type: options.type || 2,
         },
-        target: "comments-section",
+        target: 'comments-section',
       },
     };
     const buf: Uint8Array = commentOptions.encode(data).finish();
-    return encodeURIComponent(Buffer.from(buf).toString("base64"));
+    return encodeURIComponent(Buffer.from(buf).toString('base64'));
   }
 }
 
