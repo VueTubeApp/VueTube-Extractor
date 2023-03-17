@@ -1,8 +1,16 @@
 import { Root, Type, loadSync } from 'protobufjs';
 import path from 'path';
-import { duration, order, type, uploadDate, commentSortOptions, FEATURE_BY_SEARCH_FEATURE } from './conversion';
+
 import type { searchProto, protoFilters, commentOptions } from './types';
 import { SearchFilter } from '../utils/types';
+import {
+  SEARCH_UPLOAD_DATE_OPTIONS,
+  SEARCH_TYPE_OPTIONS,
+  SEARCH_DURATION_OPTIONS,
+  SEARCH_ORDER_OPTIONS,
+  FEATURE_BY_SEARCH_FEATURE,
+  COMMENT_SORT_OPTIONS,
+} from '../utils/constants';
 
 class Proto {
   private protoRoot: Root;
@@ -37,11 +45,11 @@ class Proto {
     if (data.filters) {
       data.filters = {
         ...data.filters,
-        ...(filters.uploadDate && { param_0: uploadDate[filters.uploadDate] }),
-        ...(filters.type && { param_1: type[filters.type] }),
-        ...(filters.duration && { param_2: duration[filters.duration] }),
+        ...(filters.uploadDate && { param_0: SEARCH_UPLOAD_DATE_OPTIONS[filters.uploadDate] }),
+        ...(filters.type && { param_1: SEARCH_TYPE_OPTIONS[filters.type] }),
+        ...(filters.duration && { param_2: SEARCH_DURATION_OPTIONS[filters.duration] }),
       };
-      if (filters.order) data.sort = order[filters.order];
+      if (filters.order) data.sort = SEARCH_ORDER_OPTIONS[filters.order];
       if (filters.features) {
         for (const feature of filters.features) {
           data.filters[FEATURE_BY_SEARCH_FEATURE[feature] as keyof protoFilters] = 1;
@@ -67,7 +75,7 @@ class Proto {
       params: {
         opts: {
           videoId,
-          sortBy: commentSortOptions[options.sortBy || 'topComments'],
+          sortBy: COMMENT_SORT_OPTIONS[options.sortBy || 'topComments'],
           type: options.type || 2,
         },
         target: 'comments-section',
