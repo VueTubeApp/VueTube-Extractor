@@ -1,29 +1,28 @@
 import { FEATURE, SEARCH_FEATURE } from '../utils/constants';
-import { Features, SearchFeatures } from '../utils/types';
-import { searchFilter, searchFeatures } from './types';
+import { Features, SearchFeatures, SearchFilter } from '../utils/types';
 
-const duration: { [key in searchFilter['duration']]: number | null } = {
+const duration: { [key in SearchFilter['duration']]: number | null } = {
   all: null,
   short: 1,
   long: 2,
   medium: 3,
 };
 
-const order: { [key in searchFilter['order']]: number | null } = {
+const order: { [key in SearchFilter['order']]: number | null } = {
   relevance: 0,
   rating: 1,
   uploadDate: 2,
   viewCount: 3,
 };
 
-const type: { [key in searchFilter['type']]: number | null } = {
+const type: { [key in SearchFilter['type']]: number | null } = {
   all: null,
   video: 1,
   channel: 2,
   playlist: 3,
 };
 
-const uploadDate: { [key in searchFilter['uploadDate']]: number | null } = {
+const uploadDate: { [key in SearchFilter['uploadDate']]: number | null } = {
   all: null,
   hour: 1,
   day: 2,

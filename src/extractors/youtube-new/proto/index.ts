@@ -2,7 +2,7 @@ import { Root, Type, loadSync } from 'protobufjs';
 import path from 'path';
 import { duration, order, type, uploadDate, commentSortOptions, FEATURE_BY_SEARCH_FEATURE } from './conversion';
 import type { searchProto, protoFilters, commentOptions } from './types';
-import { searchFilter } from './types';
+import { SearchFilter } from '../utils/types';
 
 class Proto {
   private protoRoot: Root;
@@ -26,10 +26,10 @@ class Proto {
 
   /**
    * encodes search filter to protobuf format
-   * @param {Partial<searchFilter>} filters - search filters
+   * @param {Partial<SearchFilter>} filters - search filters
    * @returns {string} encoded search filter
    */
-  encodeSearchFilter(filters: Partial<searchFilter>): string {
+  encodeSearchFilter(filters: Partial<SearchFilter>): string {
     if (filters?.uploadDate && filters?.type !== 'video') {
       throw new Error(JSON.stringify(filters) + '\n' + 'Search filter type must be video');
     }
@@ -48,8 +48,8 @@ class Proto {
         }
       }
     }
-    const searchFilter: Type = this.protoRoot.lookupType('youtube.SearchFilter');
-    const buf: Uint8Array = searchFilter.encode(data).finish();
+    const SearchFilter: Type = this.protoRoot.lookupType('youtube.SearchFilter');
+    const buf: Uint8Array = SearchFilter.encode(data).finish();
     return encodeURIComponent(Buffer.from(buf).toString('base64'));
   }
 

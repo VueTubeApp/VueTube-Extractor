@@ -15,6 +15,10 @@ export type searchFeatures =
   | 'location'
   | 'purchased';
 
+/**
+ * Use `SearchFilter` in src\extractors\youtube-new\utils\types.ts
+ * @deprecated
+ */
 interface searchFilter {
   uploadDate: 'hour' | 'day' | 'week' | 'month' | 'year' | 'all';
   order: 'relevance' | 'viewCount' | 'rating' | 'uploadDate';
