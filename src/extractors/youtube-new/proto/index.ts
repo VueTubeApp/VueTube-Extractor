@@ -1,20 +1,21 @@
-import { Root, Type, loadSync } from "protobufjs";
-import path from "path";
+import { Root, Type, loadSync } from 'protobufjs';
+import path from 'path';
+
+import type { searchProto, protoFilters, commentOptions } from './types';
+import { SearchFilter } from '../utils/types';
 import {
-  duration,
-  order,
-  type,
-  uploadDate,
-  commentSortOptions,
-  features,
-} from "./conversion";
-import type { searchProto, protoFilters, commentOptions } from "./types";
-import {searchFilter} from "./types";
+  SEARCH_UPLOAD_DATE_OPTIONS,
+  SEARCH_TYPE_OPTIONS,
+  SEARCH_DURATION_OPTIONS,
+  SEARCH_ORDER_OPTIONS,
+  FEATURE_BY_SEARCH_FEATURE,
+  COMMENT_SORT_OPTIONS,
+} from '../utils/constants';
 
 class Proto {
   private protoRoot: Root;
   constructor() {
-    this.protoRoot = loadSync(path.join(__dirname, "youtube.proto"));
+    this.protoRoot = loadSync(path.join(__dirname, 'youtube.proto'));
   }
 
   /**
@@ -26,42 +27,38 @@ class Proto {
    * @returns {string} encoded visitor data
    */
   encodeVisitorData(id: string, timestamp: number): string {
-    const visitorData: Type = this.protoRoot.lookupType("youtube.VisitorData");
+    const visitorData: Type = this.protoRoot.lookupType('youtube.VisitorData');
     const buf: Uint8Array = visitorData.encode({ id, timestamp }).finish();
-    return encodeURIComponent(Buffer.from(buf).toString("base64").replace(/\+/g, '-').replace(/\//g, '_'));
+    return encodeURIComponent(Buffer.from(buf).toString('base64').replace(/\+/g, '-').replace(/\//g, '_'));
   }
 
   /**
    * encodes search filter to protobuf format
-   * @param {Partial<searchFilter>} filters - search filters
+   * @param {Partial<SearchFilter>} filters - search filters
    * @returns {string} encoded search filter
    */
-  encodeSearchFilter(filters: Partial<searchFilter>): string {
-    if (filters?.uploadDate && filters?.type !== "video") {
-      throw new Error(
-        JSON.stringify(filters) + "\n" + "Search filter type must be video"
-      );
+  encodeSearchFilter(filters: Partial<SearchFilter>): string {
+    if (filters?.uploadDate && filters?.type !== 'video') {
+      throw new Error(JSON.stringify(filters) + '\n' + 'Search filter type must be video');
     }
     const data: searchProto = filters ? { filters: {} } : { noFilter: 0 };
     if (data.filters) {
       data.filters = {
         ...data.filters,
-        ...(filters.uploadDate && { param_0: uploadDate[filters.uploadDate] }),
-        ...(filters.type && { param_1: type[filters.type] }),
-        ...(filters.duration && { param_2: duration[filters.duration] }),
+        ...(filters.uploadDate && { param_0: SEARCH_UPLOAD_DATE_OPTIONS[filters.uploadDate] }),
+        ...(filters.type && { param_1: SEARCH_TYPE_OPTIONS[filters.type] }),
+        ...(filters.duration && { param_2: SEARCH_DURATION_OPTIONS[filters.duration] }),
       };
-      if (filters.order) data.sort = order[filters.order];
+      if (filters.order) data.sort = SEARCH_ORDER_OPTIONS[filters.order];
       if (filters.features) {
         for (const feature of filters.features) {
-          data.filters[features[feature] as keyof protoFilters] = 1;
+          data.filters[FEATURE_BY_SEARCH_FEATURE[feature] as keyof protoFilters] = 1;
         }
       }
     }
-    const searchFilter: Type = this.protoRoot.lookupType(
-      "youtube.SearchFilter"
-    );
-    const buf: Uint8Array = searchFilter.encode(data).finish();
-    return encodeURIComponent(Buffer.from(buf).toString("base64"));
+    const SearchFilter: Type = this.protoRoot.lookupType('youtube.SearchFilter');
+    const buf: Uint8Array = SearchFilter.encode(data).finish();
+    return encodeURIComponent(Buffer.from(buf).toString('base64'));
   }
 
   /**
@@ -71,23 +68,21 @@ class Proto {
    * @returns {string} encoded comment options
    */
   encodeCommentOptions(videoId: string, options: commentOptions = {}): string {
-    const commentOptions: Type = this.protoRoot.lookupType(
-      "youtube.CommentsSection"
-    );
+    const commentOptions: Type = this.protoRoot.lookupType('youtube.CommentsSection');
     const data = {
       ctx: { videoId },
       unkParam: 6,
       params: {
         opts: {
           videoId,
-          sortBy: commentSortOptions[options.sortBy || "topComments"],
+          sortBy: COMMENT_SORT_OPTIONS[options.sortBy || 'topComments'],
           type: options.type || 2,
         },
-        target: "comments-section",
+        target: 'comments-section',
       },
     };
     const buf: Uint8Array = commentOptions.encode(data).finish();
-    return encodeURIComponent(Buffer.from(buf).toString("base64"));
+    return encodeURIComponent(Buffer.from(buf).toString('base64'));
   }
 }
 

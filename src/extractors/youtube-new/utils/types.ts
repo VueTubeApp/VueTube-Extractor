@@ -2,6 +2,7 @@
 
 import {
   CLIENT_NAME,
+  FEATURE,
   OS_NAME,
   PARSE_TYPE,
   PLATFORM,
@@ -138,6 +139,7 @@ export type ClientName = (typeof CLIENT_NAME)[keyof typeof CLIENT_NAME];
 export type OsName = (typeof OS_NAME)[keyof typeof OS_NAME];
 export type Platform = (typeof PLATFORM)[keyof typeof PLATFORM];
 export type SearchFeatures = (typeof SEARCH_FEATURE)[keyof typeof SEARCH_FEATURE];
+export type Features = (typeof FEATURE)[keyof typeof FEATURE];
 
 export type SearchUploadDate = (typeof SEARCH_UPLOAD_DATE)[keyof typeof SEARCH_UPLOAD_DATE];
 export type SearchOrder = (typeof SEARCH_ORDER)[keyof typeof SEARCH_ORDER];
