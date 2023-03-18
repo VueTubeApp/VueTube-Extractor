@@ -22,6 +22,12 @@ export const PLATFORM = {
   DESKTOP: 'DESKTOP',
 } as const;
 
+export const DEVICE_TYPE = {
+  DESKTOP_WEB: 'DESKTOP_WEB',
+  MOBILE_WEB: 'MOBILE_WEB',
+  MOBILE_APP: 'MOBILE_APP',
+} as const;
+
 export const CLIENT_NAME = {
   ANDROID: 'ANDROID',
   IOS: 'IOS',
