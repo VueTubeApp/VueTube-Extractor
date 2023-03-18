@@ -2,6 +2,7 @@
 
 import {
   CLIENT_NAME,
+  DEVICE_TYPE,
   FEATURE,
   OS_NAME,
   PARSE_TYPE,
@@ -145,6 +146,17 @@ export type SearchUploadDate = (typeof SEARCH_UPLOAD_DATE)[keyof typeof SEARCH_U
 export type SearchOrder = (typeof SEARCH_ORDER)[keyof typeof SEARCH_ORDER];
 export type SearchType = (typeof SEARCH_TYPE)[keyof typeof SEARCH_TYPE];
 export type SearchDuration = (typeof SEARCH_DURATION)[keyof typeof SEARCH_DURATION];
+
+export type DeviceType = (typeof DEVICE_TYPE)[keyof typeof DEVICE_TYPE];
+
+export type Device = {
+  baseURL: string;
+  clientName: ClientName;
+  clientVersion: string;
+  clientFormFactor: string;
+  osName: string;
+  platform: Platform;
+};
 
 export type YTClient = {
   gl: string;
