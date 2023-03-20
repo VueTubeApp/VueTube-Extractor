@@ -1,5 +1,5 @@
-import { DEVICE_TYPE, YT_CONSTANTS, OS_NAME, PLATFORM, CLIENT_FORM_FACTOR } from 'extractors/youtube-new/utils/constants';
-import { DeviceType, Device } from 'extractors/youtube-new/utils/types';
+import { DEVICE_TYPE, YT_CONSTANTS, OS_NAME, PLATFORM, CLIENT_FORM_FACTOR } from '../../../utils/constants';
+import { DeviceType, Device } from '../../../utils/types';
 
 export const DEVICE_CONFIG: Record<DeviceType, Device> = {
   [DEVICE_TYPE.DESKTOP_WEB]: {
