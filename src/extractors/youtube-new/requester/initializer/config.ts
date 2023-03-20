@@ -1,7 +1,7 @@
-import { Http, HttpResponse } from "@vuetubeapp/http";
-import { YTClient } from "extractors/youtube-new/utils/types";
-import YT_CONSTANTS from "../../utils/constants";
-import Errors from "../../../../utils/errors";
+import { Http, HttpResponse } from '@vuetubeapp/http';
+import { YTClient } from 'extractors/youtube-new/utils/types';
+import { YT_CONSTANTS } from '../../utils/constants';
+import Errors from '../../../../utils/errors';
 
 export default class Config {
   private client_: Partial<YTClient>;

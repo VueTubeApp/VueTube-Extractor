@@ -1,6 +1,7 @@
 // import { imageData as ImageData, audioFormat as AudioFormat, videoFormat as VideoFormat } from "@types";
 
 import {
+  CLIENT_FORM_FACTOR,
   CLIENT_NAME,
   DEVICE_TYPE,
   FEATURE,
@@ -137,6 +138,7 @@ export interface SearchFilter {
 
 export type ParseTypes = (typeof PARSE_TYPE)[keyof typeof PARSE_TYPE];
 export type ClientName = (typeof CLIENT_NAME)[keyof typeof CLIENT_NAME];
+export type ClientFormFactor = (typeof CLIENT_FORM_FACTOR)[keyof typeof CLIENT_FORM_FACTOR];
 export type OsName = (typeof OS_NAME)[keyof typeof OS_NAME];
 export type Platform = (typeof PLATFORM)[keyof typeof PLATFORM];
 export type SearchFeatures = (typeof SEARCH_FEATURE)[keyof typeof SEARCH_FEATURE];
@@ -153,7 +155,7 @@ export type Device = {
   baseURL: string;
   clientName: ClientName;
   clientVersion: string;
-  clientFormFactor: string;
+  clientFormFactor: ClientFormFactor;
   osName: string;
   platform: Platform;
 };
@@ -180,10 +182,10 @@ export type YTContext = {
   request: { useSsl: boolean };
 };
 
-// export type HTTPMetadata = {
-//   apiKey: string;
-//   context: YTContext;
-// };
+export type HTTPMetadata = {
+  apiKey: string;
+  context: YTContext;
+};
 
 // // -- parsers -- //
 
