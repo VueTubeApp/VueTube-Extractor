@@ -1,9 +1,9 @@
-import { Http, HttpResponse } from "@vuetubeapp/http";
-import { YTClient } from "extractors/youtube-new/utils/types";
-import YT_CONSTANTS from "../../utils/constants";
-import Errors from "../../../../utils/errors";
+import { Http, HttpResponse } from '@vuetubeapp/http';
+import { YTClient } from 'extractors/youtube-new/utils/types';
+import { YT_CONSTANTS } from '../../utils/constants';
+import Errors from '../../../../utils/errors';
 
-export default class Config {
+export class Config {
   private client_: Partial<YTClient>;
   private apiKey_: string;
 
@@ -17,7 +17,7 @@ export default class Config {
 
   parseJSDataResponse(response: HttpResponse) {
     try {
-      const rawData: Array<any> = JSON.parse(response.data.replace(")]}'", ""));
+      const rawData: Array<any> = JSON.parse(response.data.replace(")]}'", ''));
       const data = rawData[0][2];
       this.apiKey_ = data[1];
       this.client_ = {
@@ -28,7 +28,7 @@ export default class Config {
         visitorData: data[6],
       };
     } catch (e) {
-      throw new Errors.VueTubeExtractorError("Invalid data structure returned by YouTube API");
+      throw new Errors.VueTubeExtractorError('Invalid data structure returned by YouTube API');
     }
   }
 
@@ -36,21 +36,19 @@ export default class Config {
    * Fetches the innertube key from the YouTube API.
    * @returns {Promise<Config>} Class containing API key and initial client object
    */
-  async getInnertubeConfig(
-    baseURL: string = YT_CONSTANTS.URL.YT_MOBILE
-  ): Promise<Config> {
+  async getInnertubeConfig(baseURL: string = YT_CONSTANTS.URL.YT_MOBILE): Promise<Config> {
     const response: void | HttpResponse = await Http.get({
       url: `${baseURL}/sw.js_data`,
-      responseType: "text",
-    }).catch((err) => {
-      if (typeof err === "string") {
+      responseType: 'text',
+    }).catch(err => {
+      if (typeof err === 'string') {
         throw new Errors.VueTubeExtractorError(err.toUpperCase());
       } else if (err instanceof Error) {
         throw new Errors.VueTubeExtractorError(err.message);
       }
     });
     if (!response || !response.data) {
-      throw new Errors.VueTubeExtractorError("No response from YouTube API");
+      throw new Errors.VueTubeExtractorError('No response from YouTube API');
     }
     this.parseJSDataResponse(response);
     return this;

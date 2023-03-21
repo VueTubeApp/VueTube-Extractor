@@ -1,25 +1,19 @@
 import { SearchDuration, SearchOrder, SearchType, SearchUploadDate, Features, SearchFeatures } from './types';
 
-export default {
-  URL: {
-    YT_URL: 'https://www.youtube.com',
-    YT_MOBILE: 'https://m.youtube.com',
-    YT_MUSIC_URL: 'https://music.youtube.com',
-    YT_BASE_API: 'https://www.youtube.com/youtubei/v1',
-    YT_SUGGESTION_API: 'https://suggestqueries.google.com/complete/search',
-  },
-  YTAPIVAL: {
-    VERSION: '17.20',
-    CLIENTNAME: 'ANDROID',
-    VERSION_WEB: '2.20230206.06.00',
-    CLIENT_WEB_Mobile: 'MWEB',
-    CLIENT_WEB_Desktop: 'WEB',
-  },
-};
-
 export const PLATFORM = {
   MOBILE: 'MOBILE',
   DESKTOP: 'DESKTOP',
+} as const;
+
+export const DEVICE_TYPE = {
+  DESKTOP_WEB: 'DESKTOP_WEB',
+  MOBILE_WEB: 'MOBILE_WEB',
+  MOBILE_APP: 'MOBILE_APP',
+} as const;
+
+export const CLIENT_FORM_FACTOR = {
+  UNKNOWN: 'UNKNOWN_FORM_FACTOR',
+  SMALL: 'SMALL_FORM_FACTOR',
 } as const;
 
 export const CLIENT_NAME = {
@@ -164,4 +158,21 @@ export const FEATURE_BY_SEARCH_FEATURE: { [key in SearchFeatures]: Features } = 
 export const COMMENT_SORT_OPTIONS = {
   topComments: 0,
   newestFirst: 1,
+} as const;
+
+export const YT_CONSTANTS = {
+  URL: {
+    YT_URL: 'https://www.youtube.com',
+    YT_MOBILE: 'https://m.youtube.com',
+    YT_MUSIC_URL: 'https://music.youtube.com',
+    YT_BASE_API: 'https://www.youtube.com/youtubei/v1',
+    YT_SUGGESTION_API: 'https://suggestqueries.google.com/complete/search',
+  },
+  YTAPIVAL: {
+    VERSION: '17.20',
+    CLIENTNAME: CLIENT_NAME.ANDROID,
+    VERSION_WEB: '2.20230206.06.00',
+    CLIENT_WEB_Mobile: CLIENT_NAME.MWEB,
+    CLIENT_WEB_Desktop: CLIENT_NAME.WEB,
+  },
 } as const;
