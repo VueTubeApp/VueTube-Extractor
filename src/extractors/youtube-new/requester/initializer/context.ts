@@ -3,7 +3,7 @@ import UserAgent from 'user-agents';
 import Errors from '../../../../utils/errors';
 import { DEVICE_CONFIG } from './consts/context.const';
 
-export default class Context {
+export class Context {
   private device: Device;
 
   constructor(deviceType: DeviceType) {

@@ -1,7 +1,7 @@
 import { YT_CONSTANTS, DEVICE_TYPE } from 'extractors/youtube-new/utils/constants';
 import { YTContext } from 'extractors/youtube-new/utils/types';
-import Config from './config';
-import Context from './context';
+import { Config } from './config';
+import { Context } from './context';
 
 export class Initializer {
   private _mWebContext: YTContext;

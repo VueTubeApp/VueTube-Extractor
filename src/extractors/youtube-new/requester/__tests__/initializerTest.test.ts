@@ -1,8 +1,8 @@
 import 'isomorphic-fetch';
 import Errors from '../../../../utils/errors';
 import { DeviceType } from '../../utils/types';
-import Config from '../initializer/config';
-import Context from '../initializer/context';
+import { Config } from '../initializer/config';
+import { Context } from '../initializer/context';
 
 describe('Initializer Tests', () => {
   let validConfig: Config;
