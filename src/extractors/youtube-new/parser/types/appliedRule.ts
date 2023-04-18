@@ -1,7 +1,6 @@
 import type { PropertyRule, ObjectRule, ArrayRule, TypeMap, Rule } from "./common";
 import type { RuleKeyRemap } from "./remap";
-import type { RuleStrictMode } from "./strict";
-import type { RequiredProps, NotRequiredProps } from "./required";
+import type { ObjectProps } from "./objectProps";
 
 
 export type IndexType<Type extends PropertyRule> = 
@@ -15,10 +14,7 @@ export type IndexType<Type extends PropertyRule> =
 
 export type AppliedObjectRule<Rule extends ObjectRule> = RuleKeyRemap<
   Rule, 
-  RuleStrictMode<
-    Rule, 
-    RequiredProps<Rule> & NotRequiredProps<Rule>
-  >
+  ObjectProps<Rule>
 >;
 
 export type AppliedArrayRule<Rule extends ArrayRule> = Array<AppliedRule<Rule['items']>>;
