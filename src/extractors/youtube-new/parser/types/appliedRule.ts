@@ -4,11 +4,13 @@ import type { RuleStrictMode } from "./strict";
 import type { RequiredProps, NotRequiredProps } from "./required";
 
 
-// TODO: Indexing and subrules recursion
-
 export type IndexType<Type extends PropertyRule> = 
   Type['type'] extends keyof TypeMap ? 
-  TypeMap[Type['type']] : 
+  TypeMap[Type['type']] :
+  Type extends ObjectRule ?
+  AppliedObjectRule<Type> :
+  Type extends ArrayRule ? 
+  AppliedArrayRule<Type> :
   never;
 
 export type AppliedObjectRule<Rule extends ObjectRule> = RuleKeyRemap<
