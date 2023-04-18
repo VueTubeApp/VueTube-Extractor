@@ -1,4 +1,4 @@
-import { objectRule, propertyRule } from './types';
+import { Rule, arrayRule, objectRule, propertyRule } from './types';
 
 // Common types
 
@@ -6,6 +6,7 @@ type TypeMap = {
   string: string;
   number: number;
   boolean: boolean;
+  any: any;
 };
 
 type IndexType<Type extends string> = Type extends keyof TypeMap ? TypeMap[Type] : never;
@@ -58,6 +59,17 @@ export type AppliedObjectRule<Rule extends objectRule> = RuleKeyRemap<
   >
 >;
 
+// Array rule
+
+export type AppliedArrayRule<Rule extends arrayRule> = Array<AppliedRule<Rule['items']>>;
+
+export type AppliedRule<RuleType extends Rule> = 
+  RuleType extends objectRule ? 
+  AppliedObjectRule<RuleType> :
+  RuleType extends arrayRule ?
+  AppliedArrayRule<RuleType> : 
+  string;
+
 // Examples
 
 const rule = {
@@ -83,9 +95,15 @@ const rule = {
   },
 } as const;
 
-function typedFunc<const Rule extends objectRule>(obj: any, rule: Rule): AppliedObjectRule<Rule> {
+const array = {
+  name: 'anotherName',
+  type: 'array',
+  items: rule
+} as const
+
+function typedFunc<const RuleType extends Rule>(obj: any, rule: RuleType): AppliedRule<RuleType> {
   // ...
   return obj;
 }
 
-const item = typedFunc({}, rule);
+let item = typedFunc({}, array);
