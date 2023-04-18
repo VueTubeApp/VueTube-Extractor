@@ -1,6 +1,4 @@
-// Common types
-
-type TypeMap = {
+export type TypeMap = {
   string: string;
   number: number;
   boolean: boolean;
