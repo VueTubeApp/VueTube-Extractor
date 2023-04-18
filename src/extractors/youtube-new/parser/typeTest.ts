@@ -9,8 +9,6 @@ type TypeMap = {
   any: any;
 };
 
-type IndexType<Type extends string> = Type extends keyof TypeMap ? TypeMap[Type] : never;
-
 type RuleProps<Rule extends objectRule> = Rule['properties'];
 
 type PrimitiveRuleProps<Rule extends objectRule> = {
@@ -21,29 +19,51 @@ type PrimitiveKeys<Rule extends objectRule> = keyof PrimitiveRuleProps<Rule>;
 
 type RuleKeys<Rule extends objectRule> = keyof RuleProps<Rule>;
 
+// Primitive types indexing and subrule nesting
+
+type IndexType<Type extends propertyRule> = 
+  Type['type'] extends keyof TypeMap ? 
+  TypeMap[Type['type']] : 
+  never;
+
 // Default type
 
-type PropHasDefault<Prop extends propertyRule, KeyType> = Prop extends { default: IndexType<Prop['type']> } ? KeyType : never;
+type PropHasDefault<Prop extends propertyRule, KeyType> = 
+  Prop extends { default: IndexType<Prop> } ? 
+  KeyType : 
+  never;
 
-type PropHasNotDefault<Prop extends propertyRule, KeyType> = Prop extends { default: IndexType<Prop['type']> } ? never : KeyType;
+type PropHasNotDefault<Prop extends propertyRule, KeyType> = 
+  Prop extends { default: IndexType<Prop> } ? 
+  never : 
+  KeyType;
 
 // Required prop checking
 
-type PropRequired<Prop extends propertyRule, KeyType> = Prop extends { required: false } ? PropHasDefault<Prop, KeyType> : KeyType;
+type PropRequired<Prop extends propertyRule, KeyType> = 
+  Prop extends { required: false } ? 
+  PropHasDefault<Prop, KeyType> : 
+  KeyType;
 
-type PropNotRequired<Prop extends propertyRule, KeyType> = Prop extends { required: false } ? PropHasNotDefault<Prop, KeyType> : never;
+type PropNotRequired<Prop extends propertyRule, KeyType> = 
+  Prop extends { required: false } ? 
+  PropHasNotDefault<Prop, KeyType> : 
+  never;
 
 type RequiredProps<Rule extends objectRule> = {
-  [Key in PrimitiveKeys<Rule> as PropRequired<RuleProps<Rule>[Key], Key>]: IndexType<Rule['properties'][Key]['type']>;
+  [Key in RuleKeys<Rule> as PropRequired<RuleProps<Rule>[Key], Key>]: IndexType<Rule['properties'][Key]>;
 };
 
 type NotRequiredProps<Rule extends objectRule> = {
-  [Key in PrimitiveKeys<Rule> as PropNotRequired<RuleProps<Rule>[Key], Key>]?: IndexType<Rule['properties'][Key]['type']>;
+  [Key in RuleKeys<Rule> as PropNotRequired<RuleProps<Rule>[Key], Key>]?: IndexType<Rule['properties'][Key]>;
 };
 
 // Strict mode
 
-type RuleStrictMode<Rule extends objectRule, Type> = Rule extends { strict: false } ? Partial<Type> : Type;
+type RuleStrictMode<Rule extends objectRule, Type> = 
+  Rule extends { strict: false } ? 
+  Partial<Type> : 
+  Type;
 
 // Apply keymap
 
