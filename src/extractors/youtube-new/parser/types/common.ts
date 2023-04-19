@@ -7,14 +7,7 @@ export type TypeMap = {
 
 export type ConditionalFn = (item: any) => boolean;
 
-interface BaseRule {
-  type: string;
-  name: string;
-  aliases?: string[];
-  isDiscoverable?: boolean;
-};
-
-export interface ObjectRule extends BaseRule {
+export interface ObjectRule {
   type: 'object';
   strict?: boolean;
   flatten?: boolean;
@@ -23,7 +16,7 @@ export interface ObjectRule extends BaseRule {
   condition?: ConditionalFn;
 }
 
-export interface ArrayRule extends BaseRule {
+export interface ArrayRule {
   type: 'array';
   limit?: number;
   items: Rule;
@@ -31,21 +24,21 @@ export interface ArrayRule extends BaseRule {
 
 export type Rule = ObjectRule | ArrayRule;
 
+type PropertyBase = {
+  required?: boolean;
+  aliases?: readonly string[];
+}
+
 type PrimitivePropertyRule = {
-  [Key in keyof TypeMap]: {
+  [Key in keyof TypeMap]: PropertyBase & {
     type: Key;
-    required?: boolean;
     default?: TypeMap[Key];
     expected?: TypeMap[Key];
   }
 }[keyof TypeMap];
 
-interface ObjectPropertyRule extends ObjectRule {
-  required?: boolean;
-}
+type ObjectPropertyRule  = ObjectRule & PropertyBase;
 
-interface ArrayPropertyRule extends ArrayRule {
-  required?: boolean;
-} 
+type ArrayPropertyRule = ArrayRule & PropertyBase;
 
 export type PropertyRule = ArrayPropertyRule | ObjectPropertyRule | PrimitivePropertyRule;
