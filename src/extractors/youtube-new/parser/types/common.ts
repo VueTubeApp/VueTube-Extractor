@@ -27,15 +27,18 @@ export interface ArrayRule extends BaseRule {
   type: 'array';
   limit?: number;
   items: Rule;
+  condition?: ConditionalFn | Record<string, ConditionalRule>;
 }
 
 export type Rule = ObjectRule | ArrayRule;
 
-interface PrimitivePropertyRule<Key extends keyof TypeMap = keyof TypeMap> {
-  type: Key;
-  required?: boolean;
-  default?: TypeMap[Key];
-}
+type PrimitivePropertyRule = {
+  [Key in keyof TypeMap]: {
+    type: Key;
+    required?: boolean;
+    default?: TypeMap[Key];
+  }
+}[keyof TypeMap];
 
 interface ObjectPropertyRule extends ObjectRule {
   required?: boolean;
@@ -47,7 +50,9 @@ interface ArrayPropertyRule extends ArrayRule {
 
 export type PropertyRule = ArrayPropertyRule | ObjectPropertyRule | PrimitivePropertyRule;
 
-export interface ConditionalRule<Key extends keyof TypeMap = keyof TypeMap> {
-  type: Key;
-  expected: TypeMap[Key];
-}
+export type ConditionalRule = {
+  [Key in keyof TypeMap]: {
+    type: Key;
+    expected: TypeMap[Key];
+  }
+}[keyof TypeMap];
