@@ -20,14 +20,13 @@ export interface ObjectRule extends BaseRule {
   flatten?: boolean;
   properties: Record<string, PropertyRule>;
   keymap?: Record<string, string>;
-  condition?: ConditionalFn | Record<string, ConditionalRule>;
+  condition?: ConditionalFn;
 }
 
 export interface ArrayRule extends BaseRule {
   type: 'array';
   limit?: number;
   items: Rule;
-  condition?: ConditionalFn | Record<string, ConditionalRule>;
 }
 
 export type Rule = ObjectRule | ArrayRule;
@@ -37,6 +36,7 @@ type PrimitivePropertyRule = {
     type: Key;
     required?: boolean;
     default?: TypeMap[Key];
+    expected?: TypeMap[Key];
   }
 }[keyof TypeMap];
 
@@ -49,10 +49,3 @@ interface ArrayPropertyRule extends ArrayRule {
 } 
 
 export type PropertyRule = ArrayPropertyRule | ObjectPropertyRule | PrimitivePropertyRule;
-
-export type ConditionalRule = {
-  [Key in keyof TypeMap]: {
-    type: Key;
-    expected: TypeMap[Key];
-  }
-}[keyof TypeMap];
