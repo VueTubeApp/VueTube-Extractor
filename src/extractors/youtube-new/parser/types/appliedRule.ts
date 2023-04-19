@@ -12,10 +12,12 @@ export type IndexType<Prop extends PropertyRule> =
   AppliedArrayRule<Prop> :
   never;
 
-type AppliedObjectRuleWithoutCondition<Rule extends ObjectRule> = RuleKeyRemap<
-  Rule, 
-  ObjectProps<Rule>
->
+type AppliedObjectRuleWithoutCondition<Rule extends ObjectRule> = 
+  ObjectProps<
+    RuleKeyRemap<
+      Rule
+    >
+  >;
 
 export type AppliedObjectRule<Rule extends ObjectRule> = AppliedCondition<
   Rule,
