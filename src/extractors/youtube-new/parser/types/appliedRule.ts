@@ -3,6 +3,7 @@ import type { RuleKeyRemap } from "./remap";
 import type { ObjectProps } from "./objectProps";
 import type { AppliedCondition } from "./condition";
 import type { AppliedRuleAliases } from "./aliases";
+import type { AppliedFlattenObjectRule } from "./flaten";
 
 export type IndexType<Prop extends PropertyRule> = 
   Prop['type'] extends keyof TypeMap ? 
@@ -14,12 +15,12 @@ export type IndexType<Prop extends PropertyRule> =
   never;
 
 type AppliedObjectRuleWithoutCondition<Rule extends ObjectRule> = 
-  AppliedRuleAliases<RuleKeyRemap<Rule>> extends never ?
-  never :
   ObjectProps<
-    AppliedRuleAliases<
-      RuleKeyRemap<
-        Rule
+    AppliedFlattenObjectRule< 
+      AppliedRuleAliases<
+        RuleKeyRemap<
+          Rule
+        >
       >
     >
   >;

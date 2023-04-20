@@ -18,7 +18,11 @@ type AppliedRuleAliasesWithNever<Rule extends ObjectRule> = Omit<Rule, 'properti
   }[keyof Rule['properties']]>
 };
 
-export type AppliedRuleAliases<Rule extends ObjectRule> = 
-  keyof PickNever<AppliedRuleAliasesWithNever<Rule>['properties']> extends never ?
-  AppliedRuleAliasesWithNever<Rule> :
+export type AppliedRuleAliases<Rule> =
+  Rule extends ObjectRule ?
+  (
+    keyof PickNever<AppliedRuleAliasesWithNever<Rule>['properties']> extends never ?
+    AppliedRuleAliasesWithNever<Rule> :
+    never
+  ) :
   never;

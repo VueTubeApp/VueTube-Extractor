@@ -42,4 +42,8 @@ type NullableProps<Rule extends ObjectRule> = {
   [Key in ObjectRuleKeys<Rule> as PropNullable<Rule, ObjectRuleProps<Rule>[Key], Key>]?: IndexType<Rule['properties'][Key]>;
 };
 
-export type ObjectProps<Rule extends ObjectRule> = NonNullableProps<Rule> & NullableProps<Rule>;
+export type ObjectProps<Rule> = 
+  Rule extends ObjectRule ?
+  NonNullableProps<Rule> & NullableProps<Rule> :
+  never
+;

@@ -37,7 +37,7 @@ type PrimitivePropertyRule = {
   }
 }[keyof TypeMap];
 
-type ObjectPropertyRule  = ObjectRule & PropertyBase;
+export type ObjectPropertyRule  = ObjectRule & PropertyBase;
 
 type ArrayPropertyRule = ArrayRule & PropertyBase;
 
