@@ -12,7 +12,9 @@ type RuleRemap<Rule extends ObjectRule> =
         Rule['keymap'][Key] : 
         Key : 
         Key
-      ]: ObjectRuleProps<Rule>[Key];
+      ]: ObjectRuleProps<Rule>[Key] extends ObjectRule ? // Remap done recursively for flat to work correctly
+      RuleRemap<ObjectRuleProps<Rule>[Key]> :
+      ObjectRuleProps<Rule>[Key];
     }
   }
 
