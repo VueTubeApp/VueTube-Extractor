@@ -4,6 +4,7 @@ import type { ObjectProps } from "./objectProps";
 import type { AppliedCondition } from "./condition";
 import type { AppliedRuleAliases } from "./aliases";
 import type { AppliedFlattenObjectRule } from "./flaten";
+import type { AppliedJsonPath } from "./jsonpath";
 
 export type IndexType<Prop extends PropertyRule> = 
   Prop['type'] extends keyof TypeMap ? 
@@ -19,7 +20,9 @@ type AppliedObjectRuleWithoutCondition<Rule extends ObjectRule> =
     AppliedFlattenObjectRule< 
       AppliedRuleAliases<
         RuleKeyRemap<
-          Rule
+          AppliedJsonPath<
+            Rule
+          >
         >
       >
     >
