@@ -29,6 +29,25 @@ type PropertyBase = {
   aliases?: readonly string[];
 }
 
+type MappedPrimitive<Key extends keyof TypeMap> = PropertyBase & ({
+  type: Key;
+  default: TypeMap[Key];
+  expected?: never;
+} | {
+  type: Key;
+  default?: never;
+  expected: TypeMap[Key];
+} | {
+  type: Key;
+  default?: never;
+  expected?: never;
+});
+
+const Lol: MappedPrimitive<'number'> = {
+  type: 'number',
+  default: 3,
+};
+
 type PrimitivePropertyRule = {
   [Key in keyof TypeMap]: PropertyBase & {
     type: Key;
