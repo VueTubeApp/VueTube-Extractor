@@ -11,6 +11,7 @@ export interface ObjectRule {
   type: 'object';
   strict?: boolean;
   flatten?: boolean;
+  flattenAll?: boolean;
   properties: Record<string, PropertyRule>;
   keymap?: Record<string, string>;
   condition?: ConditionalFn;
@@ -20,6 +21,7 @@ export interface ArrayRule {
   type: 'array';
   limit?: number;
   items: Rule;
+  condition?: ConditionalFn;
 }
 
 export type Rule = ObjectRule | ArrayRule;
@@ -49,11 +51,7 @@ const Lol: MappedPrimitive<'number'> = {
 };
 
 type PrimitivePropertyRule = {
-  [Key in keyof TypeMap]: PropertyBase & {
-    type: Key;
-    default?: TypeMap[Key];
-    expected?: TypeMap[Key];
-  }
+  [Key in keyof TypeMap]: MappedPrimitive<Key>
 }[keyof TypeMap];
 
 export type ObjectPropertyRule  = ObjectRule & PropertyBase;
