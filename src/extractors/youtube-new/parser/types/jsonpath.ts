@@ -1,18 +1,20 @@
 import type { ObjectRule, PropertyRule } from "./common";
 import type { ObjectRuleProps } from "./props";
-import type { UnionToIntersection, PickNever } from "./utils";
+import type { PickNever } from "./utils";
+
+type ArraySeparator = '[0].';
+
+type ObjectSeparator = '.';
 
 type ExtractKey<Key extends string | number | symbol> = 
-  Key extends `${infer Prefix}[0].${string | number}` ?
+  Key extends `${infer Prefix}${ArraySeparator}${string | number}` ?
   Prefix :
-  Key extends `${infer Prefix}.${string | number}` ?
+  Key extends `${infer Prefix}${ObjectSeparator}${string | number}` ?
   Prefix :
   Key
-
-
   
 type Extract<Key extends string | number | symbol, Prop extends PropertyRule> = 
-  Key extends `${string | number}[0].${infer Postfix}` ? 
+  Key extends `${string | number}${ArraySeparator}${infer Postfix}` ? 
   { 
     type: 'array',
     items: {
@@ -22,7 +24,7 @@ type Extract<Key extends string | number | symbol, Prop extends PropertyRule> =
       }
     }
   } :
-  Key extends `${string | number}.${infer Postfix}` ?
+  Key extends `${string | number}${ObjectSeparator}${infer Postfix}` ?
   { 
     type: 'object',
     properties: {
