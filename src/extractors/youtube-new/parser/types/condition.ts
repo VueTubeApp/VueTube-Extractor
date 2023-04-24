@@ -14,10 +14,10 @@ export type AppliedCondition<Rule, Type> =
   Rule extends ObjectRule ?
   (
     Rule extends { condition: ConditionalFn } ? 
-    Type | null :
+    Type | undefined :
     HasConditionalKeysSet<
       Rule, 
-      Type | null, 
+      Type | undefined, 
       Type
     > 
   ):
