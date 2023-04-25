@@ -1,5 +1,4 @@
-import type { ObjectRule, ConditionalFn, Rule } from "./common";
-import type { ObjectRuleProps } from "./props";
+import type { ObjectRule, ConditionalFn, ObjectRuleProps } from "./common";
 
 type ConditionalKeysSet<Rule extends ObjectRule> = keyof {
   [Key in keyof ObjectRuleProps<Rule> as ObjectRuleProps<Rule>[Key] extends { expected: unknown } ? Key : never]: unknown;

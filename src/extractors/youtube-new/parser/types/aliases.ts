@@ -1,10 +1,12 @@
-import type { ObjectRule, PropertyRule } from "./common";
+import type { ObjectRule, PropertyRule, ObjectRuleProps } from "./common";
 import type { UnionToIntersection, PickNever } from "./utils";
 
+type PropAliases<Prop extends PropertyRule> = Prop['aliases'];
+
 type AliasesUnion<Prop extends PropertyRule> = 
-  Prop['aliases'] extends readonly string[] ?
+  PropAliases<Prop> extends readonly string[] ?
   {
-    [Key in keyof Prop['aliases']]: Prop['aliases'][Key]
+    [Key in keyof PropAliases<Prop>]: PropAliases<Prop>[Key]
   }[number] :
   never;
 
@@ -13,15 +15,15 @@ type ApplyAliasToProp<Prop extends PropertyRule> = {
 };
 
 type AppliedRuleAliasesWithNever<Rule extends ObjectRule> = Omit<Rule, 'properties'> & {
-  properties: Rule['properties'] & UnionToIntersection<{
-    [Key in keyof Rule['properties']]: ApplyAliasToProp<Rule['properties'][Key]>;
-  }[keyof Rule['properties']]>
+  properties: ObjectRuleProps<Rule> & UnionToIntersection<{
+    [Key in keyof ObjectRuleProps<Rule>]: ApplyAliasToProp<ObjectRuleProps<Rule>[Key]>;
+  }[keyof ObjectRuleProps<Rule>]>
 };
 
 export type AppliedRuleAliases<Rule> =
   Rule extends ObjectRule ?
   (
-    keyof PickNever<AppliedRuleAliasesWithNever<Rule>['properties']> extends never ?
+    keyof PickNever<ObjectRuleProps<AppliedRuleAliasesWithNever<Rule>>> extends never ?
     AppliedRuleAliasesWithNever<Rule> :
     never
   ) :

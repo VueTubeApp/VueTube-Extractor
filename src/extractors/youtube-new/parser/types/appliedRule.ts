@@ -18,14 +18,11 @@ export type IndexType<Prop extends PropertyRule> =
 type AppliedObjectRuleWithoutCondition<Rule extends ObjectRule> = 
   ObjectProps<
     AppliedFlattenObjectRule< 
-      AppliedRuleAliases<
-        RuleKeyRemap<
-          AppliedJsonPath<
-            Rule
-          >
-        >
-      >
-    >
+    AppliedRuleAliases<
+    RuleKeyRemap<
+    AppliedJsonPath<
+      Rule
+    >>>>
   >;
 
 export type AppliedObjectRule<Rule extends ObjectRule> = AppliedCondition<

@@ -1,5 +1,4 @@
-import type { ObjectRule, PropertyRule } from "./common";
-import type { ObjectRuleProps } from "./props";
+import type { ObjectRule, PropertyRule, ObjectRuleProps } from "./common";
 import type { PickNever } from "./utils";
 
 type ArraySeparator = '[0].';

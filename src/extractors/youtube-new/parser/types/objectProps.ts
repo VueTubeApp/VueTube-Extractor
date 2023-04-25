@@ -1,6 +1,4 @@
-import type { ObjectRule, PropertyRule } from "./common";
-import type { ObjectRuleProps } from "./props";
-import type { ObjectRuleKeys } from "./keys";
+import type { ObjectRule, PropertyRule, ObjectRuleProps } from "./common";
 import type { IndexType } from "./appliedRule";
 import type { PropDefaultSet } from "./default";
 import type { RuleStrictMode } from "./strict";
@@ -35,11 +33,11 @@ type PropNullable<Rule extends ObjectRule, Prop extends PropertyRule, KeyType> =
 >;
 
 type NonNullableProps<Rule extends ObjectRule> = {
-  [Key in ObjectRuleKeys<Rule> as PropNonNullable<Rule, ObjectRuleProps<Rule>[Key], Key>]: IndexType<Rule['properties'][Key]>;
+  [Key in keyof ObjectRuleProps<Rule> as PropNonNullable<Rule, ObjectRuleProps<Rule>[Key], Key>]: IndexType<ObjectRuleProps<Rule>[Key]>;
 };
 
 type NullableProps<Rule extends ObjectRule> = {
-  [Key in ObjectRuleKeys<Rule> as PropNullable<Rule, ObjectRuleProps<Rule>[Key], Key>]?: IndexType<Rule['properties'][Key]>;
+  [Key in keyof ObjectRuleProps<Rule> as PropNullable<Rule, ObjectRuleProps<Rule>[Key], Key>]?: IndexType<ObjectRuleProps<Rule>[Key]>;
 };
 
 export type ObjectProps<Rule> = 
