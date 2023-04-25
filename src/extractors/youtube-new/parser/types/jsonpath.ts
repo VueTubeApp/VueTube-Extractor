@@ -1,19 +1,20 @@
 import type { ObjectRule, PropertyRule, ObjectRuleProps } from "./common";
 import type { PickNever } from "./utils";
 
-type ArraySeparator = '[0].';
+type ArraySeparator = '[0]';
 
 type ObjectSeparator = '.';
 
 type ExtractKey<Key extends string | number | symbol> = 
-  Key extends `${infer Prefix}${ArraySeparator}${string | number}` ?
-  Prefix :
   Key extends `${infer Prefix}${ObjectSeparator}${string | number}` ?
+  Prefix extends `${infer InnerPrefix}${ArraySeparator}` ?
+  InnerPrefix :
   Prefix :
-  Key
+  Key;
   
-type Extract<Key extends string | number | symbol, Prop extends PropertyRule> = 
-  Key extends `${string | number}${ArraySeparator}${infer Postfix}` ? 
+type Extract<Key extends string | number | symbol, Prop extends PropertyRule> =  
+  Key extends `${infer Prefix}${ObjectSeparator}${infer Postfix}` ?
+  Prefix extends `${string | number}${ArraySeparator}` ?
   { 
     type: 'array',
     items: {
@@ -23,15 +24,13 @@ type Extract<Key extends string | number | symbol, Prop extends PropertyRule> =
       }
     }
   } :
-  Key extends `${string | number}${ObjectSeparator}${infer Postfix}` ?
   { 
     type: 'object',
     properties: {
       [Key in ExtractKey<Postfix>]: Extract<Postfix, Prop>
     }
   } :
-  Prop
-  ;
+  Prop;
 
 type JsonPathWithNever<Rule extends ObjectRule> = Omit<Rule, 'properties'> & {
   properties: {
