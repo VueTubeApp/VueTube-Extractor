@@ -1,17 +1,54 @@
-import type { ObjectRule, ObjectPropertyRule } from "./common"
-import type { ObjectRuleProps } from "./props";
+import type { ObjectRule, ObjectPropertyRule, ObjectRuleProps } from "./common"
 import type { UnionToIntersection } from "./utils";
 
-type IsFlaten<Rule extends ObjectRule, First, Second> = 
+// Helpers
+// ========================
+
+type IsFlatten<Rule extends ObjectRule, First, Second> = 
   Rule extends { flatten: true } ?
   First :
-  Second
-;
+  Second;
+
+type IsFullFlatten<Rule extends ObjectRule, First, Second> = 
+  Rule extends { flattenAll: true } ?
+  First :
+  Second;
 
 type MakeRequiredFalse<Rule extends ObjectPropertyRule, Key extends keyof ObjectRuleProps<Rule>> = 
-  Rule extends { required: false } ? 
+  Rule extends { required: false } | { strict: false }? 
   Omit<ObjectRuleProps<Rule>[Key], 'required'> & { required: false } :
   ObjectRuleProps<Rule>[Key]
+
+
+// Filter keys
+// ========================
+
+type ObjectRuleKeys<Rule extends ObjectPropertyRule> = Exclude<keyof {
+  [
+    Key in keyof ObjectRuleProps<Rule> as 
+    ObjectRuleProps<Rule>[Key] extends ObjectPropertyRule ? 
+    Key : 
+    never
+  ]: unknown;
+}, symbol>;
+
+// Object props that have { flatten: true }
+type FlattenKeys<Rule extends ObjectPropertyRule> = Exclude<keyof {
+  [
+    Key in keyof ObjectRuleProps<Rule> as
+    ObjectRuleProps<Rule>[Key] extends ObjectRule ?
+    IsFlatten<
+      ObjectRuleProps<Rule>[Key],
+      Key,
+      never
+    > :
+    never
+  ]: unknown;
+}, symbol>;
+
+
+// Flatten types
+// ========================
 
 type FlattenProp<PropName extends string | number, Rule extends ObjectPropertyRule> = {
   [
@@ -20,39 +57,59 @@ type FlattenProp<PropName extends string | number, Rule extends ObjectPropertyRu
   ]: MakeRequiredFalse<Rule, Key>;
 }
 
-type ExcludeNonObjectRuleProps<Rule extends ObjectRule> = keyof {
-  [
-    Key in keyof ObjectRuleProps<Rule> as 
-    ObjectRuleProps<Rule>[Key] extends ObjectPropertyRule ? 
-    Key : 
-    never
-  ]: unknown;
-}
+// flattenAll: true
 
-type FlattenObjectRule<Rule extends ObjectRule> = Omit<Rule, 'properties'> & {
-  properties: {
-    [
-      Key in keyof ObjectRuleProps<Rule> as 
-      ObjectRuleProps<Rule>[Key] extends ObjectPropertyRule ? 
-      never : 
-      Key
-    ]: ObjectRuleProps<Rule>[Key]
-  } & UnionToIntersection<
-    {
-      [
-        Key in Exclude<ExcludeNonObjectRuleProps<Rule>, symbol>
-      ]: ObjectRuleProps<Rule>[Key] extends ObjectPropertyRule ? 
-      FlattenProp<Key, ObjectRuleProps<Rule>[Key]> :
-      never;
-    }[Exclude<ExcludeNonObjectRuleProps<Rule>, symbol>]
-  >;
-}
+type OneLevelDeepFlattenRule<Rule extends ObjectPropertyRule> = Omit<Rule, 'properties'> & {
+  properties: 
+    Omit<ObjectRuleProps<Rule>, ObjectRuleKeys<Rule>> & 
+    UnionToIntersection<
+      {
+        [Key in ObjectRuleKeys<Rule>]: 
+          ObjectRuleProps<Rule>[Key] extends ObjectPropertyRule ? 
+          FlattenProp<Key, ObjectRuleProps<Rule>[Key]> :
+          never;
+      }[ObjectRuleKeys<Rule>]
+    >;
+};
+
+type DeepFlattenRule<Rule extends ObjectPropertyRule> = 
+  Rule extends OneLevelDeepFlattenRule<Rule> ?
+  Rule :
+  DeepFlattenRule<OneLevelDeepFlattenRule<Rule>>;
+
+// flatten: true
+
+type OneLevelFlattenRule<Rule extends ObjectPropertyRule> = Omit<Rule, 'properties'> & {
+  properties: 
+    Omit<ObjectRuleProps<Rule>, FlattenKeys<Rule>> & 
+    UnionToIntersection<
+      {
+        [Key in FlattenKeys<Rule>]: 
+          ObjectRuleProps<Rule>[Key] extends ObjectPropertyRule ? 
+          FlattenProp<Key, ObjectRuleProps<Rule>[Key]> :
+          never;
+      }[FlattenKeys<Rule>]
+    >;
+};
+
+type FlattenRule<Rule extends ObjectPropertyRule> = 
+  Rule extends OneLevelFlattenRule<Rule> ?
+  Rule :
+  FlattenRule<OneLevelFlattenRule<Rule>>;
+
+// Applied type
+// ========================
 
 export type AppliedFlattenObjectRule<Rule> =
   Rule extends ObjectRule ?
-  IsFlaten<
-    Rule, 
-    FlattenObjectRule<Rule>,
-    Rule
+  IsFullFlatten<
+    Rule,
+    DeepFlattenRule<Rule>,
+    IsFlatten<
+      Rule,
+      OneLevelDeepFlattenRule<FlattenRule<Rule>>, // Performing one level of flattening
+      Rule
+    >
   > : 
   never;
+  
