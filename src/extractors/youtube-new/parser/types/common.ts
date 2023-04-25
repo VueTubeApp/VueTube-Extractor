@@ -45,11 +45,6 @@ type MappedPrimitive<Key extends keyof TypeMap> = PropertyBase & ({
   expected?: never;
 });
 
-const Lol: MappedPrimitive<'number'> = {
-  type: 'number',
-  default: 3,
-};
-
 type PrimitivePropertyRule = {
   [Key in keyof TypeMap]: MappedPrimitive<Key>
 }[keyof TypeMap];
