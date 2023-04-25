@@ -40,9 +40,9 @@ describe('Initializer Tests', () => {
 
   describe('Context Tests', () => {
     test('Should get a valid context object for any valid device type', async () => {
-      const validDeviceTypes = ['MOBILE_WEB', 'MOBILE_APP', 'DESKTOP_WEB'];
-      for (let i = 0; i < validDeviceTypes.length; i += 1) {
-        const context = new Context(validDeviceTypes[i] as DeviceType).getContext(validConfig.client);
+      const validDeviceTypes: DeviceType[] = ['MOBILE_WEB', 'MOBILE_APP', 'DESKTOP_WEB'];
+      for (const deviceType of validDeviceTypes) {
+        const context = new Context(deviceType).getContext(validConfig.client);
         expect(typeof context).toBe('object');
         expect(typeof context.client).toBe('object');
         expect(typeof context.client.gl).toBe('string');
