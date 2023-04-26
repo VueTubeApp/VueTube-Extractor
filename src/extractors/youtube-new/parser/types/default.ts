@@ -1,7 +1,3 @@
-import type { PropertyRule } from "./common";
-import type { IndexType } from "./appliedRule";
+import type { PropertyRule, IndexTypeMap } from './common';
 
-export type PropDefaultSet<Prop extends PropertyRule, First, Second> = 
-  Prop extends { default: IndexType<Prop> } ? 
-  First : 
-  Second;
+export type PropDefaultSet<Prop extends PropertyRule, First, Second> = Prop extends { default: IndexTypeMap<Prop> } ? First : Second;

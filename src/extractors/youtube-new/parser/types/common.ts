@@ -5,6 +5,11 @@ export type TypeMap = {
   any: any;
 };
 
+export type IndexTypeMap<Key> = 
+  Key extends keyof TypeMap ?
+  TypeMap[Key] :
+  never;
+
 export type ConditionalFn = (item: any) => boolean;
 
 export interface ObjectRule {
