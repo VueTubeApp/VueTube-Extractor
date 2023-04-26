@@ -72,12 +72,10 @@ export class ObjectRuleParser implements GenericRuleParser {
     if (!rule.rule || rule.type !== 'rule') {
       throw new utilityErrors.VueTubeExtractorError(ErrorMessages.missingValuesInRule(key, 'rule'));
     }
-    const result = this.Helper.jsonPathToObject(key, this.TO_PARSE);
-    let SUB_RULE_RESULT = this.Helper.wrapFunction(parseRule, key, undefined, result, rule.rule);
-    const errorMessage = ErrorMessages.missingRequired('key', key, 'applyObjectRule');
+    let SUB_RULE_RESULT = this.Helper.wrapFunction(parseRule, key, undefined, this.Helper.jsonPathToObject(key, this.TO_PARSE), rule.rule);
     SUB_RULE_RESULT ??= this.Helper.checkStrictlyRequired(
       isStrictlyRequired,
-      new utilityErrors.VueTubeExtractorError(errorMessage),
+      new utilityErrors.VueTubeExtractorError(ErrorMessages.missingRequired('key', key, 'applyObjectRule')),
       rule.default
     );
     return SUB_RULE_RESULT;

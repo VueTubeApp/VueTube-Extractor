@@ -11,13 +11,13 @@
     "@types/jest": "^27.5.0",
     "@types/node": "^18.15.11",
     "@types/user-agents": "^1.0.2",
-    "@typescript-eslint/eslint-plugin": "^5.55.0",
+    "@typescript-eslint/eslint-plugin": "^5.59.0",
     "@typescript-eslint/parser": "^5.57.1",
     "copyfiles": "^2.4.1",
-    "eslint": "^8.36.0",
+    "eslint": "^8.39.0",
     "isomorphic-fetch": "^3.0.0",
     "jest": "^28.1.0",
-    "jest-junit": "^15.0.0",
+    "jest-junit": "^16.0.0",
     "ts-jest": "^28.0.1",
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.1.2",
@@ -44,7 +44,7 @@
   "dependencies": {
     "@vuetubeapp/http": "^1.4.2",
     "prettier": "^2.8.7",
-    "protobufjs": "^7.2.2",
-    "user-agents": "^1.0.1345"
+    "protobufjs": "^7.2.3",
+    "user-agents": "^1.0.1360"
   }
 }
