@@ -8,7 +8,7 @@ This documentation for rewritten parser, based on the original rule concept, but
 - Aliases can now be applied to primitive properties as well.
 - Removed `rule` from property type, subrules now nested directly inside `properties`.
 - Rule conditions now merged with properties, and expected value can now be defined inside property itself (currently only to primitives).
-- If object rule condition is not met - then it will be null instead of empty object.
+- If object rule condition is not met - then it will be `undefined` instead of empty object.
 - Flatten now can be used in both ways: it now can flatten the first level and subrules with `flatten: true` or flatten the whole object.
 - Correct type inference from const rules.
 
@@ -53,7 +53,7 @@ let item = parse(obj, rule);
 //     ^--"item" will have type { prop1: string; prop2?: number; }
 ```
 
-Because rule has the type as object of concrete values (not `string`, but `'someStr'`), TypeScript can infer type of the return object as well. Under the hood, it uses conditional and remapped types, so value types are important. Without them, it cant determine, what rule is passed as parameter, and this may lead to type errors.
+Because rule has the object type which consists from concrete values (not `string`, but `'someStr'`), TypeScript can infer type of the return object as well. Under the hood, it uses conditional and remapped types, so value types are important. Without them, it cant determine, what rule is passed as parameter, and this may lead to type errors.
 
 Currently, you can define only const rules with full type support, but I will work on the new `RuleBuilder`, which will provide more convinient way to work with rules in runtime. It still will be a way to work with only finite and known variations of the rule. For example, some situations involving user input or working with api can not be typed at all, so the type can not be inferred in `parse` function:
 
@@ -362,7 +362,7 @@ Please note, that [nested object does not affected by strict rules from the pare
 
 ## Flatten [**RD**]
 
-In cases where it may be useful to flatten the result, the `flatten `property can be used. Any keys of sub-properties will follow the format `parentKey-childKey`. Keymaps will be applied to the flattened keys. Any object, that also has `flatten: true`, will be flatten as well recursively. All optional properties and strict mode will be taken to account when flatten is applied.
+In cases where it may be useful to flatten the result, the `flatten` property can be used. Any keys of sub-properties will follow the format `parentKey-childKey`. Keymaps will be applied to the flattened keys. Any object, that also has `flatten: true`, will be flatten as well recursively. All optional properties and strict mode will be taken to account when flatten is applied.
 
 ```typescript
 
@@ -464,9 +464,52 @@ let item = parse(obj, rule);
 
 ### Caveats
 
-This option in particular has a lot of caveats on how it will work along with other properties.
+If some nested object property has possibility of being `undefined` (From being [optional](#optional-props-rd), [conditional](#object-condition), [non-strict](#strict-mode-rd)), then all flatten properties will be have the possibility of being undefined.
 
-WIP.
+```typescript
+const rule = {
+  type: 'object',
+  flatten: true,
+  properties: {
+    nonStrict: {
+      type: 'object',
+      strict: false,
+      properties: {
+        prop: {
+          type: 'number',
+        }
+      }
+    },  
+    optional: {
+      required: false,
+      type: 'object',
+      properties: {
+        prop: {
+          type: 'number',
+        },
+      },
+    },
+    conditional: {
+      type: 'object',
+      properties: {
+        prop: {
+          type: 'number',
+          expected: 3,
+        },
+      },
+    }
+  },
+} as const satisfies Rule;
+
+// ...
+
+let item = parse(obj, rule);
+//     ^--{ 
+//          "nonStrict-prop"?: number, 
+//          "optional-prop"?: number,
+//          "conditional-prop"?: number
+//        }
+```
 
 ## Array rules [**RD**]
 
@@ -503,6 +546,8 @@ let item = parse(obj, rule);
 You can set conditions to array, which will filter all objects inside it.
 
 ### Function expression
+
+Function will take the item, and it should return boolean value. If it returns `true` - the object will stay in object
 
 ```typescript
 const rule = {
