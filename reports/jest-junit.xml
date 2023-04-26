@@ -1,19 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="jest tests" tests="5" failures="0" errors="0" time="4.777">
-  <testsuite name="src\extractors\youtube-new\requester\__tests__\initializerTest.test.ts" errors="0" failures="0" skipped="4" timestamp="2023-04-24T10:45:34" time="4.181" tests="5">
-    <testcase classname="Initializer Tests › Config Tests" name="Should get a valid API key and client object" time="0">
-      <skipped/>
-    </testcase>
-    <testcase classname="Initializer Tests › Config Tests › getInnertubeConfig error handling" name="Should throw an error if an invalid API URL is provided" time="0">
-      <skipped/>
-    </testcase>
-    <testcase classname="Initializer Tests › Config Tests › getInnertubeConfig error handling" name="Should throw an error if an invalid data structure is returned" time="0">
-      <skipped/>
-    </testcase>
-    <testcase classname="Initializer Tests › Context Tests" name="Should get a valid context object for any valid device type" time="0.03">
-    </testcase>
-    <testcase classname="Initializer Tests › Context Tests › getInnertubeConfig error handling" name="Should throw an error if an invalid device type is provided" time="0">
-      <skipped/>
+<testsuites name="jest tests" tests="1" failures="0" errors="0" time="306.79">
+  <testsuite name="src\extractors\youtube-new\requester\__tests__\controllerTest.test.ts" errors="0" failures="0" skipped="0" timestamp="2023-04-25T22:18:50" time="306.474" tests="1">
+    <testcase classname="Controller Tests › Home Page Tests" name="Should get a valid request option" time="299.463">
     </testcase>
   </testsuite>
 </testsuites>

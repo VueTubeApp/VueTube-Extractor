@@ -3,8 +3,8 @@ import { HttpOptions } from '@vuetubeapp/http';
 import { Config } from '../initializer/config';
 
 export interface BaseControllerModel<T> {
-  getRequest(): Promise<HttpOptions | Record<string, HttpOptions>>;
-  buildRequestOptions(config: Config): RequestOptions;
+  getRequest(config: Config, continuation?: string): Promise<HttpOptions | Record<string, HttpOptions>>;
+  buildRequestOptions(config: Config, continuation?: string): RequestOptions;
   parseRawResponse(data: Record<string, any>): object;
   postProcessResponse(data: Record<string, any>): T;
   parseData(data: Record<string, any>): Promise<T>;
