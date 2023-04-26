@@ -16,7 +16,7 @@ type IsFullFlatten<Rule extends ObjectRule, First, Second> =
 
 type MakeRequiredFalse<Rule extends ObjectPropertyRule, Key extends keyof ObjectRuleProps<Rule>> = 
   Rule extends { required: false } | { strict: false }? 
-  Omit<ObjectRuleProps<Rule>[Key], 'required'> & { required: false } :
+  Omit<ObjectRuleProps<Rule>[Key], 'required' | 'default'> & { required: false } :
   ObjectRuleProps<Rule>[Key]
 
 
