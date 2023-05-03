@@ -13,9 +13,15 @@
     </picture>
   </a>
   <br>
-  <sub>Logo by <a href="https://github.com/afnzmn">@afnzmn</a></sub>
-  <br>
-  <br>
+ <details>
+  <summary>Show Readme credits</summary>
+
+<sub>VueTube Logo by <a href="https://github.com/afnzmn">@afnzmn</a></sub> </br>
+<sub>English Readme contributors: <a href="https://github.com/404-Program-not-found">@404-Program-not-found</a>
+, <a href="https://github.com/AdamIskandarAI">@AdamIskandarAI</a>
+
+</details>
+
 <strong>VueTube extractor is a library designed to extract data from streaming services. Designed for use in VueTube.</strong>
 <br>
 This is the library for VueTube. The main repository is <a href="https://github.com/Frontesque/VueTube"> here.</a>
@@ -42,6 +48,8 @@ This is the library for VueTube. The main repository is <a href="https://github.
   </a>
     <img src="https://github.com/VueTubeApp/VueTube-Extractor/actions/workflows/codeql.yml/badge.svg" alt="CodeQL">
 </p>
+
+**Read this page in other languages**: [English,](readme.md), [Bahasa Melayu,](/readme/readme.ms.md)
 
 VueTube Extractor is currently under active development, and is not a part of the main VueTube app. It is planned to
 completely replace the current API wrapper employed by VueTube upon completion.
