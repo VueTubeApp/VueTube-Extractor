@@ -13,9 +13,14 @@
     </picture>
   </a>
   <br>
-  <sub>Logo oleh <a href="https://github.com/afnzmn">@afnzmn</a></sub>
-  <br>
-  <br>
+  <details>
+  <summary>Tunjukkan kredit Readme</summary>
+
+<sub>Logo VueTube oleh <a href="https://github.com/afnzmn">@afnzmn</a></sub> </br>
+<sub>Penyumbang-penyumbang Readme Bahasa Melayu: <a href="https://github.com/AdamIskandarAI">@AdamIskandarAI</a>
+
+</details>
+  
 <strong>VueTube extractor adalah sebuah pustaka (library) yang direka untuk mengekstrak daripada perkhidmatan penstriman (misalnya YouTube). Direka untuk digunakan dalam VueTube.</strong>
 <br>
 Ini ialah pustaka (library) untuk VueTube. Repositori utama adalah <a href="https://github.com/Frontesque/VueTube"> di sini.</a>
@@ -43,8 +48,10 @@ Ini ialah pustaka (library) untuk VueTube. Repositori utama adalah <a href="http
     <img src="https://github.com/VueTubeApp/VueTube-Extractor/actions/workflows/codeql.yml/badge.svg" alt="CodeQL">
 </p>
 
+**Baca halaman ini dalam bahasa lain**: [English,](readme.md) [Bahasa Melayu](/readme/readme.ms.md)
+
 VueTube Extractor sedang aktif dibangunkan, dan ia bukan sebahagian daripada apl VueTube. Ia dirancang untuk
-menggantikan pembalut API (API wrapper) sedia ada yang digunaka oleh VueTube setelah disiapkan.
+menggantikan pembalut API (API wrapper) sedia ada yang digunakan oleh VueTube setelah disiapkan.
 
 ## Bermula & Menyumbang
 
