@@ -49,7 +49,7 @@ This is the library for VueTube. The main repository is <a href="https://github.
     <img src="https://github.com/VueTubeApp/VueTube-Extractor/actions/workflows/codeql.yml/badge.svg" alt="CodeQL">
 </p>
 
-**Read this page in other languages**: [English,](readme.md), [Bahasa Melayu,](/readme/readme.ms.md)
+**Read this page in other languages**: [English,](readme.md) [Bahasa Melayu](/readme/readme.ms.md)
 
 VueTube Extractor is currently under active development, and is not a part of the main VueTube app. It is planned to
 completely replace the current API wrapper employed by VueTube upon completion.
