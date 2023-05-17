@@ -13,18 +13,17 @@
     </picture>
   </a>
   <br>
- <details>
-  <summary>Show Readme credits</summary>
+  <details>
+  <summary>Tunjukkan kredit Readme</summary>
 
-<sub>VueTube Logo by <a href="https://github.com/afnzmn">@afnzmn</a></sub> </br>
-<sub>English Readme contributors: <a href="https://github.com/404-Program-not-found">@404-Program-not-found</a>
-, <a href="https://github.com/AdamIskandarAI">@AdamIskandarAI</a>
+<sub>Logo VueTube oleh <a href="https://github.com/afnzmn">@afnzmn</a></sub> </br>
+<sub>Penyumbang-penyumbang Readme Bahasa Melayu: <a href="https://github.com/AdamIskandarAI">@AdamIskandarAI</a>
 
 </details>
-
-<strong>VueTube extractor is a library designed to extract data from streaming services. Designed for use in VueTube.</strong>
+  
+<strong>VueTube extractor adalah sebuah pustaka (library) yang direka untuk mengekstrak daripada perkhidmatan penstriman (misalnya YouTube). Direka untuk digunakan dalam VueTube.</strong>
 <br>
-This is the library for VueTube. The main repository is <a href="https://github.com/Frontesque/VueTube"> here.</a>
+Ini ialah pustaka (library) untuk VueTube. Repositori utama adalah <a href="https://github.com/Frontesque/VueTube"> di sini.</a>
 </p>
 
 <p align="center">
@@ -49,28 +48,25 @@ This is the library for VueTube. The main repository is <a href="https://github.
     <img src="https://github.com/VueTubeApp/VueTube-Extractor/actions/workflows/codeql.yml/badge.svg" alt="CodeQL">
 </p>
 
-**Read this page in other languages**: [English,](readme.md) [Bahasa Melayu](/readme/readme.ms.md)
+**Baca halaman ini dalam bahasa lain**: [English,](readme.md) [Bahasa Melayu](/readme/readme.ms.md)
 
-VueTube Extractor is currently under active development, and is not a part of the main VueTube app. It is planned to
-completely replace the current API wrapper employed by VueTube upon completion.
+VueTube Extractor sedang aktif dibangunkan, dan ia bukan sebahagian daripada apl VueTube. Ia dirancang untuk
+menggantikan pembalut API (API wrapper) sedia ada yang digunakan oleh VueTube setelah disiapkan.
 
-## Getting Started & Contributing
+## Bermula & Menyumbang
 
-See [the wiki](https://github.com/VueTubeApp/VueTube-Extractor/wiki) as well as [CONTRIBUTING.md](CONTRIBUTING.md) for more information.
+Lihat [halaman wiki](https://github.com/VueTubeApp/VueTube-Extractor/wiki) serta [CONTRIBUTING.md](CONTRIBUTING.md) untuk maklumat lanjut.
 
-## Contributors
+## Penyumbang-penyumbang
 
 <a href="https://github.com/VueTubeApp/VueTube-Extractor/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=VueTubeApp/VueTube-Extractor"  alt="VueTube Extractor is made thanks to the help of contributors within the community"/>
+  <img src="https://contrib.rocks/image?repo=VueTubeApp/VueTube-Extractor"  alt="VueTube Extractor dibuat berkat bantuan daripada penyumbang-penyumbang dalam komuniti"/>
 </a>
 
-<sub>Made with [contrib.rocks](https://contrib.rocks). </sub>
+<sub>Dibuat dengan [contrib.rocks](https://contrib.rocks). </sub>
 
-## Disclaimer
+## Penafian
 
-The VueTube project and its contents are not affiliated with, funded, authorized, endorsed by, or in any way associated
-with YouTube, Google LLC or any of its affiliates and subsidiaries. The official YouTube website can be found
-at [www.youtube.com](https://www.youtube.com).
+Projek VueTube dan kandungannya tidak bergabung dengan, dibiayai, diberi izin, disokong oleh, atau dalam apa jua cara dikaitkan dengan YouTube, Google LLC atau mana-mana sekutu dan anak syarikatnya. Laman web rasmi YouTube boleh didapati di [www.youtube.com](https://www.youtube.com).
 
-Any trademark, service mark, trade name, or other intellectual property rights used in the VueTube project are owned by
-the respective owners.
+Sebarang tanda dagangan, tanda perkhidmatan, nama dagangan atau hak harta intelek lain yang digunakan dalam projek VueTube dimiliki oleh pemilik masing-masing.
