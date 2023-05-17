@@ -45,6 +45,6 @@
     "@vuetubeapp/http": "^1.4.2",
     "prettier": "^2.8.7",
     "protobufjs": "^7.2.3",
-    "user-agents": "^1.0.1360"
+    "user-agents": "^1.0.1381"
   }
 }
